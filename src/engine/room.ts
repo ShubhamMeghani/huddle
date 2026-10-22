@@ -5,6 +5,7 @@ import { metaOf, GAME_META } from '@/games/meta';
 import { validateSettings } from '@/games/settings';
 import { hasModule, moduleOf } from '@/games/registry';
 import { balanceTeams } from './teams';
+import { strengthFor } from './elo';
 import {
   activeSeats,
   addNotice,
@@ -167,7 +168,7 @@ function ensureTeams(room: RoomState, gameId: GameId, ctx: Ctx) {
   }
   const players = seated(room);
   const covered = room.teams && players.every((p) => room.teams!.some((t) => t.seatIds.includes(p.id)));
-  if (!room.teams || !covered) room.teams = balanceTeams(players, room.teams?.length ?? 2, {}, ctx);
+  if (!room.teams || !covered) room.teams = balanceTeams(players, room.teams?.length ?? 2, strengths(room, ctx, gameId), ctx);
   for (const t of room.teams) t.seatIds = t.seatIds.filter((id) => seatById(room, id)?.status === 'seated');
   for (const s of room.seats) s.teamId = room.teams.find((t) => t.seatIds.includes(s.id))?.id ?? null;
 }
@@ -494,13 +495,24 @@ export function applyAction(room: RoomState, seat: Seat, action: GameAction, ctx
   }
 }
 
+/** Seat strengths for balancing: stored ratings (never client-supplied) for the next team game. */
+function strengths(room: RoomState, ctx: Ctx, gameId: GameId | null): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const s of seated(room)) out[s.id] = strengthFor(ctx.ratings?.[s.identityId], gameId);
+  return out;
+}
+
+function nextTeamGame(room: RoomState): GameId | null {
+  const cfg = room.queue.slice(room.queueIndex).find((q) => GAME_META[q.gameId]?.teams !== 'none');
+  return cfg?.gameId ?? null;
+}
+
 function setTeams(room: RoomState, action: GameAction, ctx: Ctx) {
   const players = seated(room);
   if (action.mode === 'balance' || action.mode === 'shuffle') {
     const n = Number(action.count ?? room.teams?.length ?? 2);
     if (!Number.isInteger(n) || n < 2 || n > 4 || n > players.length) throw new GameError('INVALID');
-    const ratings = (action.ratings && typeof action.ratings === 'object' ? action.ratings : {}) as Record<string, number>;
-    room.teams = balanceTeams(players, n, action.mode === 'shuffle' ? {} : ratings, ctx, action.mode === 'shuffle');
+    room.teams = balanceTeams(players, n, strengths(room, ctx, nextTeamGame(room)), ctx, action.mode === 'shuffle');
   } else if (action.mode === 'move') {
     if (!room.teams) throw new GameError('INVALID');
     const s = seatById(room, action.seatId as string);

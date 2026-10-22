@@ -22,7 +22,22 @@ export function TeamsPanel({ sync, state }: RoomProps) {
           </div>
         )}
       </div>
-      {!teams?.length && <p className="font-semibold text-muted">Team games split players automatically. Tap Balance to preview.</p>}
+      {me.isAdmin && (
+        <div className="flex items-center gap-2" role="group" aria-label="Number of teams">
+          {[2, 3, 4].map((n) => (
+            <button
+              key={n}
+              className={`btn !min-h-11 !px-4 text-sm ${(teams?.length ?? 2) === n ? 'btn-primary' : 'btn-ghost'}`}
+              aria-pressed={(teams?.length ?? 2) === n}
+              onClick={() => void sync.act('setTeams', { mode: 'balance', count: n })}
+              data-testid={`teams-count-${n}`}
+            >
+              {n} teams
+            </button>
+          ))}
+        </div>
+      )}
+      {!teams?.length && <p className="font-semibold text-muted">Teams are balanced from past results. Tap Balance to preview, then move players by hand.</p>}
       {teams?.map((t) => (
         <div key={t.id} data-testid="team" data-team-id={t.id}>
           <h3 className="font-black">{t.name}</h3>

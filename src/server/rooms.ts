@@ -45,6 +45,17 @@ function makeCtx(room: RoomState, now: number, presence: Record<string, number>)
   };
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+async function loadRatings(c: Tx, room: RoomState): Promise<Record<string, Record<string, number>>> {
+  const ids = room.seats.map((s) => s.identityId).filter((id) => UUID_RE.test(id));
+  if (!ids.length) return {};
+  const rows = await c.query('select identity_id, game_type, rating from ratings where identity_id = any($1::uuid[])', [ids]);
+  const out: Record<string, Record<string, number>> = {};
+  for (const r of rows.rows) (out[r.identity_id] ??= {})[r.game_type] = Number(r.rating);
+  return out;
+}
+
 async function loadPresence(c: Tx, roomId: string): Promise<Record<string, number>> {
   const rows = await c.query(
     'select identity_id, (extract(epoch from last_seen_at) * 1000)::float8 as t from presence where room_id = $1',
@@ -137,6 +148,7 @@ export async function roomOp<T>(
     const room = structuredClone(before);
     room.v = row.version;
     const ctx = makeCtx(room, now, presence);
+    if (room.status !== 'playing') ctx.ratings = await loadRatings(c, room);
     catchUp(room, ctx);
     const result = op(room, ctx);
     planBots(room, ctx);

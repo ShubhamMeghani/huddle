@@ -56,8 +56,8 @@ The full stack is in SPEC §3:
 | Phase | Name | Mode | Status | Commit |
 |---|---|---|---|---|
 | 1 | Deployment skeleton | AUTO (human steps after) | done | 3a4168a |
-| 2 | Core engine: rooms, sync, rejoin, timers, AFK, admin, queue | AUTO | done | phase-2 commit |
-| 3 | Teams and ratings | AUTO | todo | – |
+| 2 | Core engine: rooms, sync, rejoin, timers, AFK, admin, queue | AUTO | done | 431c22e |
+| 3 | Teams and ratings | AUTO | done | phase-3 commit |
 | 4 | Quiz Clash | AUTO | todo | – |
 | 5 | Draw & Guess | AUTO | todo | – |
 | 6 | Imposter | AUTO | todo | – |
@@ -442,9 +442,9 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-32 | Unit | 9 | todo | `tests/unit/settings.test.ts` |
 | AC-33 | E2E | 5 | todo | `tests/e2e/hostless.spec.ts` |
 | AC-34 | E2E | 8 | todo | `tests/e2e/queue.spec.ts` |
-| AC-35 | Unit | 3 | todo | `tests/unit/teams.test.ts` |
-| AC-36 | E2E | 3 | todo | `tests/e2e/teams.spec.ts` |
-| AC-37 | Unit | 3 | todo | `tests/unit/ratings.test.ts` |
+| AC-35 | Unit | 3 | pass | `tests/unit/teams.test.ts` · pass @ phase-3 |
+| AC-36 | E2E | 3 | pass | `tests/e2e/teams.spec.ts` · pass @ phase-3 |
+| AC-37 | Unit | 3 | pass | `tests/unit/ratings.test.ts` · pass @ phase-3 |
 | AC-38 | Unit | 9 | todo | `tests/unit/secrets.test.ts` |
 | AC-39 | E2E | 15 | todo | `tests/e2e/secrets-sniff.spec.ts` |
 | AC-40 | E2E | 13 | todo | `tests/e2e/layout.spec.ts` |

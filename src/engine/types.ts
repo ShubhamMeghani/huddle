@@ -191,6 +191,8 @@ export interface Ctx {
   breakMs: number;
   /** A seat counts as connected if seen within this window (60 s; shorter in test mode). */
   presenceMs: number;
+  /** identityId → gameType → rating, loaded by the server when teams may be formed (R32, R33). */
+  ratings?: Record<string, Record<string, number>>;
   /** Set while an admin skip forces a deadline: missed-turn (AFK) accounting is suppressed. */
   skipping?: boolean;
 }
