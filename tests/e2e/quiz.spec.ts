@@ -13,24 +13,28 @@ test('AC-58 four phones play three questions: same question and countdown, revea
     expect(Math.max(...secs.map(Number)) - Math.min(...secs.map(Number))).toBeLessThanOrEqual(1);
     // Each player picks a different option, so exactly one is right.
     for (let i = 0; i < 4; i++) await players[i].page.getByTestId(`quiz-option-${i}`).click();
-    for (const p of players) await expect(p.page.getByTestId('quiz-reveal')).toBeVisible();
-    let correct = -1;
-    for (let i = 0; i < 4; i++) if ((await players[0].page.getByTestId(`quiz-option-${i}`).getAttribute('data-correct')) === 'true') correct = i;
-    expect(correct).toBeGreaterThanOrEqual(0);
-    await Promise.all(
+    // Each phone records its own reveal as soon as it appears (the reveal is on screen for a few seconds).
+    const reveals = await Promise.all(
       players.map(async (p) => {
-        for (let i = 0; i < 4; i++) await expect(p.page.getByTestId(`quiz-dist-${i}`)).toHaveText('1');
-        await expect(p.page.locator('[data-testid^=quiz-option-][data-correct=true]')).toHaveAttribute('data-testid', `quiz-option-${correct}`);
+        await expect(p.page.getByTestId('quiz-reveal')).toBeVisible();
+        const correctTile = await p.page.locator('[data-testid^=quiz-option-][data-correct=true]').getAttribute('data-testid');
+        const dist = await Promise.all([0, 1, 2, 3].map((i) => p.page.getByTestId(`quiz-dist-${i}`).textContent()));
+        const mine = (await p.page.getByTestId('quiz-my-points').textContent())!;
+        return { correct: Number(correctTile!.split('-').pop()), dist, mine };
       }),
     );
-    const winnerText = (await players[correct].page.getByTestId('quiz-my-points').textContent())!;
-    const pts = Number(winnerText.match(/\+(\d+)/)![1]);
+    const correct = reveals[0].correct;
+    for (const r of reveals) {
+      expect(r.correct).toBe(correct);
+      expect(r.dist).toEqual(['1', '1', '1', '1']);
+    }
+    const pts = Number(reveals[correct].mine.match(/\+(\d+)/)![1]);
     expect(pts).toBeGreaterThanOrEqual(500);
     expect(pts).toBeLessThanOrEqual(1000);
     totals.set(players[correct].name, totals.get(players[correct].name)! + pts);
-    await Promise.all(
-      players.map((p, i) => (i === correct ? null : expect(p.page.getByTestId('quiz-my-points')).toHaveText('No points this time'))),
-    );
+    reveals.forEach((r, i) => {
+      if (i !== correct) expect(r.mine).toBe('No points this time');
+    });
   }
   for (const p of players) await expect(p.page.getByTestId('break')).toBeVisible({ timeout: 30_000 });
   const boards = await Promise.all(
@@ -48,23 +52,23 @@ test('AC-11 a fifth player joining during question 2 watches live and is seated 
   const { code, players } = await roomOf(browser, ['Asha', 'Bilal', 'Charu', 'Dev']);
   await startGame(players[0].page, quizQueue(3, 30));
   for (const p of players) await atQuestion(p.page, 1);
+  const late = await newPlayer(browser, 'Esha'); // context ready before question 2 starts
   for (let i = 0; i < 4; i++) await players[i].page.getByTestId(`quiz-option-${i}`).click();
-  for (const p of players) await atQuestion(p.page, 2);
+  await atQuestion(players[0].page, 2);
 
-  const late = await newPlayer(browser, 'Esha');
   await joinRoom(late, code);
   await expect(late.page.getByTestId('spectator-banner')).toBeVisible();
   await atQuestion(late.page, 2);
   await expect(late.page.getByTestId('countdown')).toBeVisible();
   await expect(late.page.getByTestId('quiz-option-0')).toBeDisabled();
 
-  for (let i = 0; i < 4; i++) await players[i].page.getByTestId(`quiz-option-${(i + 1) % 4}`).click();
+  await Promise.all(players.map((p, i) => p.page.getByTestId(`quiz-option-${(i + 1) % 4}`).click()));
   await atQuestion(late.page, 3);
   await expect(late.page.getByTestId('spectator-banner')).toHaveCount(0);
   await expect(late.page.getByTestId('quiz-option-0')).toBeEnabled();
   await late.page.getByTestId('quiz-option-0').click();
   await expect(late.page.getByTestId('quiz-answered')).toContainText('Locked in');
-  for (let i = 0; i < 4; i++) await players[i].page.getByTestId(`quiz-option-${i}`).click();
+  await Promise.all(players.map((p, i) => p.page.getByTestId(`quiz-option-${i}`).click()));
   await expect(late.page.getByTestId('break')).toBeVisible({ timeout: 30_000 });
   // Esha only played question 3: her total is at most one question's points.
   const eshaScore = Number(await late.page.locator('[data-testid=standing]', { hasText: 'Esha' }).getByTestId('standing-score').textContent());

@@ -59,8 +59,8 @@ The full stack is in SPEC §3:
 | 2 | Core engine: rooms, sync, rejoin, timers, AFK, admin, queue | AUTO | done | 431c22e |
 | 3 | Teams and ratings | AUTO | done | d368335 |
 | 4 | Quiz Clash | AUTO | done | 30524a7 |
-| 5 | Draw & Guess | AUTO | done | phase-5 commit |
-| 6 | Imposter | AUTO | todo | – |
+| 5 | Draw & Guess | AUTO | done | e5ee1b7 |
+| 6 | Imposter | AUTO | done | phase-6 commit |
 | 7 | Atlas | AUTO | todo | – |
 | 8 | Dumb Charades | AUTO | todo | – |
 | 9 | Most Likely To (Should) and cross-game suites | AUTO | todo | – |
@@ -478,9 +478,9 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-68 | Unit | 7 | todo | `tests/unit/games/atlas.test.ts` |
 | AC-69 | Unit | 7 | todo | `tests/unit/games/atlas-vote.test.ts` |
 | AC-70 | E2E | 7 | todo | `tests/e2e/atlas.spec.ts` |
-| AC-71 | Unit | 6 | todo | `tests/unit/content/imposter-pairs.test.ts` |
-| AC-72 | Unit | 6 | todo | `tests/unit/games/imposter.test.ts` |
-| AC-73 | E2E | 6 | todo | `tests/e2e/imposter.spec.ts` |
+| AC-71 | Unit | 6 | pass | `tests/unit/content/imposter-pairs.test.ts` · pass @ phase-6 (186 pairs) |
+| AC-72 | Unit | 6 | pass | `tests/unit/games/imposter.test.ts` · pass @ phase-6 |
+| AC-73 | E2E | 6 | pass | `tests/e2e/imposter.spec.ts` · pass @ phase-6 |
 | AC-74 | Unit | 9 | todo | `tests/unit/games/mlt.test.ts` |
 | AC-75 | E2E | 9 | todo | `tests/e2e/mlt.spec.ts` |
 | AC-76 | Deploy | 16 | Pending (human) | GitHub Actions run (after H6) |
@@ -521,6 +521,8 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 5 · The canvas fingerprint (`data-op-digest`) uses canonical field order. · Postgres `jsonb` reorders object keys, so raw JSON differs between live and replayed ops.
 - 2026-10-23 · 5 · Test mode shortens the Draw choose timer (4 s) and turn-end reveal (2.5 s) and lengthens the Quiz reveal (8 s); production keeps 15 s / 4 s / 5 s. · Fast E2E for AFK chains, plus robust reveal assertions on loaded iPhone emulation.
 - 2026-10-23 · 5 · The demo bots' drawings are generated from simple parametric shapes (`scripts/make-bot-drawings.ts`, 24 words). · Deterministic, reviewable bot art.
+- 2026-10-23 · 6 · An Imposter game has 1–5 rounds (default 3) with new words and a new imposter each round. With two imposters, the crew wins only if the accused is an imposter and their steal guess fails. The +50 good-vote bonus applies whatever the outcome. · SPEC defines a single round; repeated rounds make a fuller game. These details were left open.
+- 2026-10-23 · 6 · E2E specs read final scores from the finished game in the snapshot instead of the scoreboard DOM, and check reveals on all phones in parallel. Local Playwright workers: 3. · The scoreboard break and reveals are short, and loaded WebKit pages are slow; the tests stay strict about values but not about wall-clock luck.
 
 ## Blockers
 

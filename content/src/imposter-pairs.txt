@@ -1,0 +1,187 @@
+# Imposter word pairs: category|crew word|imposter word|hint1,hint2 for the first|hint1,hint2 for the second
+food|chai|coffee|kulhad,masala|beans,espresso
+food|samosa|kachori|triangle,potato|round,dal
+food|dosa|uttapam|crispy,thin|thick,onion
+food|idli|dhokla|steamed,white|yellow,gujarati
+food|biryani|pulao|dum,spicy|mild,peas
+food|jalebi|imarti|spiral,crispy|flower,urad
+food|gulab jamun|rasgulla|syrup,brown|spongy,white
+food|pani puri|bhel puri|water,tangy|puffed,crunchy
+food|pav bhaji|vada pav|butter,vegetables|potato,mumbai
+food|paratha|chapati|stuffed,ghee|thin,roti
+food|naan|kulcha|tandoor,garlic|amritsari,stuffed
+food|lassi|buttermilk|sweet,curd|chaas,salty
+food|kulfi|ice cream|matka,stick|cone,scoop
+food|ladoo|barfi|round,boondi|square,milk
+food|kheer|halwa|rice,milk|carrot,ghee
+food|momos|dumplings|tibetan,chutney|chinese,steamed
+food|pizza|burger|cheese,slice|bun,patty
+food|noodles|pasta|chopsticks,soy|italian,sauce
+food|sandwich|toast|layers,filling|crispy,butter
+food|apple|pear|red,doctor|green,shape
+food|mango|papaya|king,summer|orange,seeds
+food|banana|plantain|yellow,peel|cooking,green
+food|orange|lemon|juicy,peel|sour,yellow
+food|watermelon|muskmelon|red,seeds|orange,netted
+food|grapes|berries|bunch,wine|small,juicy
+food|tomato|capsicum|red,ketchup|bell,green
+food|potato|sweet potato|aloo,fries|orange,shakarkandi
+food|onion|garlic|tears,layers|cloves,smell
+food|ginger|turmeric|adrak,root|haldi,yellow
+food|salt|sugar|sea,namak|sweet,cane
+food|honey|jam|bees,sticky|fruit,spread
+food|butter|cheese|churn,toast|holes,pizza
+food|curd|paneer|dahi,raita|cottage,cubes
+food|egg|omelette|shell,yolk|fried,breakfast
+food|chocolate|candy|cocoa,dark|sweet,wrapper
+food|cake|pastry|birthday,candles|cream,slice
+food|popcorn|chips|movie,butter|potato,crunchy
+food|pickle|chutney|achaar,oil|mint,green
+food|coconut water|sugarcane juice|tender,beach|crushed,sweet
+food|maggi|poha|instant,hostel|flattened,indore
+place|beach|swimming pool|sand,waves|chlorine,lanes
+place|mountain|hill|peak,snow|small,climb
+place|school|college|uniform,teacher|campus,degree
+place|hospital|clinic|ward,emergency|small,doctor
+place|library|bookstore|silence,borrow|buy,shelves
+place|airport|railway station|flight,runway|platform,tracks
+place|cinema|theatre|popcorn,screen|stage,drama
+place|zoo|safari|cages,animals|jeep,jungle
+place|park|garden|swings,bench|flowers,plants
+place|mall|market|escalator,brands|bargain,vegetables
+place|restaurant|dhaba|waiter,menu|highway,charpai
+place|hotel|hostel|room,service|bunk,students
+place|office|factory|desk,meeting|machines,workers
+place|kitchen|bathroom|stove,cooking|shower,towel
+place|goa|kerala|beaches,party|backwaters,coconut
+place|mumbai|delhi|local,sea|metro,winter
+place|kolkata|chennai|howrah,tram|marina,filter
+place|bengaluru|hyderabad|traffic,startups|biryani,charminar
+place|jaipur|udaipur|pink,forts|lakes,palace
+place|shimla|manali|hills,train|snow,rohtang
+place|london|paris|thames,tea|eiffel,romantic
+place|new york|los angeles|liberty,subway|hollywood,beach
+place|desert|forest|sand,camel|trees,wild
+place|island|peninsula|surrounded,boat|attached,coast
+place|village|city|farms,quiet|crowded,buildings
+place|gym|stadium|weights,treadmill|crowd,match
+object|pen|pencil|ink,cap|graphite,sharpen
+object|laptop|tablet|keyboard,work|touch,thin
+object|phone|landline|mobile,apps|wire,old
+object|watch|clock|wrist,strap|wall,alarm
+object|chair|stool|backrest,arms|small,round
+object|bed|sofa|sleep,pillow|cushions,living
+object|fan|air conditioner|ceiling,blades|cooling,remote
+object|umbrella|raincoat|rain,fold|wear,hood
+object|shoes|slippers|laces,socks|bathroom,flat
+object|bag|suitcase|school,straps|travel,wheels
+object|mirror|window|reflection,face|glass,view
+object|knife|scissors|cut,kitchen|paper,blades
+object|spoon|fork|soup,curve|prongs,pasta
+object|cup|glass|handle,tea|water,transparent
+object|bucket|tub|water,handle|bath,big
+object|candle|lamp|wax,flame|bulb,switch
+object|book|magazine|chapters,novel|glossy,monthly
+object|newspaper|television|morning,headlines|channels,remote
+object|guitar|violin|strings,strum|bow,orchestra
+object|drum|tabla|beat,sticks|pair,hands
+object|piano|harmonium|keys,grand|bellows,portable
+object|car|bus|drive,four|passengers,conductor
+object|bicycle|motorcycle|pedal,chain|engine,helmet
+object|train|metro|railway,coach|underground,card
+object|aeroplane|helicopter|wings,pilot|rotor,hover
+object|ship|boat|ocean,cargo|small,oars
+object|auto rickshaw|taxi|three,meter|yellow,cab
+object|key|lock|door,turn|latch,secure
+object|ring|necklace|finger,wedding|neck,pendant
+object|bangles|bracelet|glass,wrist|chain,charm
+object|saree|lehenga|drape,pallu|skirt,bridal
+object|kurta|shirt|ethnic,long|collar,buttons
+object|tie|scarf|knot,office|neck,winter
+object|cap|hat|cricket,peak|wide,cowboy
+object|sunglasses|spectacles|shades,summer|reading,power
+object|toothbrush|comb|bristles,paste|hair,teeth
+object|soap|shampoo|bar,lather|hair,bottle
+object|pillow|blanket|head,soft|cover,warm
+object|fridge|oven|cold,ice|bake,hot
+object|balloon|kite|air,pop|string,sky
+object|camera|binoculars|photo,lens|distance,pair
+object|map|globe|paper,route|round,spin
+object|coin|banknote|metal,toss|paper,wallet
+job|doctor|nurse|stethoscope,prescription|injection,care
+job|teacher|principal|class,homework|school,head
+job|police|army|constable,siren|soldier,border
+job|pilot|driver|cockpit,flight|road,steering
+job|chef|waiter|cook,recipe|serve,tips
+job|farmer|gardener|fields,tractor|plants,hose
+job|actor|singer|film,role|songs,voice
+job|cricketer|footballer|bat,wicket|goal,kick
+job|engineer|architect|bridges,machines|designs,blueprint
+job|lawyer|judge|court,client|verdict,gavel
+job|barber|tailor|haircut,razor|stitch,measure
+job|dentist|optician|teeth,braces|eyes,lenses
+job|youtuber|influencer|videos,subscribe|reels,sponsor
+job|astronaut|scientist|space,rocket|lab,experiment
+job|magician|juggler|tricks,rabbit|balls,circus
+sport|cricket|baseball|wicket,ipl|pitcher,american
+sport|football|rugby|goal,messi|tackle,oval
+sport|badminton|tennis|shuttle,sindhu|wimbledon,court
+sport|chess|carrom|checkmate,knight|striker,coins
+sport|ludo|snakes and ladders|dice,tokens|climb,bite
+sport|kabaddi|kho kho|raid,breath|chase,poles
+sport|swimming|diving|pool,laps|board,flip
+sport|boxing|wrestling|gloves,punch|mat,grapple
+sport|cycling|running|pedal,helmet|track,sprint
+sport|yoga|gym workout|asana,breathing|weights,treadmill
+sport|basketball|volleyball|hoop,dribble|spike,net
+sport|hockey|golf|turf,goalkeeper|club,hole
+sport|marathon|sprint|long,endurance|short,fast
+event|diwali|holi|lamps,crackers|colours,gulal
+event|birthday|anniversary|cake,candles|couple,years
+event|wedding|engagement|mandap,baraat|ring,proposal
+event|picnic|road trip|basket,park|highway,packing
+event|exam|interview|marks,syllabus|job,resume
+event|concert|play|music,crowd|actors,curtain
+event|christmas|new year|santa,tree|countdown,resolution
+event|monsoon|winter|rain,umbrella|cold,sweater
+event|summer|spring|heat,vacation|flowers,bloom
+event|sleepover|house party|pyjamas,movies|music,dance
+animal|dog|wolf|pet,bark|wild,howl
+animal|cat|tiger|meow,pet|stripes,jungle
+animal|lion|cheetah|king,mane|fast,spots
+animal|elephant|rhino|trunk,tusks|horn,armoured
+animal|cow|buffalo|milk,moo|black,horns
+animal|horse|donkey|race,gallop|bray,load
+animal|monkey|gorilla|banana,tail|big,silverback
+animal|crow|pigeon|black,caw|grey,message
+animal|parrot|peacock|green,talks|feathers,dance
+animal|snake|lizard|venom,slither|wall,tail
+animal|frog|toad|green,jump|warts,dry
+animal|fish|shark|water,gills|teeth,jaws
+animal|dolphin|whale|smart,flipper|huge,blue
+animal|ant|bee|colony,sugar|honey,sting
+animal|butterfly|moth|colourful,day|night,lamp
+animal|mosquito|housefly|bite,dengue|buzz,garbage
+animal|rabbit|squirrel|carrot,ears|nuts,tree
+animal|penguin|polar bear|antarctica,waddle|arctic,white
+animal|camel|giraffe|desert,hump|tall,neck
+tech|email|letter|inbox,send|post,stamp
+tech|selfie|photo|front,pose|album,frame
+tech|password|pin|login,secret|four,atm
+tech|wifi|bluetooth|router,internet|pairing,earphones
+tech|computer|calculator|keyboard,mouse|numbers,maths
+tech|robot|alien|machine,metal|space,green
+tech|video call|phone call|camera,screen|ring,voice
+tech|movie|series|popcorn,theatre|episodes,binge
+tech|song|poem|singer,tune|rhyme,poet
+tech|rap|qawwali|beats,flow|sufi,harmonium
+film|sholay|deewaar|gabbar,basanti|maa,vijay
+film|ddlj|kuch kuch hota hai|simran,train|anjali,college
+film|three idiots|pk|rancho,engineering|alien,remote
+film|harry potter|lord of the rings|wizard,hogwarts|hobbit,frodo
+film|superman|batman|krypton,cape|gotham,joker
+film|spider-man|iron man|web,peter|suit,tony
+film|titanic|avatar|ship,iceberg|blue,pandora
+film|lion king|jungle book|simba,pride|mowgli,baloo
+film|tom and jerry|mickey mouse|cat,chase|disney,ears
+film|chhota bheem|doraemon|laddoo,dholakpur|gadgets,nobita

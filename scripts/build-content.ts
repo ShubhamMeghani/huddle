@@ -44,6 +44,25 @@ export function buildWords(src: string) {
     });
 }
 
+export function buildPairs(src: string) {
+  const counters: Record<string, number> = {};
+  return src
+    .split(/\r?\n/)
+    .filter((l) => l.trim() && !l.startsWith('#'))
+    .map((line) => {
+      const [category, a, b, ha, hb] = line.split('|').map((x) => x.trim());
+      counters[category] = (counters[category] ?? 0) + 1;
+      return {
+        id: `${category.slice(0, 3)}${String(counters[category]).padStart(2, '0')}`,
+        category,
+        a,
+        b,
+        hintsA: ha.split(',').map((x) => x.trim()),
+        hintsB: hb.split(',').map((x) => x.trim()),
+      };
+    });
+}
+
 const lines = (rows: unknown[]) => '[\n' + rows.map((r) => JSON.stringify(r)).join(',\n') + '\n]\n';
 
 if (process.argv[1] && /build-content\.ts$/.test(process.argv[1])) {
@@ -53,4 +72,7 @@ if (process.argv[1] && /build-content\.ts$/.test(process.argv[1])) {
   const words = buildWords(readFileSync('content/src/draw-words.txt', 'utf8'));
   writeFileSync('content/draw-words.json', lines(words));
   console.log(`draw-words.json: ${words.length} words`);
+  const pairs = buildPairs(readFileSync('content/src/imposter-pairs.txt', 'utf8'));
+  writeFileSync('content/imposter-pairs.json', lines(pairs));
+  console.log(`imposter-pairs.json: ${pairs.length} pairs`);
 }
