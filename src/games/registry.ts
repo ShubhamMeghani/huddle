@@ -3,8 +3,9 @@ import type { GameId } from '@/engine/types';
 import type { GameModule } from './types';
 import { ping } from './ping/rules';
 import { quiz } from './quiz/rules';
+import { draw } from './draw/rules';
 
-const MODULES: Partial<Record<GameId, GameModule>> = { ping, quiz };
+const MODULES: Partial<Record<GameId, GameModule>> = { ping, quiz, draw };
 
 export function moduleOf(id: GameId): GameModule {
   const m = MODULES[id];

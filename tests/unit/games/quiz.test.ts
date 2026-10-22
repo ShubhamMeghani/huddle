@@ -94,7 +94,7 @@ describe('Quiz Clash rules', () => {
       touchAll(h);
       h.act('A', { type: 'answer', choice: c });
       h.act('B', { type: 'answer', choice: (c + 1) % 4 });
-      h.clock.advance(5_001); // the reveal lasts 5 s
+      h.clock.advance(8_001); // the reveal lasts 8 s in test mode (5 s in production)
       touchAll(h);
       h.tick();
     }

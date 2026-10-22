@@ -1,4 +1,5 @@
-[{"id":"bw001","category":"bollywood","difficulty":"easy","question":"Which film features the song \"Chaiyya Chaiyya\" filmed on top of a moving train?","options":["Kuch Kuch Hota Hai","Dil Se..","Taal","Dil To Pagal Hai"],"answer":1},
+[
+{"id":"bw001","category":"bollywood","difficulty":"easy","question":"Which film features the song \"Chaiyya Chaiyya\" filmed on top of a moving train?","options":["Kuch Kuch Hota Hai","Dil Se..","Taal","Dil To Pagal Hai"],"answer":1},
 {"id":"bw002","category":"bollywood","difficulty":"easy","question":"Who directed the 1975 classic \"Sholay\"?","options":["Ramesh Sippy","Yash Chopra","Manmohan Desai","Prakash Mehra"],"answer":0},
 {"id":"bw003","category":"bollywood","difficulty":"easy","question":"What is the name of the villain played by Amjad Khan in \"Sholay\"?","options":["Mogambo","Gabbar Singh","Shakaal","Kancha Cheena"],"answer":1},
 {"id":"bw004","category":"bollywood","difficulty":"easy","question":"\"Mogambo khush hua\" is a famous line from which film?","options":["Karma","Tridev","Shahenshah","Mr. India"],"answer":3},
@@ -436,4 +437,5 @@
 {"id":"sp056","category":"sports","difficulty":"easy","question":"At which Olympics did Neeraj Chopra win his gold medal?","options":["Tokyo 2020","Rio 2016","London 2012","Beijing 2008"],"answer":0},
 {"id":"sp057","category":"sports","difficulty":"hard","question":"At which golf course is The Masters played every year?","options":["St Andrews","Augusta National","Pebble Beach","Wentworth"],"answer":1},
 {"id":"sp058","category":"sports","difficulty":"easy","question":"What is the Ballon d'Or awarded for?","options":["Best footballer of the year","Best football club","Best goalkeeper only","Best young coach"],"answer":0},
-{"id":"sp059","category":"sports","difficulty":"easy","question":"How many players does a hockey team have on the field?","options":["9","10","11","12"],"answer":2}]
+{"id":"sp059","category":"sports","difficulty":"easy","question":"How many players does a hockey team have on the field?","options":["9","10","11","12"],"answer":2}
+]

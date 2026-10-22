@@ -62,6 +62,8 @@ export interface Phase {
   durationMs: number | null;
   /** Seat whose turn this phase is (AFK accounting); null for simultaneous phases. */
   turnSeatId: SeatId | null;
+  /** When the visible countdown ends, if later than `deadline` (e.g. drawing with hint ticks). */
+  endsAt?: number | null;
 }
 
 export interface GameConfig {

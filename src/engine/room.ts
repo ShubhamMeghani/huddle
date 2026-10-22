@@ -425,6 +425,8 @@ export function applyAction(room: RoomState, seat: Seat, action: GameAction, ctx
       if (!room.paused) throw new GameError('WRONG_PHASE');
       const shift = ctx.now - room.paused.at;
       if (room.phase.deadline != null) room.phase.deadline = ctx.now + room.paused.remainingMs;
+      if (room.phase.endsAt != null) room.phase.endsAt += shift;
+      m?.shiftTimes?.(room, shift);
       for (const b of room.botPlan) b.dueAt += shift;
       room.paused = null;
       addNotice(room, 'Game resumed', ctx, 'admin');

@@ -30,6 +30,7 @@ export function setPhase(room: RoomState, kind: string, durationMs: number | nul
     startedAt: ctx.now,
     durationMs,
     turnSeatId,
+    endsAt: null,
   };
   room.botPlan = room.botPlan.filter((b) => b.phaseId === room.phase.id);
 }

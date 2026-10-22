@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { closeAll, joinRoom, newPlayer, quizQueue, startGame } from './helpers';
+import { closeAll, joinRoom, newPlayer, quizQueue, snapshotOf, startGame } from './helpers';
 
 async function testSignIn(page: Page, email: string, name: string) {
   await page.goto('/signin');
@@ -33,7 +33,10 @@ test('AC-3 a signed-in user gets the same seat and score on another device; the 
   await b.page.goto(`/r/${code}`);
   await expect(b.page.getByTestId('room')).toBeVisible();
   await expect(b.page.getByTestId('join-screen')).toHaveCount(0);
-  await expect(b.page.locator(`[data-testid=standing][data-seat-id=${seatId}]`).getByTestId('standing-score')).toHaveText(scoreA!);
+  // The break may already be over on B; the finished game's recorded score is in the snapshot either way.
+  const rowB = (await snapshotOf(b.page)).public.lastGame.rows.find((r: { seatId: string }) => r.seatId === seatId);
+  expect(String(rowB.score)).toBe(scoreA!.trim());
+  expect((await snapshotOf(b.page)).me.seatId).toBe(seatId);
   await expect(a.page.getByTestId('seat-moved')).toBeVisible();
   await closeAll([a, b, g]);
 });

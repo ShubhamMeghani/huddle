@@ -1,0 +1,593 @@
+# Draw & Guess words. word|difficulty|tags (comma-separated). Letters, spaces and hyphens only.
+chai|easy|india,food
+samosa|easy|india,food
+jalebi|medium|india,food
+dosa|easy|india,food
+idli|easy|india,food
+biryani|medium|india,food
+rangoli|medium|india,art
+diya|easy|india,object
+auto rickshaw|medium|india,vehicle
+cycle rickshaw|hard|india,vehicle
+tiffin box|medium|india,object
+pressure cooker|medium|india,object
+mehendi|medium|india,art
+saree|easy|india,clothes
+kurta|easy|india,clothes
+turban|easy|india,clothes
+bindi|easy|india,object
+cricket bat|easy|india,sport
+kabaddi|hard|india,sport
+tabla|medium|india,music
+sitar|medium|india,music
+harmonium|hard|india,music
+dhol|medium|india,music
+shehnai|hard|india,music
+mango|easy|india,food
+coconut|easy|india,food
+banana leaf|medium|india,food
+taj mahal|easy|india,place
+india gate|medium|india,place
+qutub minar|hard|india,place
+gateway of india|hard|india,place
+charminar|hard|india,place
+howrah bridge|hard|india,place
+hawa mahal|hard|india,place
+red fort|medium|india,place
+lotus temple|hard|india,place
+holi|medium|india,festival
+diwali|medium|india,festival
+fireworks|easy|india,festival
+dabbawala|hard|india,person
+chaiwala|medium|india,person
+pani puri|medium|india,food
+pav bhaji|medium|india,food
+vada pav|medium|india,food
+gulab jamun|medium|india,food
+ladoo|easy|india,food
+paratha|medium|india,food
+chapati|easy|india,food
+naan|easy|india,food
+paneer|medium|india,food
+lassi|medium|india,food
+kulfi|medium|india,food
+pickle jar|medium|india,food
+thali|medium|india,food
+dal|medium|india,food
+rasgulla|medium|india,food
+momos|easy|india,food
+poha|hard|india,food
+halwa|hard|india,food
+tandoor|hard|india,object
+bullock cart|medium|india,vehicle
+local train|medium|india,vehicle
+ludo|easy|india,game
+carrom|medium|india,game
+gilli danda|hard|india,game
+snakes and ladders|medium|india,game
+spinning top|medium|india,game
+kite flying|medium|india,activity
+mandap|hard|india,place
+baraat|hard|india,event
+bangles|easy|india,clothes
+anklet|medium|india,clothes
+jhumka|medium|india,clothes
+nose ring|medium|india,clothes
+dupatta|medium|india,clothes
+dhoti|medium|india,clothes
+lungi|medium|india,clothes
+sherwani|hard|india,clothes
+chappal|easy|india,clothes
+monsoon|medium|india,weather
+banyan tree|medium|india,nature
+houseboat|medium|india,place
+toran|hard|india,object
+incense stick|medium|india,object
+cricket stadium|medium|india,sport
+peacock|easy|india,animal
+royal bengal tiger|medium|india,animal
+one-horned rhino|hard|india,animal
+sugarcane|medium|india,food
+matka|medium|india,object
+charpai|hard|india,object
+cow|easy|animal
+cat|easy|animal
+dog|easy|animal
+elephant|easy|animal
+giraffe|easy|animal
+zebra|easy|animal
+lion|easy|animal
+monkey|easy|animal
+horse|easy|animal
+donkey|easy|animal
+camel|easy|animal
+rabbit|easy|animal
+turtle|easy|animal
+snake|easy|animal
+frog|easy|animal
+fish|easy|animal
+shark|easy|animal
+whale|easy|animal
+dolphin|easy|animal
+octopus|easy|animal
+crab|easy|animal
+jellyfish|medium|animal
+starfish|easy|animal
+penguin|easy|animal
+owl|easy|animal
+parrot|easy|animal
+eagle|medium|animal
+duck|easy|animal
+chicken|easy|animal
+pig|easy|animal
+sheep|easy|animal
+goat|easy|animal
+mouse|easy|animal
+bat|easy|animal
+spider|easy|animal
+butterfly|easy|animal
+bee|easy|animal
+ant|easy|animal
+snail|easy|animal
+caterpillar|medium|animal
+mosquito|medium|animal
+kangaroo|medium|animal
+koala|medium|animal
+panda|easy|animal
+polar bear|medium|animal
+crocodile|medium|animal
+dinosaur|easy|animal
+deer|medium|animal
+squirrel|medium|animal
+hedgehog|hard|animal
+peacock feather|medium|animal
+flamingo|medium|animal
+swan|medium|animal
+unicorn|easy|fantasy
+dragon|easy|fantasy
+mermaid|medium|fantasy
+ghost|easy|fantasy
+alien|easy|fantasy
+robot|easy|object
+apple|easy|food
+banana|easy|food
+orange|easy|food
+grapes|easy|food
+watermelon|easy|food
+pineapple|easy|food
+strawberry|easy|food
+cherry|easy|food
+lemon|easy|food
+carrot|easy|food
+tomato|easy|food
+potato|easy|food
+onion|easy|food
+corn|easy|food
+mushroom|easy|food
+broccoli|medium|food
+pumpkin|easy|food
+chilli|easy|food
+pizza|easy|food
+burger|easy|food
+sandwich|easy|food
+hot dog|easy|food
+french fries|easy|food
+noodles|easy|food
+ice cream|easy|food
+cake|easy|food
+cupcake|easy|food
+donut|easy|food
+cookie|easy|food
+popcorn|easy|food
+chocolate|easy|food
+candy|easy|food
+lollipop|easy|food
+egg|easy|food
+bread|easy|food
+cheese|easy|food
+milk|easy|food
+coffee|easy|food
+juice|easy|food
+honey|medium|food
+sushi|medium|food
+pancake|medium|food
+spaghetti|medium|food
+soup|easy|food
+salad|easy|food
+house|easy|object
+door|easy|object
+window|easy|object
+chair|easy|object
+table|easy|object
+bed|easy|object
+sofa|easy|object
+lamp|easy|object
+clock|easy|object
+mirror|easy|object
+television|easy|object
+remote control|medium|object
+computer|easy|object
+laptop|easy|object
+keyboard|medium|object
+phone|easy|object
+camera|easy|object
+headphones|easy|object
+speaker|medium|object
+guitar|easy|music
+piano|easy|music
+drum|easy|music
+violin|medium|music
+trumpet|medium|music
+flute|medium|music
+microphone|easy|music
+book|easy|object
+pencil|easy|object
+pen|easy|object
+eraser|easy|object
+scissors|easy|object
+ruler|easy|object
+backpack|easy|object
+envelope|easy|object
+calendar|medium|object
+key|easy|object
+lock|easy|object
+umbrella|easy|object
+glasses|easy|object
+sunglasses|easy|object
+watch|easy|object
+ring|easy|object
+crown|easy|object
+hat|easy|clothes
+cap|easy|clothes
+shirt|easy|clothes
+t-shirt|easy|clothes
+jeans|easy|clothes
+dress|easy|clothes
+skirt|easy|clothes
+shoe|easy|clothes
+sock|easy|clothes
+boot|easy|clothes
+glove|easy|clothes
+scarf|easy|clothes
+tie|easy|clothes
+belt|easy|clothes
+jacket|easy|clothes
+raincoat|medium|clothes
+pyjamas|medium|clothes
+cup|easy|object
+mug|easy|object
+plate|easy|object
+bowl|easy|object
+spoon|easy|object
+fork|easy|object
+knife|easy|object
+bottle|easy|object
+teapot|medium|object
+kettle|medium|object
+frying pan|medium|object
+fridge|easy|object
+oven|medium|object
+toaster|medium|object
+fan|easy|object
+bucket|easy|object
+broom|easy|object
+toothbrush|easy|object
+toothpaste|medium|object
+soap|easy|object
+towel|easy|object
+comb|easy|object
+hair dryer|medium|object
+candle|easy|object
+balloon|easy|object
+gift|easy|object
+kite|easy|object
+ball|easy|sport
+football|easy|sport
+basketball|easy|sport
+tennis racket|medium|sport
+badminton|medium|sport
+shuttlecock|medium|sport
+hockey stick|medium|sport
+golf|medium|sport
+bowling|medium|sport
+skateboard|medium|sport
+surfing|medium|sport
+skiing|medium|sport
+swimming|easy|sport
+boxing|medium|sport
+trophy|easy|sport
+medal|easy|sport
+goal|easy|sport
+whistle|easy|sport
+dumbbell|medium|sport
+yoga|medium|sport
+chess|medium|game
+dice|easy|game
+playing cards|medium|game
+puzzle|medium|game
+video game|medium|game
+car|easy|vehicle
+bus|easy|vehicle
+truck|easy|vehicle
+bicycle|easy|vehicle
+motorcycle|easy|vehicle
+scooter|easy|vehicle
+train|easy|vehicle
+airplane|easy|vehicle
+helicopter|easy|vehicle
+rocket|easy|vehicle
+boat|easy|vehicle
+ship|easy|vehicle
+submarine|medium|vehicle
+tractor|medium|vehicle
+ambulance|medium|vehicle
+fire truck|medium|vehicle
+police car|medium|vehicle
+taxi|easy|vehicle
+hot air balloon|medium|vehicle
+parachute|medium|vehicle
+traffic light|easy|place
+bridge|easy|place
+road|easy|place
+castle|easy|place
+tower|easy|place
+lighthouse|medium|place
+pyramid|easy|place
+igloo|easy|place
+tent|easy|place
+hospital|medium|place
+school|easy|place
+library|medium|place
+zoo|medium|place
+park|easy|place
+garden|easy|place
+farm|easy|place
+beach|easy|place
+island|easy|place
+desert|easy|place
+jungle|medium|place
+mountain|easy|nature
+volcano|easy|nature
+river|easy|nature
+lake|easy|nature
+waterfall|medium|nature
+cave|medium|nature
+forest|easy|nature
+tree|easy|nature
+flower|easy|nature
+rose|easy|nature
+sunflower|easy|nature
+leaf|easy|nature
+grass|easy|nature
+cactus|easy|nature
+palm tree|easy|nature
+sun|easy|nature
+moon|easy|nature
+star|easy|nature
+cloud|easy|nature
+rain|easy|weather
+snow|easy|weather
+snowman|easy|weather
+rainbow|easy|weather
+lightning|easy|weather
+tornado|medium|weather
+wind|medium|weather
+fire|easy|nature
+ice|easy|nature
+earth|easy|nature
+planet|easy|space
+comet|medium|space
+astronaut|medium|space
+telescope|medium|space
+satellite|medium|space
+moon landing|hard|space
+black hole|hard|space
+doctor|medium|person
+nurse|medium|person
+teacher|medium|person
+farmer|medium|person
+chef|medium|person
+pilot|medium|person
+police officer|medium|person
+firefighter|medium|person
+astronomer|hard|person
+painter|medium|person
+singer|medium|person
+dancer|medium|person
+magician|medium|person
+pirate|easy|person
+king|easy|person
+queen|easy|person
+clown|easy|person
+ninja|medium|person
+superhero|medium|person
+zombie|medium|fantasy
+vampire|medium|fantasy
+witch|easy|fantasy
+wizard|medium|fantasy
+fairy|medium|fantasy
+baby|easy|person
+grandmother|medium|person
+family|medium|person
+eye|easy|body
+ear|easy|body
+nose|easy|body
+mouth|easy|body
+hand|easy|body
+foot|easy|body
+finger|easy|body
+tooth|easy|body
+heart|easy|body
+brain|medium|body
+skeleton|medium|body
+beard|easy|body
+moustache|easy|body
+hair|easy|body
+smile|easy|emotion
+tears|medium|emotion
+angry|medium|emotion
+sleepy|medium|emotion
+surprised|medium|emotion
+laughing|medium|emotion
+running|easy|action
+jumping|easy|action
+sleeping|easy|action
+dancing|easy|action
+singing|easy|action
+reading|easy|action
+writing|easy|action
+cooking|easy|action
+eating|easy|action
+drinking|easy|action
+crying|easy|action
+climbing|medium|action
+fishing|medium|action
+painting|medium|action
+driving|medium|action
+flying|medium|action
+sneezing|medium|action
+yawning|medium|action
+waving|medium|action
+clapping|medium|action
+shopping|medium|action
+texting|medium|action
+juggling|hard|action
+hiking|medium|action
+camping|medium|action
+skydiving|hard|action
+sweeping|medium|action
+brushing teeth|medium|action
+taking a selfie|medium|action
+birthday|easy|event
+wedding|medium|event
+party|easy|event
+picnic|medium|event
+concert|medium|event
+graduation|hard|event
+holiday|medium|event
+treasure|easy|object
+map|easy|object
+compass|medium|object
+anchor|medium|object
+sword|easy|object
+shield|easy|object
+bow and arrow|medium|object
+magnet|medium|object
+battery|medium|object
+light bulb|easy|object
+plug|medium|object
+ladder|easy|object
+hammer|easy|object
+screwdriver|medium|object
+saw|easy|object
+nail|easy|object
+axe|easy|object
+shovel|easy|object
+wheelbarrow|medium|object
+rope|easy|object
+chain|easy|object
+net|easy|object
+cage|easy|object
+basket|easy|object
+box|easy|object
+suitcase|easy|object
+wallet|easy|object
+coin|easy|object
+money|easy|object
+credit card|medium|object
+newspaper|medium|object
+letter|easy|object
+stamp|medium|object
+flag|easy|object
+paintbrush|easy|object
+crayon|easy|object
+sticky note|medium|object
+paper plane|easy|object
+origami|hard|object
+snowflake|easy|nature
+icicle|medium|nature
+fossil|hard|nature
+bone|easy|object
+feather|easy|object
+nest|easy|nature
+spider web|easy|nature
+seashell|medium|nature
+pearl|medium|object
+diamond|easy|object
+gold|medium|object
+treasure chest|medium|object
+pirate ship|medium|vehicle
+sandcastle|medium|place
+swing|easy|place
+slide|easy|place
+seesaw|medium|place
+merry-go-round|hard|place
+roller coaster|medium|place
+ferris wheel|medium|place
+circus|medium|place
+cinema|medium|place
+popcorn bucket|medium|food
+ticket|easy|object
+queue|hard|action
+selfie stick|medium|object
+charger|medium|object
+wifi|medium|object
+password|hard|object
+email|medium|object
+alarm clock|easy|object
+hourglass|medium|object
+calculator|medium|object
+globe|easy|object
+microscope|medium|object
+magnifying glass|medium|object
+test tube|medium|object
+stethoscope|medium|object
+bandage|medium|object
+pill|easy|object
+syringe|medium|object
+wheelchair|medium|object
+crutches|medium|object
+mask|easy|object
+helmet|easy|object
+backpack strap|hard|object
+zip|medium|object
+button|easy|object
+needle|easy|object
+thread|medium|object
+sewing machine|hard|object
+iron|easy|object
+washing machine|medium|object
+vacuum cleaner|medium|object
+dustbin|easy|object
+recycling|hard|object
+plastic bag|medium|object
+water bottle|easy|object
+straw|easy|object
+ice cube|easy|food
+lunch box|easy|object
+picnic basket|medium|object
+barbecue|medium|food
+campfire|easy|nature
+marshmallow|medium|food
+tent pole|hard|object
+sleeping bag|medium|object
+flashlight|easy|object
+lantern|medium|object
+fireplace|medium|object
+chimney|medium|object
+roof|easy|object
+staircase|medium|object
+elevator|medium|object
+escalator|hard|object
+doorbell|medium|object
+mailbox|medium|object
+fence|easy|object
+gate|easy|object
+garage|medium|place
+balcony|medium|place
+skyscraper|medium|place
+windmill|medium|place
+haunted house|medium|place
+treehouse|medium|place
+scarecrow|medium|object
+well|medium|place

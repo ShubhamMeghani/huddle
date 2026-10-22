@@ -140,6 +140,7 @@ export async function roomOp<T>(
           private: stored.private,
           replayed: true,
           before: room,
+          strokes: [],
         };
       }
     }
@@ -187,7 +188,8 @@ export async function roomOp<T>(
       );
       presence[identity.id] = now;
     }
-    return { room, result, changed, presence, serverNow: now, private: ctx.private, before };
+    const strokes = ctx.effects.filter((e) => e.type === 'strokes');
+    return { room, result, changed, presence, serverNow: now, private: ctx.private, before, strokes };
   });
 
   if (outcome.changed) {
@@ -198,8 +200,10 @@ export async function roomOp<T>(
       privateFor: privateChanges(outcome.before, outcome.room),
     });
   }
-  const { before: _before, ...rest } = outcome;
-  void _before;
+  for (const e of outcome.strokes) {
+    if (e.type === 'strokes') await publish(outcome.room.roomId, 'strokes', { turnId: e.turnId, seq: e.seq, ops: e.ops });
+  }
+  const { before: _before, strokes: _strokes, ...rest } = outcome;
   return rest;
 }
 

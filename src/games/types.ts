@@ -15,6 +15,8 @@ export interface GameModule {
   privateView(room: RoomState, seat: Seat | null): { mustAct: boolean; [k: string]: unknown };
   /** Next action for a bot seat, if any (demo, R44). */
   bot?(room: RoomState, seat: Seat, ctx: Ctx): { delayMs: number; action: GameAction } | null;
+  /** The game was paused for `ms`: shift any absolute times kept in game state. */
+  shiftTimes?(room: RoomState, ms: number): void;
   /** A seat was kicked mid-game: repair turn order etc. */
   seatRemoved?(room: RoomState, seatId: SeatId, ctx: Ctx): void;
   /** Per-seat stats recorded in game_results (awards, crew stats). */

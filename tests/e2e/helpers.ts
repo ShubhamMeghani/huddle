@@ -89,3 +89,36 @@ export function quizQueue(questions: number, seconds: number, extra: Record<stri
 export async function atQuestion(page: Page, n: number) {
   await expect(page.getByTestId('quiz-progress')).toContainText(`Question ${n} /`, { timeout: 30_000 });
 }
+
+export function drawQueue(rounds: number, drawSeconds: number, hints = 2) {
+  return [{ gameId: 'draw', settings: { rounds, drawSeconds, hints, words: 'mixed' } }];
+}
+
+/** Drags across the canvas with the mouse (logical 0–1000 × 0–750 coordinates). */
+export async function drawLine(page: Page, from: [number, number], to: [number, number], steps = 12) {
+  const box = (await page.getByTestId('draw-canvas').boundingBox())!;
+  const at = (p: [number, number]) => [box.x + (p[0] / 1000) * box.width, box.y + (p[1] / 750) * box.height] as const;
+  const [x1, y1] = at(from);
+  const [x2, y2] = at(to);
+  await page.mouse.move(x1, y1);
+  await page.mouse.down();
+  await page.mouse.move(x2, y2, { steps });
+  await page.mouse.up();
+}
+
+/** The player whose phone shows the word choices. */
+export async function findDrawer(players: Player[]): Promise<Player> {
+  for (let i = 0; i < 100; i++) {
+    for (const p of players) if (await p.page.getByTestId('draw-choices').isVisible().catch(() => false)) return p;
+    await players[0].page.waitForTimeout(200);
+  }
+  throw new Error('no drawer found');
+}
+
+export async function opDigest(page: Page): Promise<string | null> {
+  return page.getByTestId('draw-canvas').getAttribute('data-op-digest');
+}
+
+export function snapshotOf(page: Page): Promise<any> {
+  return page.evaluate(() => (window as unknown as { __huddleSync: { state: { snapshot: unknown } } }).__huddleSync.state.snapshot);
+}

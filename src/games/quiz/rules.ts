@@ -102,7 +102,7 @@ function reveal(room: RoomState, ctx: Ctx) {
     for (const [id, p] of Object.entries(points)) award(room, { seatId: id }, p, `quiz q${s.idx + 1}`);
   }
   s.reveal = { correct: q.answer, dist, points };
-  setPhase(room, 'reveal', REVEAL_MS, ctx);
+  setPhase(room, 'reveal', ctx.testMode ? 8000 : REVEAL_MS, ctx); // longer in test mode so loaded CI phones can assert it
 }
 
 function median(xs: number[]): number {

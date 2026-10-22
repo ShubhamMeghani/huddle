@@ -58,8 +58,8 @@ The full stack is in SPEC §3:
 | 1 | Deployment skeleton | AUTO (human steps after) | done | 3a4168a |
 | 2 | Core engine: rooms, sync, rejoin, timers, AFK, admin, queue | AUTO | done | 431c22e |
 | 3 | Teams and ratings | AUTO | done | d368335 |
-| 4 | Quiz Clash | AUTO | done | phase-4 commit |
-| 5 | Draw & Guess | AUTO | todo | – |
+| 4 | Quiz Clash | AUTO | done | 30524a7 |
+| 5 | Draw & Guess | AUTO | done | phase-5 commit |
 | 6 | Imposter | AUTO | todo | – |
 | 7 | Atlas | AUTO | todo | – |
 | 8 | Dumb Charades | AUTO | todo | – |
@@ -424,7 +424,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-14 | Unit | 7 | todo | `tests/unit/pipeline.test.ts` |
 | AC-15 | Unit | 9 | todo | `tests/unit/views.test.ts` |
 | AC-16 | E2E | 2 | pass | `tests/e2e/sync.spec.ts` · pass @ phase-2 |
-| AC-17 | E2E | 5 | todo | `tests/e2e/draw-rejoin.spec.ts` |
+| AC-17 | E2E | 5 | pass | `tests/e2e/draw-rejoin.spec.ts` · pass @ phase-5 |
 | AC-18 | Unit | 9 | todo | `tests/unit/rejoin.test.ts` |
 | AC-19 | E2E | 4 | pass | `tests/e2e/reconnect.spec.ts` · pass @ phase-4 |
 | AC-20 | E2E | 4 | pass | `tests/e2e/reconnect.spec.ts` · pass @ phase-4 |
@@ -433,14 +433,14 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-23 | E2E | 2 | pass | `tests/e2e/clock.spec.ts` · pass @ phase-2 |
 | AC-24 | Unit | 2 | pass | `tests/unit/timers.test.ts` · pass @ phase-2 |
 | AC-25 | Unit | 2 | pass | `tests/unit/timers.test.ts` · pass @ phase-2 |
-| AC-26 | E2E | 5 | todo | `tests/e2e/afk.spec.ts` |
+| AC-26 | E2E | 5 | pass | `tests/e2e/afk.spec.ts` · pass @ phase-5 |
 | AC-27 | Unit | 7 | todo | `tests/unit/afk.test.ts` |
 | AC-28 | Unit | 2 | pass | `tests/unit/timers.test.ts` · pass @ phase-2 |
 | AC-29 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
 | AC-30 | Unit | 2 | pass | `tests/unit/undo.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) |
 | AC-31 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
 | AC-32 | Unit | 9 | todo | `tests/unit/settings.test.ts` |
-| AC-33 | E2E | 5 | todo | `tests/e2e/hostless.spec.ts` |
+| AC-33 | E2E | 5 | pass | `tests/e2e/hostless.spec.ts` · pass @ phase-5 |
 | AC-34 | E2E | 8 | todo | `tests/e2e/queue.spec.ts` |
 | AC-35 | Unit | 3 | pass | `tests/unit/teams.test.ts` · pass @ phase-3 |
 | AC-36 | E2E | 3 | pass | `tests/e2e/teams.spec.ts` · pass @ phase-3 |
@@ -470,10 +470,10 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-60 | Unit | 8 | todo | `tests/unit/content/movies.test.ts` |
 | AC-61 | Unit | 8 | todo | `tests/unit/games/charades.test.ts` |
 | AC-62 | E2E | 8 | todo | `tests/e2e/charades.spec.ts` |
-| AC-63 | Unit | 5 | todo | `tests/unit/content/draw-words.test.ts` |
-| AC-64 | Unit | 5 | todo | `tests/unit/strokes.test.ts` |
-| AC-65 | Unit | 5 | todo | `tests/unit/games/draw.test.ts` |
-| AC-66 | E2E | 5 | todo | `tests/e2e/draw.spec.ts` |
+| AC-63 | Unit | 5 | pass | `tests/unit/content/draw-words.test.ts` · pass @ phase-5 (592 words, 91 India) |
+| AC-64 | Unit | 5 | pass | `tests/unit/strokes.test.ts` · pass @ phase-5 |
+| AC-65 | Unit | 5 | pass | `tests/unit/games/draw.test.ts` · pass @ phase-5 |
+| AC-66 | E2E | 5 | pass | `tests/e2e/draw.spec.ts` · pass @ phase-5 |
 | AC-67 | Unit | 7 | todo | `tests/unit/content/places.test.ts` |
 | AC-68 | Unit | 7 | todo | `tests/unit/games/atlas.test.ts` |
 | AC-69 | Unit | 7 | todo | `tests/unit/games/atlas-vote.test.ts` |
@@ -495,7 +495,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-85 | E2E | 13 | todo | `tests/e2e/celebrations.spec.ts` |
 | AC-86 | E2E | 14 | todo | `tests/e2e/privacy.spec.ts` |
 | AC-87 | Deploy | 16 | Pending (human) | `tests/deploy/demo.spec.ts` |
-| AC-88 | E2E | 5 | todo | `tests/e2e/draw-touch.spec.ts` |
+| AC-88 | E2E | 5 | pass | `tests/e2e/draw-touch.spec.ts` · pass @ phase-5 |
 
 ---
 
@@ -517,6 +517,10 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 4 · The quiz source is a compact pipe-delimited file (`content/src/quiz.txt`). `npm run build:content` turns it into `content/quiz.json`, placing the correct option deterministically, and a unit test proves the JSON matches the source. · Easy to review and edit, with no answer-position bias.
 - 2026-10-23 · 4 · AC-3 also checks that a Quiz score carries over to the other device (it was seat-only in Phase 1). · Completes AC-3 as written.
 - 2026-10-23 · 4 · The browser `offline` event shows "Reconnecting…" immediately and starts polling. On `online` the client resyncs and clears the pill if realtime survived. · Phones react to Wi-Fi drops without waiting 10 s.
+- 2026-10-23 · 5 · Hint letters are timed events inside the drawing phase. `phase.deadline` is the next wake-up and `phase.endsAt` is the visible countdown; pause/resume shifts both through a module `shiftTimes` hook. · Hints work without a background loop and the countdown never jumps.
+- 2026-10-23 · 5 · The canvas fingerprint (`data-op-digest`) uses canonical field order. · Postgres `jsonb` reorders object keys, so raw JSON differs between live and replayed ops.
+- 2026-10-23 · 5 · Test mode shortens the Draw choose timer (4 s) and turn-end reveal (2.5 s) and lengthens the Quiz reveal (8 s); production keeps 15 s / 4 s / 5 s. · Fast E2E for AFK chains, plus robust reveal assertions on loaded iPhone emulation.
+- 2026-10-23 · 5 · The demo bots' drawings are generated from simple parametric shapes (`scripts/make-bot-drawings.ts`, 24 words). · Deterministic, reviewable bot art.
 
 ## Blockers
 

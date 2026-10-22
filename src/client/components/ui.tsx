@@ -64,7 +64,9 @@ export function useSecondsLeft(sync: RoomSync, deadline: number | null, paused: 
 
 export function Countdown({ sync, state }: RoomProps) {
   const pub = state.snapshot!.public;
-  const secs = useSecondsLeft(sync, pub.phase.deadline, pub.paused);
+  const target = pub.phase.endsAt ?? pub.phase.deadline;
+  const paused = pub.paused && pub.phase.endsAt != null ? { remainingMs: pub.phase.endsAt - pub.paused.at } : pub.paused;
+  const secs = useSecondsLeft(sync, target, paused);
   if (secs == null) return null;
   const urgent = secs <= 5 && !pub.paused;
   return (

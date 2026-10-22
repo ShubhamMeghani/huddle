@@ -34,8 +34,23 @@ export function buildQuiz(src: string) {
     });
 }
 
+export function buildWords(src: string) {
+  return src
+    .split(/\r?\n/)
+    .filter((l) => l.trim() && !l.startsWith('#'))
+    .map((line) => {
+      const [word, difficulty, tags] = line.split('|').map((x) => x.trim());
+      return { word, difficulty, tags: tags ? tags.split(',').map((t) => t.trim()) : [] };
+    });
+}
+
+const lines = (rows: unknown[]) => '[\n' + rows.map((r) => JSON.stringify(r)).join(',\n') + '\n]\n';
+
 if (process.argv[1] && /build-content\.ts$/.test(process.argv[1])) {
   const quiz = buildQuiz(readFileSync('content/src/quiz.txt', 'utf8'));
-  writeFileSync('content/quiz.json', JSON.stringify(quiz, null, 0).replace(/\},\{/g, '},\n{') + '\n');
+  writeFileSync('content/quiz.json', lines(quiz));
   console.log(`quiz.json: ${quiz.length} questions`);
+  const words = buildWords(readFileSync('content/src/draw-words.txt', 'utf8'));
+  writeFileSync('content/draw-words.json', lines(words));
+  console.log(`draw-words.json: ${words.length} words`);
 }

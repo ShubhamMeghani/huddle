@@ -2,6 +2,7 @@
 import type { GameId } from '@/engine/types';
 import type { SettingsSpec } from './settings';
 import { quizMeta } from './quiz/meta';
+import { drawMeta } from './draw/meta';
 
 export interface HowTo {
   rules: string[];
@@ -49,7 +50,7 @@ const ping: GameMeta = {
   },
 };
 
-export const GAME_META: Record<string, GameMeta> = { quiz: quizMeta, ping };
+export const GAME_META: Record<string, GameMeta> = { quiz: quizMeta, draw: drawMeta, ping };
 
 export function metaOf(id: GameId): GameMeta {
   const m = GAME_META[id];
