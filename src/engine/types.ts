@@ -158,6 +158,8 @@ export interface RoomState {
   notices: Notice[];
   noticeCounter: number;
   pendingClaims: PendingClaim[];
+  /** Per-room memory that outlives single games (e.g. quiz questions already used, R61). */
+  memory: Record<string, unknown>;
   /** Lobby "wave" counter: the Phase 1 skeleton action. */
   waves: number;
   /** Rate limiting: per-seat recent action timestamps (pruned). */
@@ -193,6 +195,8 @@ export interface Ctx {
   presenceMs: number;
   /** identityId → gameType → rating, loaded by the server when teams may be formed (R32, R33). */
   ratings?: Record<string, Record<string, number>>;
+  /** Quiz question ids reported by ≥ 3 players (R60), loaded by the server before a game starts. */
+  excludedQuestions?: string[];
   /** Set while an admin skip forces a deadline: missed-turn (AFK) accounting is suppressed. */
   skipping?: boolean;
 }

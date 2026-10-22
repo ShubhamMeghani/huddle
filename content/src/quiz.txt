@@ -1,0 +1,442 @@
+# Quiz Clash source. One question per line: category|difficulty|question|correct|wrong1|wrong2|wrong3
+# Categories: bollywood, hollywood, cricket, india_gk, world_gk, science, sports. Difficulty: easy, medium, hard.
+# Generated into content/quiz.json by `npm run build:content` (options shuffled deterministically).
+bollywood|easy|Which film features the song "Chaiyya Chaiyya" filmed on top of a moving train?|Dil Se..|Kuch Kuch Hota Hai|Taal|Dil To Pagal Hai
+bollywood|easy|Who directed the 1975 classic "Sholay"?|Ramesh Sippy|Yash Chopra|Manmohan Desai|Prakash Mehra
+bollywood|easy|What is the name of the villain played by Amjad Khan in "Sholay"?|Gabbar Singh|Mogambo|Shakaal|Kancha Cheena
+bollywood|easy|"Mogambo khush hua" is a famous line from which film?|Mr. India|Karma|Tridev|Shahenshah
+bollywood|easy|Which actor is popularly called "King Khan" of Bollywood?|Shah Rukh Khan|Salman Khan|Aamir Khan|Saif Ali Khan
+bollywood|medium|In which year was "Dilwale Dulhania Le Jayenge" released?|1995|1993|1997|1999
+bollywood|easy|Which Aamir Khan film was nominated for the Academy Award for Best Foreign Language Film?|Lagaan|Dangal|Rang De Basanti|Taare Zameen Par
+bollywood|easy|Who played Circuit in "Munna Bhai M.B.B.S."?|Arshad Warsi|Boman Irani|Jimmy Shergill|Paresh Rawal
+bollywood|easy|Who directed "3 Idiots"?|Rajkumar Hirani|Aamir Khan|Karan Johar|Anurag Kashyap
+bollywood|easy|In which film does Aamir Khan play the character Rancho?|3 Idiots|PK|Dil Chahta Hai|Rang De Basanti
+bollywood|easy|"Kitne aadmi the?" is a dialogue from which film?|Sholay|Deewaar|Don|Zanjeer
+bollywood|easy|"Mere paas maa hai" is a famous line from which film?|Deewaar|Trishul|Shakti|Kaala Patthar
+bollywood|medium|Which actress danced to "Ek Do Teen" in the film "Tezaab"?|Madhuri Dixit|Sridevi|Juhi Chawla|Karisma Kapoor
+bollywood|medium|Who composed the music for the 1995 film "Rangeela"?|A. R. Rahman|Anu Malik|Nadeem-Shravan|Jatin-Lalit
+bollywood|easy|Jai and Veeru are characters in which film?|Sholay|Seeta Aur Geeta|Chupke Chupke|Namak Halaal
+bollywood|easy|Who directed "Kabhi Khushi Kabhie Gham..."?|Karan Johar|Aditya Chopra|Farah Khan|Sooraj Barjatya
+bollywood|medium|Which film marked Ranbir Kapoor's acting debut?|Saawariya|Wake Up Sid|Bachna Ae Haseeno|Rockstar
+bollywood|easy|Who played Bajirao in "Bajirao Mastani"?|Ranveer Singh|Ranbir Kapoor|Hrithik Roshan|Shahid Kapoor
+bollywood|medium|Who directed "Gangs of Wasseypur"?|Anurag Kashyap|Tigmanshu Dhulia|Vishal Bhardwaj|Dibakar Banerjee
+bollywood|easy|Which film is about a dyslexic boy named Ishaan?|Taare Zameen Par|Stanley Ka Dabba|I Am Kalam|Chillar Party
+bollywood|easy|Who plays wrestler Mahavir Singh Phogat in "Dangal"?|Aamir Khan|Salman Khan|Akshay Kumar|Ajay Devgn
+bollywood|easy|In which film does Salman Khan play the cop Chulbul Pandey?|Dabangg|Wanted|Ready|Bodyguard
+bollywood|medium|"Lagaan" is set during which period?|British rule in the 1890s|The Mughal era|The 1971 war|1950s Bombay
+bollywood|medium|Who sang the original "Lag Jaa Gale"?|Lata Mangeshkar|Asha Bhosle|Geeta Dutt|Shamshad Begum
+bollywood|easy|"Mughal-e-Azam" tells the love story of Prince Salim and whom?|Anarkali|Mumtaz|Jodha|Noor Jahan
+bollywood|medium|The song "Jai Ho" won an Oscar for A. R. Rahman. Which film was it from?|Slumdog Millionaire|Yuvvraaj|Delhi-6|Ghajini
+bollywood|medium|In "Kahaani", Vidya Balan searches Kolkata for her missing...?|Husband|Brother|Sister|Father
+bollywood|medium|Who played Kancha Cheena in the 2012 remake of "Agneepath"?|Sanjay Dutt|Rishi Kapoor|Danny Denzongpa|Rajkummar Rao
+bollywood|easy|Which actress goes on a solo honeymoon in "Queen" (2014)?|Kangana Ranaut|Taapsee Pannu|Anushka Sharma|Kalki Koechlin
+bollywood|medium|"Mera Joota Hai Japani" is from which Raj Kapoor film?|Shree 420|Awaara|Barsaat|Mera Naam Joker
+bollywood|medium|Which actress starred in the 1972 classic "Pakeezah"?|Meena Kumari|Madhubala|Nargis|Waheeda Rehman
+bollywood|medium|Who played the lead role in "Mother India" (1957)?|Nargis|Meena Kumari|Vyjayanthimala|Nutan
+bollywood|easy|Which actor played the "angry young man" Vijay in "Deewaar" and "Zanjeer"?|Amitabh Bachchan|Dharmendra|Rajesh Khanna|Vinod Khanna
+bollywood|easy|What was Hrithik Roshan's debut film as a lead actor?|Kaho Naa... Pyaar Hai|Koi... Mil Gaya|Fiza|Mission Kashmir
+bollywood|easy|What is the friendly alien called in "Koi... Mil Gaya"?|Jadoo|Krrish|Bittu|Tota
+bollywood|easy|"Chak De! India" is about which sport?|Hockey|Cricket|Football|Kabaddi
+bollywood|easy|Who played coach Kabir Khan in "Chak De! India"?|Shah Rukh Khan|Salman Khan|Aamir Khan|Akshay Kumar
+bollywood|easy|In "Andhadhun", the pianist pretends to be...?|Blind|Deaf|Mute|Paralysed
+bollywood|easy|Who directed the "Baahubali" films?|S. S. Rajamouli|Shankar|Mani Ratnam|Prashanth Neel
+bollywood|easy|Who directed "Devdas" (2002)?|Sanjay Leela Bhansali|Karan Johar|Yash Chopra|Mansoor Khan
+bollywood|easy|The song "Tujhe Dekha To" is from which film?|Dilwale Dulhania Le Jayenge|Kuch Kuch Hota Hai|Yes Boss|Pardes
+bollywood|easy|Who directed "Dil Chahta Hai"?|Farhan Akhtar|Zoya Akhtar|Rakeysh Omprakash Mehra|Kabir Khan
+bollywood|easy|"Zindagi Na Milegi Dobara" is mostly set in which country?|Spain|Italy|Portugal|France
+bollywood|medium|Ranbir Kapoor's character in "Barfi!" is...?|Deaf and mute|Blind|An amnesiac|A magician
+bollywood|easy|In "Swades", Shah Rukh Khan plays a scientist working at...?|NASA|ISRO|CERN|DRDO
+bollywood|medium|In "Anand", who is the "Babumoshai" that Rajesh Khanna's character talks to?|Amitabh Bachchan|Dharmendra|Johnny Walker|Om Prakash
+bollywood|hard|Who played the music teacher Master Pillai in "Padosan" (1968)?|Mehmood|Johnny Walker|Keshto Mukherjee|Asrani
+bollywood|hard|Who directed the 1979 comedy "Golmaal" starring Amol Palekar?|Hrishikesh Mukherjee|Basu Chatterjee|Gulzar|Shakti Samanta
+bollywood|medium|"Dhadak" is a remake of which Marathi film?|Sairat|Natsamrat|Court|Fandry
+bollywood|medium|In "Kuch Kuch Hota Hai", what is Rahul's daughter named?|Anjali|Tina|Pooja|Simran
+bollywood|easy|Raj and Simran are the lead characters of which film?|Dilwale Dulhania Le Jayenge|Kuch Kuch Hota Hai|Kal Ho Naa Ho|Mohabbatein
+bollywood|easy|"Kal Ho Naa Ho" is set in which city?|New York|London|Toronto|Sydney
+bollywood|easy|The song "Kajra Re" is from which film?|Bunty Aur Babli|Dhoom|Salaam Namaste|Bluffmaster
+bollywood|easy|Who played the thief Mr. A in "Dhoom 2"?|Hrithik Roshan|John Abraham|Aamir Khan|Abhishek Bachchan
+bollywood|easy|Who directed "Lagaan"?|Ashutosh Gowariker|Rajkumar Hirani|Aamir Khan|Vidhu Vinod Chopra
+bollywood|easy|In "PK", Aamir Khan plays...?|An alien|A ghost|A robot|A time traveller
+bollywood|easy|Who played Piku's father Bhaskor in "Piku"?|Amitabh Bachchan|Rishi Kapoor|Paresh Rawal|Naseeruddin Shah
+bollywood|easy|"Gully Boy" is about which kind of music?|Rap|Qawwali|Classical|Jazz
+bollywood|easy|Who played Avni and Manjulika in "Bhool Bhulaiyaa" (2007)?|Vidya Balan|Shilpa Shetty|Ameesha Patel|Rani Mukerji
+bollywood|easy|Who directed "Om Shanti Om"?|Farah Khan|Zoya Akhtar|Karan Johar|Rohit Shetty
+bollywood|easy|Who played the chatty Geet in "Jab We Met"?|Kareena Kapoor|Priyanka Chopra|Katrina Kaif|Deepika Padukone
+bollywood|medium|"Rang De Basanti" was directed by...?|Rakeysh Omprakash Mehra|Rajkumar Hirani|Farhan Akhtar|Imtiaz Ali
+hollywood|easy|Who directed "Jaws"?|Steven Spielberg|George Lucas|Martin Scorsese|Ridley Scott
+hollywood|easy|"May the Force be with you" comes from which franchise?|Star Wars|Star Trek|Dune|Avatar
+hollywood|easy|In "The Matrix", which pill does Neo take?|Red|Blue|Green|White
+hollywood|easy|Who directed "Titanic" (1997)?|James Cameron|Ron Howard|Robert Zemeckis|Peter Jackson
+hollywood|easy|Jack and Rose are characters in which film?|Titanic|The Notebook|Pearl Harbor|Romeo + Juliet
+hollywood|easy|Who played the Joker in "The Dark Knight"?|Heath Ledger|Jared Leto|Joaquin Phoenix|Jack Nicholson
+hollywood|easy|Who played Forrest Gump?|Tom Hanks|Tom Cruise|Kevin Costner|Robin Williams
+hollywood|medium|What is the prison called in "The Shawshank Redemption"?|Shawshank State Prison|Alcatraz|Sing Sing|Folsom Prison
+hollywood|medium|Which was the first non-English-language film to win the Oscar for Best Picture?|Parasite|Roma|Life Is Beautiful|Crouching Tiger, Hidden Dragon
+hollywood|easy|Who directed "Inception"?|Christopher Nolan|David Fincher|Denis Villeneuve|Darren Aronofsky
+hollywood|easy|In "Finding Nemo", what kind of fish is Nemo?|Clownfish|Blue tang|Pufferfish|Goldfish
+hollywood|medium|In "Finding Nemo", what kind of fish is Dory?|Blue tang|Clownfish|Angelfish|Seahorse
+hollywood|easy|What is the name of the cowboy toy in "Toy Story"?|Woody|Buzz|Jessie|Andy
+hollywood|easy|What is the name of Harry Potter's owl?|Hedwig|Errol|Pigwidgeon|Fawkes
+hollywood|easy|Who directed "The Godfather"?|Francis Ford Coppola|Martin Scorsese|Brian De Palma|Sergio Leone
+hollywood|medium|Who played Vito Corleone in "The Godfather" (1972)?|Marlon Brando|Al Pacino|Robert De Niro|James Caan
+hollywood|medium|"Jurassic Park" is based on a novel by...?|Michael Crichton|Stephen King|Dan Brown|Tom Clancy
+hollywood|easy|Who says "I'll be back" in "The Terminator"?|Arnold Schwarzenegger|Sylvester Stallone|Bruce Willis|Mel Gibson
+hollywood|easy|Who is the villain in "The Lion King"?|Scar|Jafar|Ursula|Hades
+hollywood|easy|Which character sings "Let It Go" in "Frozen"?|Elsa|Anna|Olaf|Kristoff
+hollywood|easy|The ship "Black Pearl" appears in which film series?|Pirates of the Caribbean|Hook|Master and Commander|Treasure Planet
+hollywood|easy|What is Iron Man's real name?|Tony Stark|Bruce Wayne|Steve Rogers|Peter Parker
+hollywood|easy|Who played Captain America in the Marvel films?|Chris Evans|Chris Hemsworth|Chris Pratt|Chris Pine
+hollywood|medium|What is the name of Thor's original hammer?|Mjolnir|Stormbreaker|Gungnir|Excalibur
+hollywood|easy|"Avatar" (2009) is set on which moon?|Pandora|Arrakis|Naboo|Krypton
+hollywood|medium|"Dune" is set on which desert planet?|Arrakis|Tatooine|Pandora|Vulcan
+hollywood|medium|What is Luke Skywalker's home planet?|Tatooine|Hoth|Endor|Naboo
+hollywood|easy|In "E.T.", what does E.T. famously want to do?|Phone home|Go to school|Eat pizza|Find his dog
+hollywood|easy|Which car is the time machine in "Back to the Future"?|DeLorean|Mustang|Beetle|Corvette
+hollywood|medium|To which year does Marty McFly travel in the first "Back to the Future"?|1955|1965|1945|1975
+hollywood|medium|Who played Hannibal Lecter in "The Silence of the Lambs"?|Anthony Hopkins|Gary Oldman|Kevin Spacey|Ralph Fiennes
+hollywood|easy|Who played Maximus in "Gladiator" (2000)?|Russell Crowe|Gerard Butler|Brad Pitt|Joaquin Phoenix
+hollywood|easy|Who directed "Oppenheimer" (2023)?|Christopher Nolan|Greta Gerwig|Steven Spielberg|David Fincher
+hollywood|easy|Who directed "Barbie" (2023)?|Greta Gerwig|Sofia Coppola|Olivia Wilde|Chloé Zhao
+hollywood|easy|"The Shining" is based on a novel by...?|Stephen King|Edgar Allan Poe|Anne Rice|H. P. Lovecraft
+hollywood|medium|Who voiced Woody in "Toy Story"?|Tom Hanks|Tim Allen|Billy Crystal|Robin Williams
+hollywood|medium|Who voiced the Genie in Disney's "Aladdin" (1992)?|Robin Williams|Eddie Murphy|Jim Carrey|Will Smith
+hollywood|easy|Who directed "Pulp Fiction"?|Quentin Tarantino|Guy Ritchie|The Coen brothers|Tim Burton
+hollywood|medium|"Schindler's List" was filmed mostly in...?|Black and white|Full colour|Sepia|Animation
+hollywood|medium|"Here's looking at you, kid" is a line from which film?|Casablanca|Gone with the Wind|Citizen Kane|Roman Holiday
+hollywood|medium|Who is the heroine of "Gone with the Wind"?|Scarlett O'Hara|Holly Golightly|Dorothy Gale|Rose DeWitt Bukater
+hollywood|easy|What is Dorothy's dog called in "The Wizard of Oz"?|Toto|Lassie|Benji|Snoopy
+hollywood|easy|Who directed "The Lord of the Rings" film trilogy?|Peter Jackson|Guillermo del Toro|Sam Raimi|Chris Columbus
+hollywood|easy|Who is Frodo's loyal gardener friend?|Samwise Gamgee|Merry|Pippin|Bilbo
+hollywood|medium|Who played Spider-Man in the 2002 film?|Tobey Maguire|Andrew Garfield|Tom Holland|Jake Gyllenhaal
+hollywood|easy|Which fictional country is the home of Black Panther?|Wakanda|Genovia|Latveria|Zubrowka
+hollywood|easy|"The Social Network" is about the founding of...?|Facebook|Twitter|Google|Apple
+hollywood|easy|In "Up", what lifts Carl's house into the sky?|Balloons|Rockets|Birds|Kites
+hollywood|medium|Who voiced Donkey in "Shrek"?|Eddie Murphy|Chris Rock|Mike Myers|Ben Stiller
+hollywood|easy|"Mamma Mia!" is built around songs by which band?|ABBA|Queen|The Beatles|Bee Gees
+hollywood|easy|"Bohemian Rhapsody" (2018) is a biopic about which band?|Queen|The Rolling Stones|Pink Floyd|The Beatles
+hollywood|easy|Rocky Balboa competes in which sport?|Boxing|Wrestling|American football|Basketball
+hollywood|easy|What is Tom Cruise's call sign in "Top Gun"?|Maverick|Iceman|Goose|Viper
+hollywood|easy|Who directed "Psycho" (1960)?|Alfred Hitchcock|Orson Welles|Stanley Kubrick|Billy Wilder
+hollywood|medium|What is the name of the computer in "2001: A Space Odyssey"?|HAL 9000|Skynet|JARVIS|WOPR
+hollywood|easy|Who is the headmaster of Hogwarts in the first Harry Potter film?|Albus Dumbledore|Severus Snape|Minerva McGonagall|Gellert Grindelwald
+hollywood|easy|Which Pixar film takes place inside a girl's mind?|Inside Out|Soul|Up|Coco
+hollywood|medium|Pixar's "Coco" centres on which celebration?|Day of the Dead|Christmas|Carnival|New Year
+hollywood|medium|Who directed "Slumdog Millionaire"?|Danny Boyle|Ang Lee|Richard Attenborough|Mira Nair
+hollywood|medium|Who directed "Life of Pi"?|Ang Lee|Danny Boyle|Ridley Scott|Alfonso Cuarón
+hollywood|medium|Who played Mahatma Gandhi in "Gandhi" (1982)?|Ben Kingsley|Daniel Day-Lewis|Anthony Hopkins|Roshan Seth
+hollywood|easy|Which wizarding school does Harry Potter attend?|Hogwarts|Durmstrang|Beauxbatons|Ilvermorny
+cricket|easy|How many players does each cricket team have on the field?|11|9|10|12
+cricket|easy|Which team won the first men's ODI World Cup in 1975?|West Indies|Australia|England|India
+cricket|easy|In which year did India win its first men's ODI World Cup?|1983|1987|1979|2011
+cricket|easy|Who captained India in the 1983 World Cup?|Kapil Dev|Sunil Gavaskar|Mohinder Amarnath|Ravi Shastri
+cricket|easy|Who captained India to the 2011 World Cup title?|MS Dhoni|Virat Kohli|Sachin Tendulkar|Sourav Ganguly
+cricket|easy|At which stadium was the 2011 World Cup final played?|Wankhede Stadium|Eden Gardens|M. Chinnaswamy Stadium|Feroz Shah Kotla
+cricket|easy|Who was the first man to score a double century in an ODI?|Sachin Tendulkar|Virender Sehwag|Rohit Sharma|Chris Gayle
+cricket|medium|Who holds the record for the highest individual score in men's ODIs (264)?|Rohit Sharma|Martin Guptill|Virender Sehwag|Chris Gayle
+cricket|medium|Brian Lara's record Test score of 400 not out came against which team?|England|Australia|India|South Africa
+cricket|easy|How many international centuries did Sachin Tendulkar score?|100|99|101|98
+cricket|easy|Who took all 10 wickets in a Test innings against Pakistan in 1999?|Anil Kumble|Harbhajan Singh|Javagal Srinath|Venkatesh Prasad
+cricket|medium|How many Test wickets did Muttiah Muralitharan take?|800|708|619|760
+cricket|easy|Which team won the first ICC T20 World Cup in 2007?|India|Pakistan|Sri Lanka|Australia
+cricket|medium|Yuvraj Singh hit six sixes in an over off which bowler in 2007?|Stuart Broad|James Anderson|Andrew Flintoff|Ryan Sidebottom
+cricket|easy|The Ashes is played between which two teams?|England and Australia|India and Pakistan|Australia and New Zealand|England and South Africa
+cricket|easy|What does LBW stand for?|Leg Before Wicket|Long Ball Wide|Leg Bye Wicket|Late Bat Win
+cricket|easy|How many legal balls make an over?|6|5|8|4
+cricket|easy|What is a "duck" in cricket?|Getting out for zero|A six off the last ball|A no-ball|A maiden over
+cricket|medium|What is a "golden duck"?|Out first ball for zero|Out for 99|A century off 50 balls|A hat-trick
+cricket|easy|What is a maiden over?|An over with no runs conceded|An over with six wickets|An over of wides|A bowler's first over
+cricket|easy|Which batter is nicknamed "The Wall"?|Rahul Dravid|VVS Laxman|Cheteshwar Pujara|Sunil Gavaskar
+cricket|easy|Which Indian captain is nicknamed "Dada"?|Sourav Ganguly|Rahul Dravid|Anil Kumble|Zaheer Khan
+cricket|easy|Which Indian captain is known as "Captain Cool"?|MS Dhoni|Virat Kohli|Kapil Dev|Rohit Sharma
+cricket|medium|Who was the first Indian bowler to take a Test hat-trick?|Harbhajan Singh|Irfan Pathan|Kapil Dev|Jasprit Bumrah
+cricket|hard|Irfan Pathan took a hat-trick in the first over of a 2006 Test against which team?|Pakistan|Sri Lanka|Bangladesh|England
+cricket|easy|Which ground is known as the "Home of Cricket"?|Lord's|The Oval|Melbourne Cricket Ground|Eden Gardens
+cricket|easy|In which city is the Melbourne Cricket Ground?|Melbourne|Sydney|Brisbane|Perth
+cricket|easy|In which city is Eden Gardens?|Kolkata|Mumbai|Chennai|Delhi
+cricket|easy|The M. A. Chidambaram Stadium (Chepauk) is in which city?|Chennai|Hyderabad|Bengaluru|Kochi
+cricket|easy|In which year did the IPL begin?|2008|2007|2009|2010
+cricket|easy|Which team won the first IPL title?|Rajasthan Royals|Chennai Super Kings|Mumbai Indians|Deccan Chargers
+cricket|easy|Which team is nicknamed the "Proteas"?|South Africa|Sri Lanka|West Indies|Zimbabwe
+cricket|medium|What is the New Zealand men's cricket team nicknamed?|Black Caps|All Blacks|Silver Ferns|Kiwi Kings
+cricket|easy|How many stumps are there at each end of the pitch?|3|2|4|5
+cricket|easy|How long is a cricket pitch?|22 yards|20 yards|24 yards|18 yards
+cricket|easy|What is Hawk-Eye used for in cricket?|Ball tracking|Crowd control|Pitch watering|Weather forecasts
+cricket|easy|What does DRS stand for?|Decision Review System|Direct Run Scoring|Delivery Rate Speed|Dual Referee System
+cricket|medium|Who bowled the "Ball of the Century" to Mike Gatting in 1993?|Shane Warne|Abdul Qadir|Muttiah Muralitharan|Anil Kumble
+cricket|medium|Who bowled the fastest recorded delivery, 161.3 km/h?|Shoaib Akhtar|Brett Lee|Shaun Tait|Mitchell Starc
+cricket|easy|Mithali Raj captained which national women's team?|India|England|Australia|Sri Lanka
+cricket|medium|Which Indian batter scored two Test triple centuries?|Virender Sehwag|Karun Nair|Rahul Dravid|Sachin Tendulkar
+cricket|medium|Sunil Gavaskar was the first batter to reach how many Test runs?|10,000|8,000|12,000|15,000
+cricket|medium|Who scored 175 not out against Zimbabwe in the 1983 World Cup?|Kapil Dev|Sunil Gavaskar|Yashpal Sharma|Kris Srikkanth
+cricket|medium|How was the 2019 men's World Cup final decided after the Super Over was tied?|Boundary count|Coin toss|Bowl-out|Shared trophy
+cricket|easy|Which team won the 2019 men's ODI World Cup?|England|New Zealand|India|Australia
+cricket|easy|In limited-overs cricket, what is a Super Over used for?|Breaking a tie|Punishing a slow over rate|Starting a rain-shortened match|Rewarding a hat-trick
+cricket|easy|In limited-overs cricket, a free hit is awarded after a...?|No-ball|Wide|Bye|Leg bye
+cricket|easy|The Ranji Trophy is India's...?|First-class domestic championship|T20 league|Women's league|Under-19 tournament
+cricket|hard|In cricket superstition, which team score is known as "Nelson"?|111|100|99|222
+cricket|medium|A "googly" is bowled by which kind of bowler?|Leg-spinner|Fast bowler|Off-spinner|Medium pacer
+cricket|hard|Which bowler is credited with inventing the "doosra"?|Saqlain Mushtaq|Shane Warne|Anil Kumble|Daniel Vettori
+cricket|easy|What was Don Bradman's Test batting average?|99.94|89.94|100.00|95.14
+cricket|easy|Which country did Don Bradman play for?|Australia|England|South Africa|New Zealand
+cricket|medium|At which ground did Laxman and Dravid build their famous 2001 partnership against Australia?|Eden Gardens|Chepauk|Wankhede Stadium|Feroz Shah Kotla
+cricket|hard|How many runs did VVS Laxman score in that 2001 Kolkata Test innings?|281|251|301|270
+cricket|medium|Who was India's first Test captain?|C. K. Nayudu|Lala Amarnath|Vijay Hazare|Mansoor Ali Khan Pataudi
+cricket|medium|In which year did India play its first Test match?|1932|1947|1926|1952
+cricket|easy|Which body governs international cricket?|ICC|FIFA|BCCI|IOC
+cricket|easy|What does BCCI stand for?|Board of Control for Cricket in India|Bharat Cricket Club of India|Board of Cricket Clubs of India|British Cricket Council of India
+cricket|easy|How many runs is a hit that clears the boundary without bouncing?|6|4|5|8
+india_gk|easy|What is the capital of India?|New Delhi|Mumbai|Kolkata|Agra
+india_gk|easy|What is India's national animal?|Bengal tiger|Asiatic lion|Indian elephant|Peacock
+india_gk|easy|What is India's national bird?|Indian peafowl|Parrot|Eagle|Sparrow
+india_gk|easy|What is India's national flower?|Lotus|Rose|Marigold|Jasmine
+india_gk|easy|What is India's national fruit?|Mango|Banana|Jackfruit|Guava
+india_gk|easy|Who wrote "Jana Gana Mana"?|Rabindranath Tagore|Bankim Chandra Chatterjee|Sarojini Naidu|Muhammad Iqbal
+india_gk|easy|Who wrote "Vande Mataram"?|Bankim Chandra Chatterjee|Rabindranath Tagore|Subramania Bharati|Sarojini Naidu
+india_gk|easy|How many spokes does the Ashoka Chakra on the flag have?|24|12|16|32
+india_gk|easy|Who was India's first Prime Minister?|Jawaharlal Nehru|Sardar Vallabhbhai Patel|Rajendra Prasad|Lal Bahadur Shastri
+india_gk|easy|Who was India's first President?|Rajendra Prasad|S. Radhakrishnan|Zakir Husain|V. V. Giri
+india_gk|easy|On which date did India's Constitution come into effect?|26 January 1950|15 August 1947|26 November 1949|2 October 1950
+india_gk|easy|Who chaired the drafting committee of the Indian Constitution?|B. R. Ambedkar|Jawaharlal Nehru|Rajendra Prasad|Sardar Vallabhbhai Patel
+india_gk|easy|Who is known as the "Iron Man of India"?|Sardar Vallabhbhai Patel|Bal Gangadhar Tilak|Subhas Chandra Bose|Lal Bahadur Shastri
+india_gk|easy|In which state is the Statue of Unity?|Gujarat|Maharashtra|Rajasthan|Madhya Pradesh
+india_gk|easy|In which city is the Taj Mahal?|Agra|Delhi|Jaipur|Lucknow
+india_gk|easy|Which Mughal emperor built the Taj Mahal?|Shah Jahan|Akbar|Jahangir|Aurangzeb
+india_gk|easy|In which city is the Qutub Minar?|Delhi|Agra|Hyderabad|Jaipur
+india_gk|easy|In which city is the Charminar?|Hyderabad|Lucknow|Bhopal|Mysuru
+india_gk|easy|In which city is the Gateway of India?|Mumbai|Chennai|Kolkata|Kochi
+india_gk|easy|Which river is the longest flowing within India?|Ganga|Godavari|Yamuna|Narmada
+india_gk|medium|Which river is called the "Dakshin Ganga"?|Godavari|Krishna|Kaveri|Narmada
+india_gk|easy|Which state is called "God's Own Country"?|Kerala|Goa|Karnataka|Tamil Nadu
+india_gk|easy|Which is India's largest state by area?|Rajasthan|Madhya Pradesh|Maharashtra|Uttar Pradesh
+india_gk|easy|Which is India's most populous state?|Uttar Pradesh|Maharashtra|Bihar|West Bengal
+india_gk|easy|Which is India's smallest state by area?|Goa|Sikkim|Tripura|Mizoram
+india_gk|easy|What is the capital of Odisha?|Bhubaneswar|Cuttack|Puri|Rourkela
+india_gk|medium|What is the capital of Assam?|Dispur|Guwahati|Shillong|Jorhat
+india_gk|medium|What is the capital of Arunachal Pradesh?|Itanagar|Tawang|Shillong|Aizawl
+india_gk|medium|What is the capital of Mizoram?|Aizawl|Imphal|Kohima|Agartala
+india_gk|easy|What is the capital of Kerala?|Thiruvananthapuram|Kochi|Kozhikode|Thrissur
+india_gk|easy|What is the capital of Chhattisgarh?|Raipur|Bilaspur|Durg|Ranchi
+india_gk|easy|What is the capital of Himachal Pradesh?|Shimla|Manali|Solan|Kullu
+india_gk|easy|The Sundarbans are famous for which animal?|Royal Bengal tiger|Snow leopard|One-horned rhinoceros|Asiatic lion
+india_gk|easy|Where in India do Asiatic lions live in the wild?|Gir National Park|Kaziranga|Jim Corbett|Ranthambore
+india_gk|easy|Which national park is famous for the one-horned rhinoceros?|Kaziranga|Sariska|Periyar|Bandipur
+india_gk|medium|Which was India's first national park?|Jim Corbett National Park|Kaziranga National Park|Gir National Park|Kanha National Park
+india_gk|hard|Who designed the Indian rupee symbol (₹)?|D. Udaya Kumar|Satish Gujral|M. F. Husain|Charles Correa
+india_gk|easy|In which city is the Reserve Bank of India headquartered?|Mumbai|New Delhi|Kolkata|Chennai
+india_gk|medium|In which city is ISRO headquartered?|Bengaluru|Sriharikota|Thiruvananthapuram|Ahmedabad
+india_gk|easy|Chandrayaan-3 landed near which region of the Moon?|South pole|North pole|Equator|Far side
+india_gk|easy|What was India's first satellite?|Aryabhata|Bhaskara|Rohini|INSAT-1A
+india_gk|easy|To which planet did India's Mangalyaan mission go?|Mars|Moon|Venus|Jupiter
+india_gk|easy|Who was the first Indian citizen to travel to space?|Rakesh Sharma|Kalpana Chawla|Sunita Williams|Ravish Malhotra
+india_gk|easy|Gandhi's Dandi March protested a tax on...?|Salt|Cotton|Land|Tea
+india_gk|medium|In which year was the Dandi March?|1930|1920|1942|1919
+india_gk|easy|In which year did the Quit India Movement begin?|1942|1930|1947|1920
+india_gk|easy|In which city did the Jallianwala Bagh massacre take place?|Amritsar|Lahore|Jalandhar|Ludhiana
+india_gk|easy|Who gave the slogan "Dilli Chalo" to the Indian National Army?|Subhas Chandra Bose|Bhagat Singh|Lala Lajpat Rai|Chandrashekhar Azad
+india_gk|medium|Who said "Swaraj is my birthright and I shall have it"?|Bal Gangadhar Tilak|Gopal Krishna Gokhale|Dadabhai Naoroji|Bipin Chandra Pal
+india_gk|easy|Where was Mahatma Gandhi born?|Porbandar|Ahmedabad|Rajkot|Surat
+india_gk|easy|On which date is Gandhi Jayanti celebrated?|2 October|30 January|14 November|15 August
+india_gk|easy|Children's Day in India marks the birthday of...?|Jawaharlal Nehru|Mahatma Gandhi|Indira Gandhi|A. P. J. Abdul Kalam
+india_gk|easy|Teachers' Day on 5 September honours...?|S. Radhakrishnan|A. P. J. Abdul Kalam|Savitribai Phule|Zakir Husain
+india_gk|easy|Who is known as the "Missile Man of India"?|A. P. J. Abdul Kalam|Vikram Sarabhai|Homi J. Bhabha|Satish Dhawan
+india_gk|easy|What is the Bharat Ratna?|India's highest civilian award|India's highest military award|A sports award|A film award
+india_gk|easy|What is India's highest wartime gallantry award?|Param Vir Chakra|Ashoka Chakra|Maha Vir Chakra|Kirti Chakra
+india_gk|easy|In which state is the Konark Sun Temple?|Odisha|Tamil Nadu|Gujarat|Karnataka
+india_gk|easy|In which state are the Ajanta and Ellora caves?|Maharashtra|Madhya Pradesh|Karnataka|Andhra Pradesh
+india_gk|easy|In which state are the ruins of Hampi?|Karnataka|Telangana|Tamil Nadu|Kerala
+india_gk|easy|Bihu is the main festival of which state?|Assam|Bihar|Punjab|Manipur
+india_gk|easy|Onam is the harvest festival of which state?|Kerala|Tamil Nadu|Karnataka|Odisha
+india_gk|easy|Pongal is mainly celebrated in which state?|Tamil Nadu|Kerala|West Bengal|Gujarat
+india_gk|medium|The Hornbill Festival is held in which state?|Nagaland|Mizoram|Meghalaya|Manipur
+india_gk|easy|Kathakali dance comes from which state?|Kerala|Tamil Nadu|Andhra Pradesh|Odisha
+india_gk|easy|Bharatanatyam comes from which state?|Tamil Nadu|Kerala|Manipur|Odisha
+india_gk|medium|Kuchipudi dance comes from which state?|Andhra Pradesh|Odisha|Karnataka|Assam
+india_gk|easy|Which city is called the "Pink City"?|Jaipur|Jodhpur|Udaipur|Bikaner
+india_gk|easy|Which city is called the "Blue City"?|Jodhpur|Jaipur|Udaipur|Jaisalmer
+india_gk|easy|Which city is called the "City of Lakes"?|Udaipur|Bhopal|Srinagar|Nainital
+india_gk|medium|Indian Standard Time is based on which longitude?|82.5° E|75° E|90° E|68.7° E
+india_gk|medium|Kanyakumari is where the Arabian Sea and the Indian Ocean meet which other sea?|Bay of Bengal|Red Sea|Andaman Sea|Laccadive Sea
+world_gk|easy|What is the capital of Australia?|Canberra|Sydney|Melbourne|Perth
+world_gk|easy|What is the capital of Canada?|Ottawa|Toronto|Vancouver|Montreal
+world_gk|easy|What is the capital of Japan?|Tokyo|Kyoto|Osaka|Hiroshima
+world_gk|easy|What is the capital of Brazil?|Brasília|Rio de Janeiro|São Paulo|Salvador
+world_gk|easy|What is the capital of Turkey?|Ankara|Istanbul|Izmir|Antalya
+world_gk|easy|What is the capital of South Korea?|Seoul|Busan|Incheon|Daegu
+world_gk|easy|What is the capital of Egypt?|Cairo|Alexandria|Giza|Luxor
+world_gk|easy|What is the capital of Nepal?|Kathmandu|Pokhara|Lalitpur|Bhaktapur
+world_gk|easy|What is the capital of Bhutan?|Thimphu|Paro|Punakha|Gangtok
+world_gk|medium|What is the capital of New Zealand?|Wellington|Auckland|Christchurch|Queenstown
+world_gk|medium|Which city is Switzerland's federal city (capital)?|Bern|Zurich|Geneva|Basel
+world_gk|easy|Which is the largest ocean?|Pacific Ocean|Atlantic Ocean|Indian Ocean|Arctic Ocean
+world_gk|easy|Which is the largest continent?|Asia|Africa|North America|Europe
+world_gk|easy|Which is the smallest continent?|Australia|Europe|Antarctica|South America
+world_gk|easy|Which is the highest mountain above sea level?|Mount Everest|K2|Kangchenjunga|Makalu
+world_gk|easy|Which is the largest hot desert in the world?|Sahara|Gobi|Kalahari|Thar
+world_gk|easy|Which is the largest country by area?|Russia|Canada|China|United States
+world_gk|easy|Which country gifted the Statue of Liberty to the USA?|France|United Kingdom|Spain|Italy
+world_gk|easy|In which city is the Eiffel Tower?|Paris|Rome|London|Madrid
+world_gk|easy|In which city is the Colosseum?|Rome|Athens|Florence|Venice
+world_gk|easy|In which country is Machu Picchu?|Peru|Bolivia|Chile|Mexico
+world_gk|easy|In which country is most of the Great Wall?|China|Mongolia|Japan|Korea
+world_gk|medium|In which country is the ancient city of Petra?|Jordan|Egypt|Syria|Saudi Arabia
+world_gk|medium|In which country is Angkor Wat?|Cambodia|Thailand|Laos|Vietnam
+world_gk|easy|What is the currency of Japan?|Yen|Won|Yuan|Ringgit
+world_gk|easy|What is the currency of the United Kingdom?|Pound sterling|Euro|Dollar|Franc
+world_gk|medium|What is the currency of Bangladesh?|Taka|Rupee|Rupiah|Kyat
+world_gk|easy|What is the main language of Brazil?|Portuguese|Spanish|English|French
+world_gk|easy|Who painted the Mona Lisa?|Leonardo da Vinci|Michelangelo|Raphael|Vincent van Gogh
+world_gk|easy|Who painted "The Starry Night"?|Vincent van Gogh|Claude Monet|Pablo Picasso|Salvador Dalí
+world_gk|easy|Who wrote "Romeo and Juliet"?|William Shakespeare|Charles Dickens|Jane Austen|Leo Tolstoy
+world_gk|easy|Who wrote "War and Peace"?|Leo Tolstoy|Fyodor Dostoevsky|Anton Chekhov|Victor Hugo
+world_gk|easy|Who was the first person to walk on the Moon?|Neil Armstrong|Buzz Aldrin|Yuri Gagarin|Michael Collins
+world_gk|easy|Who was the first human in space?|Yuri Gagarin|Neil Armstrong|Alan Shepard|John Glenn
+world_gk|easy|In which city is the United Nations headquarters?|New York|Geneva|Paris|Vienna
+world_gk|easy|How many rings are on the Olympic flag?|5|4|6|7
+world_gk|easy|Which country is called the "Land of the Rising Sun"?|Japan|China|South Korea|Thailand
+world_gk|medium|Which country is known as the "Land of a Thousand Lakes"?|Finland|Norway|Canada|Sweden
+world_gk|easy|The Suez Canal connects the Mediterranean Sea with which sea?|Red Sea|Black Sea|Arabian Sea|Caspian Sea
+world_gk|easy|The Panama Canal connects the Atlantic Ocean with which ocean?|Pacific Ocean|Indian Ocean|Arctic Ocean|Southern Ocean
+world_gk|easy|In which year did the Berlin Wall fall?|1989|1991|1985|1975
+world_gk|easy|In which year did World War II end?|1945|1944|1946|1939
+world_gk|easy|What is the capital of Kenya?|Nairobi|Mombasa|Kampala|Addis Ababa
+world_gk|medium|What is the capital of Nigeria?|Abuja|Lagos|Accra|Kano
+world_gk|easy|What is the capital of Argentina?|Buenos Aires|Santiago|Lima|Montevideo
+world_gk|easy|What is the capital of Spain?|Madrid|Barcelona|Seville|Lisbon
+world_gk|easy|What is the capital of Germany?|Berlin|Munich|Bonn|Frankfurt
+world_gk|easy|What is the capital of Russia?|Moscow|Saint Petersburg|Kazan|Kyiv
+world_gk|easy|What is the capital of Thailand?|Bangkok|Phuket|Chiang Mai|Pattaya
+world_gk|medium|What is the capital of Vietnam?|Hanoi|Ho Chi Minh City|Da Nang|Hue
+world_gk|easy|What is the capital of the United Arab Emirates?|Abu Dhabi|Dubai|Sharjah|Doha
+world_gk|easy|What is the capital of Saudi Arabia?|Riyadh|Jeddah|Mecca|Medina
+world_gk|easy|What is the capital of Afghanistan?|Kabul|Kandahar|Herat|Islamabad
+world_gk|easy|What is the capital of Pakistan?|Islamabad|Karachi|Lahore|Rawalpindi
+world_gk|hard|What is the capital of Myanmar?|Naypyidaw|Yangon|Mandalay|Bago
+world_gk|medium|Which river flows through Baghdad?|Tigris|Euphrates|Jordan|Nile
+world_gk|easy|Which river flows through London?|Thames|Seine|Danube|Rhine
+world_gk|easy|Which river flows through Paris?|Seine|Thames|Loire|Rhône
+world_gk|medium|In which country is Mount Kilimanjaro?|Tanzania|Kenya|Uganda|Ethiopia
+world_gk|easy|Who is credited with inventing the telephone?|Alexander Graham Bell|Thomas Edison|Nikola Tesla|Guglielmo Marconi
+world_gk|medium|Who invented the World Wide Web?|Tim Berners-Lee|Bill Gates|Steve Jobs|Vint Cerf
+world_gk|medium|Which country has the city of Timbuktu?|Mali|Niger|Chad|Senegal
+world_gk|easy|Which country is home to the kangaroo?|Australia|New Zealand|South Africa|Argentina
+science|easy|What is the chemical symbol for gold?|Au|Ag|Gd|Go
+science|easy|What is the chemical symbol for sodium?|Na|So|Sd|S
+science|easy|What is the chemical formula of water?|H2O|CO2|O2|H2O2
+science|easy|Which planet is called the Red Planet?|Mars|Venus|Jupiter|Mercury
+science|easy|Which is the largest planet in our solar system?|Jupiter|Saturn|Neptune|Uranus
+science|easy|Which planet is closest to the Sun?|Mercury|Venus|Mars|Earth
+science|medium|Which is the hottest planet in our solar system?|Venus|Mercury|Mars|Jupiter
+science|easy|Which planet is famous for its large, bright rings?|Saturn|Mars|Mercury|Venus
+science|medium|Roughly how fast does light travel in a vacuum?|300,000 km per second|30,000 km per second|3,000 km per second|3,000,000 km per second
+science|easy|What is the SI unit of force?|Newton|Joule|Watt|Pascal
+science|easy|What is the SI unit of electrical resistance?|Ohm|Volt|Ampere|Tesla
+science|easy|What is the SI unit of power?|Watt|Joule|Newton|Volt
+science|easy|Which gas do plants absorb for photosynthesis?|Carbon dioxide|Oxygen|Nitrogen|Hydrogen
+science|easy|Which gas makes up most of Earth's atmosphere?|Nitrogen|Oxygen|Argon|Carbon dioxide
+science|easy|Which part of the cell is called its powerhouse?|Mitochondria|Nucleus|Ribosome|Golgi apparatus
+science|easy|How many bones are in the adult human body?|206|201|212|186
+science|easy|What is the largest organ of the human body?|Skin|Liver|Heart|Lungs
+science|easy|Which blood cells fight infection?|White blood cells|Red blood cells|Platelets|Plasma
+science|easy|Which vitamin does the body make with sunlight?|Vitamin D|Vitamin C|Vitamin A|Vitamin K
+science|medium|A lack of vitamin C causes which disease?|Scurvy|Rickets|Beriberi|Night blindness
+science|easy|What is the pH of pure water at 25 °C?|7|0|14|5
+science|easy|At sea level, water boils at how many degrees Celsius?|100|90|110|212
+science|medium|Water freezes at how many degrees Fahrenheit?|32|0|100|212
+science|easy|Who developed the theory of relativity?|Albert Einstein|Isaac Newton|Niels Bohr|Stephen Hawking
+science|easy|Who formulated the three laws of motion?|Isaac Newton|Galileo Galilei|Albert Einstein|Johannes Kepler
+science|easy|Who discovered penicillin?|Alexander Fleming|Louis Pasteur|Edward Jenner|Robert Koch
+science|easy|Who proposed evolution by natural selection?|Charles Darwin|Gregor Mendel|Jean-Baptiste Lamarck|Carl Linnaeus
+science|medium|Who is called the father of genetics?|Gregor Mendel|Charles Darwin|James Watson|Louis Pasteur
+science|easy|What does DNA stand for?|Deoxyribonucleic acid|Dinitrogen acid|Dual nucleic acid|Deoxy natural acid
+science|easy|What is the hardest natural substance?|Diamond|Gold|Iron|Quartz
+science|easy|Which metal is liquid at room temperature?|Mercury|Lead|Aluminium|Tin
+science|medium|What is the atomic number of carbon?|6|12|8|4
+science|easy|What is the lightest element?|Hydrogen|Helium|Lithium|Oxygen
+science|easy|Which gas glows red-orange in classic advertising signs?|Neon|Argon|Xenon|Krypton
+science|easy|The ozone layer protects us from which radiation?|Ultraviolet|Infrared|Radio waves|Microwaves
+science|easy|Through which of these can sound NOT travel?|A vacuum|Water|Air|Steel
+science|easy|The primary colours of light are red, green and...?|Blue|Yellow|White|Orange
+science|easy|Which instrument records earthquakes?|Seismograph|Barometer|Hygrometer|Anemometer
+science|easy|What does a barometer measure?|Atmospheric pressure|Humidity|Temperature|Wind speed
+science|easy|Photosynthesis produces glucose and which gas?|Oxygen|Carbon dioxide|Nitrogen|Methane
+science|easy|Which organ produces insulin?|Pancreas|Liver|Kidney|Thyroid
+science|easy|How many chambers does the human heart have?|4|2|3|5
+science|easy|What is normal human body temperature in degrees Celsius, roughly?|37|35|39|40
+science|easy|What is the basic unit of life?|Cell|Atom|Molecule|Tissue
+science|easy|What is the largest animal on Earth?|Blue whale|African elephant|Giraffe|Whale shark
+science|easy|What is the fastest land animal?|Cheetah|Lion|Pronghorn|Greyhound
+science|medium|Which planet has the Great Red Spot?|Jupiter|Mars|Saturn|Neptune
+science|easy|In which galaxy is our solar system?|Milky Way|Andromeda|Triangulum|Sombrero
+science|easy|What does a light-year measure?|Distance|Time|Brightness|Speed
+science|easy|Ocean tides are mainly caused by...?|The Moon's gravity|Wind|Earthquakes|Earth's magnetism
+science|easy|What is the SI unit of electric current?|Ampere|Volt|Ohm|Coulomb
+science|medium|Which device converts AC into DC?|Rectifier|Transformer|Inverter|Oscillator
+science|medium|Who discovered the electron?|J. J. Thomson|Ernest Rutherford|James Chadwick|Niels Bohr
+science|hard|Who discovered the neutron?|James Chadwick|J. J. Thomson|Ernest Rutherford|Enrico Fermi
+science|medium|C. V. Raman won the Nobel Prize for work on...?|Scattering of light|Radioactivity|Relativity|Photosynthesis
+science|easy|Which Indian mathematician worked with G. H. Hardy at Cambridge?|Srinivasa Ramanujan|Aryabhata|Bhaskara|C. R. Rao
+science|medium|Which ancient Indian mathematician gave rules for calculating with zero?|Brahmagupta|Euclid|Pythagoras|Fibonacci
+science|easy|What is the value of pi, to two decimal places?|3.14|2.72|1.62|1.41
+science|easy|What is the square root of 144?|12|14|11|16
+science|easy|Which of these birds cannot fly?|Ostrich|Eagle|Sparrow|Pigeon
+science|medium|Which blood group is the universal donor for red cells?|O negative|AB positive|A positive|B negative
+science|easy|Bees make honey mainly from...?|Nectar|Leaves|Tree sap|Dew
+sports|easy|How many players does each football (soccer) team have on the field?|11|10|9|12
+sports|easy|How often is the men's FIFA World Cup held?|Every 4 years|Every 2 years|Every 3 years|Every 5 years
+sports|easy|Which country has won the most men's FIFA World Cups?|Brazil|Germany|Italy|Argentina
+sports|easy|Who captained Argentina to the 2022 FIFA World Cup title?|Lionel Messi|Diego Maradona|Ángel Di María|Lautaro Martínez
+sports|easy|Who scored the "Hand of God" goal?|Diego Maradona|Pelé|Zinedine Zidane|Lionel Messi
+sports|easy|In which event did Neeraj Chopra win Olympic gold?|Javelin throw|Shot put|Discus throw|Hammer throw
+sports|easy|Who was India's first individual Olympic gold medallist?|Abhinav Bindra|Neeraj Chopra|Leander Paes|Mary Kom
+sports|easy|In which sport did Abhinav Bindra win Olympic gold?|Shooting|Archery|Wrestling|Boxing
+sports|easy|Who is known as the "Flying Sikh"?|Milkha Singh|P. T. Usha|Dhyan Chand|Kapil Dev
+sports|medium|Which athlete is known as the "Payyoli Express"?|P. T. Usha|Anju Bobby George|Hima Das|Dutee Chand
+sports|easy|India's National Sports Day is celebrated on the birthday of...?|Major Dhyan Chand|Milkha Singh|Sachin Tendulkar|P. T. Usha
+sports|easy|In which sport is Mary Kom a world champion?|Boxing|Wrestling|Badminton|Weightlifting
+sports|easy|P. V. Sindhu plays which sport?|Badminton|Tennis|Table tennis|Squash
+sports|easy|Sania Mirza played which sport?|Tennis|Badminton|Squash|Table tennis
+sports|easy|Viswanathan Anand is a world champion in which game?|Chess|Carrom|Billiards|Go
+sports|easy|Which chess piece moves in an L-shape?|Knight|Bishop|Rook|Queen
+sports|easy|How many squares are on a chessboard?|64|81|100|48
+sports|easy|Which tennis Grand Slam is played on clay?|French Open|Wimbledon|US Open|Australian Open
+sports|easy|On which surface is Wimbledon played?|Grass|Clay|Hard court|Carpet
+sports|easy|In tennis, what does "love" mean?|Zero|Deuce|Advantage|Game point
+sports|easy|Michael Jordan is a legend of which sport?|Basketball|Baseball|American football|Ice hockey
+sports|medium|What is Usain Bolt's 100 m world record time?|9.58 seconds|9.63 seconds|9.69 seconds|9.72 seconds
+sports|medium|How long is a marathon?|42.195 km|40 km|21.1 km|50 km
+sports|easy|Which city hosted the 2024 Summer Olympics?|Paris|Los Angeles|Tokyo|London
+sports|medium|Which country won the first Kabaddi World Cup in 2004?|India|Iran|Pakistan|Bangladesh
+sports|medium|How many players does a kabaddi team have on court?|7|6|5|9
+sports|medium|In golf, what is a score of one under par on a hole called?|Birdie|Eagle|Bogey|Albatross
+sports|easy|Lewis Hamilton races in which sport?|Formula 1|MotoGP|NASCAR|Rally
+sports|medium|What was Muhammad Ali's birth name?|Cassius Clay|Joe Frazier|George Foreman|Sonny Liston
+sports|easy|Which country does Cristiano Ronaldo play for?|Portugal|Spain|Brazil|Argentina
+sports|easy|Sunil Chhetri is famous in which sport?|Football|Hockey|Kabaddi|Basketball
+sports|easy|A traditional badminton shuttlecock is made with...?|Feathers|Rubber|Leather|Wool
+sports|easy|Table tennis is also known as...?|Ping pong|Squash|Paddle ball|Racquetball
+sports|easy|Where were the first modern Olympic Games held in 1896?|Athens|Paris|London|Rome
+sports|easy|Kho kho is a traditional sport from which country?|India|Iran|Japan|Brazil
+sports|easy|Polo is played on...?|Horseback|Bicycles|Foot|Elephants
+sports|easy|Which Indian city hosted the 2010 Commonwealth Games?|Delhi|Mumbai|Kolkata|Hyderabad
+sports|medium|Which country hosted the first Asian Games in 1951?|India|Japan|China|Philippines
+sports|easy|In football, a hat-trick means scoring how many goals?|3|2|4|5
+sports|easy|How many players does a basketball team have on court?|5|6|7|4
+sports|easy|How many players does a volleyball team have on court?|6|5|7|9
+sports|easy|What shape is a rugby ball?|Oval|Round|Square|Triangular
+sports|easy|The Tour de France is a race in which sport?|Cycling|Running|Motor racing|Sailing
+sports|easy|Which country does sprinter Usain Bolt represent?|Jamaica|United States|Kenya|Trinidad and Tobago
+sports|easy|Michael Phelps won a record number of Olympic medals in which sport?|Swimming|Athletics|Gymnastics|Cycling
+sports|easy|Which country does Roger Federer come from?|Switzerland|Spain|Serbia|Sweden
+sports|easy|Rafael Nadal is known as the "King of..."?|Clay|Grass|Hard courts|Indoor courts
+sports|easy|Which country does Novak Djokovic represent?|Serbia|Croatia|Russia|Montenegro
+sports|easy|With which club did Lionel Messi spend most of his career?|FC Barcelona|Real Madrid|Manchester United|Bayern Munich
+sports|medium|The Durand Cup is a tournament in which sport?|Football|Hockey|Cricket|Polo
+sports|medium|The Santosh Trophy is a national championship in which sport?|Football|Hockey|Volleyball|Basketball
+sports|medium|India won the Thomas Cup in 2022. In which sport?|Badminton|Hockey|Tennis|Table tennis
+sports|easy|Pankaj Advani is a world champion in which sport?|Billiards and snooker|Golf|Chess|Shooting
+sports|easy|Deepika Kumari is a top Indian athlete in which sport?|Archery|Shooting|Boxing|Wrestling
+sports|easy|Mirabai Chanu won an Olympic medal in which sport?|Weightlifting|Wrestling|Boxing|Judo
+sports|easy|At which Olympics did Neeraj Chopra win his gold medal?|Tokyo 2020|Rio 2016|London 2012|Beijing 2008
+sports|hard|At which golf course is The Masters played every year?|Augusta National|St Andrews|Pebble Beach|Wentworth
+sports|easy|What is the Ballon d'Or awarded for?|Best footballer of the year|Best football club|Best goalkeeper only|Best young coach
+sports|easy|How many players does a hockey team have on the field?|11|9|10|12

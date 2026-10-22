@@ -73,6 +73,7 @@ export function newRoomState(opts: {
     notices: [],
     noticeCounter: 0,
     pendingClaims: [],
+    memory: {},
     waves: 0,
     rate: {},
     chatRate: {},

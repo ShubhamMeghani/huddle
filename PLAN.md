@@ -57,8 +57,8 @@ The full stack is in SPEC §3:
 |---|---|---|---|---|
 | 1 | Deployment skeleton | AUTO (human steps after) | done | 3a4168a |
 | 2 | Core engine: rooms, sync, rejoin, timers, AFK, admin, queue | AUTO | done | 431c22e |
-| 3 | Teams and ratings | AUTO | done | phase-3 commit |
-| 4 | Quiz Clash | AUTO | todo | – |
+| 3 | Teams and ratings | AUTO | done | d368335 |
+| 4 | Quiz Clash | AUTO | done | phase-4 commit |
 | 5 | Draw & Guess | AUTO | todo | – |
 | 6 | Imposter | AUTO | todo | – |
 | 7 | Atlas | AUTO | todo | – |
@@ -418,7 +418,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-8 | E2E | 2 | pass | `tests/e2e/rooms.spec.ts` · pass @ phase-2 |
 | AC-9 | E2E | 2 | pass | `tests/e2e/rooms.spec.ts` · pass @ phase-2 |
 | AC-10 | Unit | 2 | pass | `tests/unit/expiry.test.ts` · pass @ phase-2 |
-| AC-11 | E2E | 4 | todo | `tests/e2e/quiz.spec.ts` |
+| AC-11 | E2E | 4 | pass | `tests/e2e/quiz.spec.ts` · pass @ phase-4 |
 | AC-12 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
 | AC-13 | Unit | 9 | todo | `tests/unit/games/invalid-actions.test.ts` |
 | AC-14 | Unit | 7 | todo | `tests/unit/pipeline.test.ts` |
@@ -426,8 +426,8 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-16 | E2E | 2 | pass | `tests/e2e/sync.spec.ts` · pass @ phase-2 |
 | AC-17 | E2E | 5 | todo | `tests/e2e/draw-rejoin.spec.ts` |
 | AC-18 | Unit | 9 | todo | `tests/unit/rejoin.test.ts` |
-| AC-19 | E2E | 4 | todo | `tests/e2e/reconnect.spec.ts` |
-| AC-20 | E2E | 4 | todo | `tests/e2e/reconnect.spec.ts` |
+| AC-19 | E2E | 4 | pass | `tests/e2e/reconnect.spec.ts` · pass @ phase-4 |
+| AC-20 | E2E | 4 | pass | `tests/e2e/reconnect.spec.ts` · pass @ phase-4 |
 | AC-21 | E2E | 2 | pass | `tests/e2e/reclaim.spec.ts` · pass @ phase-2 |
 | AC-22 | Unit | 2 | pass | `tests/unit/clock.test.ts` · pass @ phase-2 |
 | AC-23 | E2E | 2 | pass | `tests/e2e/clock.spec.ts` · pass @ phase-2 |
@@ -463,10 +463,10 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-53 | Unit | 10 | todo | `tests/unit/awards.test.ts` |
 | AC-54 | E2E | 10 | todo | `tests/e2e/recap.spec.ts` |
 | AC-55 | E2E | 11 | todo | `tests/e2e/screen.spec.ts` |
-| AC-56 | Unit | 4 | todo | `tests/unit/content/quiz.test.ts` |
-| AC-57 | Unit | 4 | todo | `tests/unit/games/quiz.test.ts` |
-| AC-58 | E2E | 4 | todo | `tests/e2e/quiz.spec.ts` |
-| AC-59 | Unit | 4 | todo | `tests/unit/games/quiz-reports.test.ts` |
+| AC-56 | Unit | 4 | pass | `tests/unit/content/quiz.test.ts` · pass @ phase-4 (439 questions) |
+| AC-57 | Unit | 4 | pass | `tests/unit/games/quiz.test.ts` · pass @ phase-4 |
+| AC-58 | E2E | 4 | pass | `tests/e2e/quiz.spec.ts` · pass @ phase-4 |
+| AC-59 | Unit | 4 | pass | `tests/unit/games/quiz-reports.test.ts` · pass @ phase-4 |
 | AC-60 | Unit | 8 | todo | `tests/unit/content/movies.test.ts` |
 | AC-61 | Unit | 8 | todo | `tests/unit/games/charades.test.ts` |
 | AC-62 | E2E | 8 | todo | `tests/e2e/charades.spec.ts` |
@@ -514,6 +514,9 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 2 · Catch-up runs each overdue deadline at its own due time (a virtual clock), so several overdue turns chain exactly. · Matches SPEC §4.3: AFK turns are skipped even while phones are off.
 - 2026-10-23 · 2 · Test mode shortens the presence window (4 s), admin grace (5 s) and break (4 s), with a faster heartbeat. · Lets the hand-off, reclaim and AFK E2E tests run in seconds; production keeps 60 s / 60 s / 30 s.
 - 2026-10-23 · 2 · Team balancing (snake draft plus swaps) is written in Phase 2; Phase 3 feeds it real ratings. · Charades and team Quiz need teams before ratings exist.
+- 2026-10-23 · 4 · The quiz source is a compact pipe-delimited file (`content/src/quiz.txt`). `npm run build:content` turns it into `content/quiz.json`, placing the correct option deterministically, and a unit test proves the JSON matches the source. · Easy to review and edit, with no answer-position bias.
+- 2026-10-23 · 4 · AC-3 also checks that a Quiz score carries over to the other device (it was seat-only in Phase 1). · Completes AC-3 as written.
+- 2026-10-23 · 4 · The browser `offline` event shows "Reconnecting…" immediately and starts polling. On `online` the client resyncs and clears the pill if realtime survived. · Phones react to Wi-Fi drops without waiting 10 s.
 
 ## Blockers
 

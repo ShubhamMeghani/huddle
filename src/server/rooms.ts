@@ -148,7 +148,11 @@ export async function roomOp<T>(
     const room = structuredClone(before);
     room.v = row.version;
     const ctx = makeCtx(room, now, presence);
-    if (room.status !== 'playing') ctx.ratings = await loadRatings(c, room);
+    if (room.status !== 'playing') {
+      ctx.ratings = await loadRatings(c, room);
+      const ex = await c.query('select question_id from question_reports group by question_id having count(*) >= 3');
+      ctx.excludedQuestions = ex.rows.map((r: { question_id: string }) => r.question_id);
+    }
     catchUp(room, ctx);
     const result = op(room, ctx);
     planBots(room, ctx);

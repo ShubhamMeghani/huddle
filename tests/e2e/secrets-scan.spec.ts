@@ -18,9 +18,13 @@ test('AC-6 no secret reaches the browser: static bundles, HTTP responses and rea
   const dbUrl = JSON.parse(readFileSync('.cache/e2e-db.json', 'utf8')).url as string;
   const needles = [...SENTINEL_NEEDLES, dbUrl, new URL(dbUrl).password ? `:${new URL(dbUrl).password}@` : dbUrl];
 
+  // Content with answers (the quiz bank) must stay server-side too.
+  const bank = JSON.parse(readFileSync('content/quiz.json', 'utf8')) as { question: string }[];
+  const questionSamples = [bank[0], bank[100], bank[250], bank[400]].map((q) => q.question.slice(0, 40));
   for (const f of filesUnder('.next/static')) {
     const s = readFileSync(f, 'utf8');
     for (const n of needles) expect(s.includes(n), `${f} contains a secret`).toBe(false);
+    for (const q of questionSamples) expect(s.includes(q), `${f} contains quiz content`).toBe(false);
   }
 
   const a = await newPlayer(browser, 'Asha');

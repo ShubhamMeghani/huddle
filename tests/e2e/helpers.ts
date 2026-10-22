@@ -78,3 +78,14 @@ export async function apiPlayer(browser: Browser, code: string, name: string) {
   const j = await ctx.request.post(`/api/rooms/${code}/join`, { data: {} });
   return { ctx, join: await j.json() };
 }
+
+export const ALL_QUIZ = ['bollywood', 'hollywood', 'cricket', 'india_gk', 'world_gk', 'science', 'sports'];
+
+export function quizQueue(questions: number, seconds: number, extra: Record<string, unknown> = {}) {
+  return [{ gameId: 'quiz', settings: { questions, seconds, categories: ALL_QUIZ, difficulty: 'any', mode: 'solo', ...extra } }];
+}
+
+/** Waits until the page shows question number n (1-based). */
+export async function atQuestion(page: Page, n: number) {
+  await expect(page.getByTestId('quiz-progress')).toContainText(`Question ${n} /`, { timeout: 30_000 });
+}

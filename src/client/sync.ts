@@ -96,6 +96,17 @@ export class RoomSync {
       if (document.visibilityState === 'visible') void this.fetchSnapshot();
     };
     const onFocusOrOnline = () => void this.fetchSnapshot();
+    const onOffline = () => this.markOffline();
+    const onOnline = () => {
+      if (this.es && this.es.readyState === EventSource.CLOSED) this.connectLocal();
+      void this.fetchSnapshot().then(() => {
+        // The stream may have survived the outage; if realtime is still connected we are live again.
+        const ablyState = (this.ably as unknown as { connection?: { state?: string } } | null)?.connection?.state;
+        if (this.es?.readyState === EventSource.OPEN || ablyState === 'connected') this.markLive();
+      });
+    };
+    window.addEventListener('offline', onOffline);
+    window.addEventListener('online', onOnline);
     document.addEventListener('visibilitychange', onWake);
     window.addEventListener('focus', onFocusOrOnline);
     window.addEventListener('online', onFocusOrOnline);
@@ -105,6 +116,8 @@ export class RoomSync {
       window.removeEventListener('focus', onFocusOrOnline);
       window.removeEventListener('online', onFocusOrOnline);
       window.removeEventListener('pageshow', onFocusOrOnline);
+      window.removeEventListener('offline', onOffline);
+      window.removeEventListener('online', onOnline);
     });
     this.heartbeatTimer = setInterval(() => {
       if (document.visibilityState === 'visible') void this.heartbeat();
@@ -191,6 +204,14 @@ export class RoomSync {
     if (this.pollTimer) clearInterval(this.pollTimer);
     this.pollTimer = null;
     this.set({ connection: 'live' });
+  }
+
+  /** The browser says the network is gone: show "Reconnecting…" now and keep trying by polling. */
+  private markOffline() {
+    if (this.downTimer) clearTimeout(this.downTimer);
+    this.downTimer = null;
+    if (!this.pollTimer) this.pollTimer = setInterval(() => void this.fetchSnapshot(), 3000);
+    this.set({ connection: 'polling' });
   }
 
   private markDown() {
