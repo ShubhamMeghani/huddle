@@ -4,6 +4,7 @@ import type { SettingsSpec } from './settings';
 import { quizMeta } from './quiz/meta';
 import { drawMeta } from './draw/meta';
 import { imposterMeta } from './imposter/meta';
+import { atlasMeta } from './atlas/meta';
 
 export interface HowTo {
   rules: string[];
@@ -51,7 +52,7 @@ const ping: GameMeta = {
   },
 };
 
-export const GAME_META: Record<string, GameMeta> = { quiz: quizMeta, draw: drawMeta, imposter: imposterMeta, ping };
+export const GAME_META: Record<string, GameMeta> = { quiz: quizMeta, draw: drawMeta, imposter: imposterMeta, atlas: atlasMeta, ping };
 
 export function metaOf(id: GameId): GameMeta {
   const m = GAME_META[id];

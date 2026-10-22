@@ -42,6 +42,33 @@ describe('room pipeline', () => {
     expect(after.state.v).toBe(after.version);
   });
 
+  test('AC-14 two concurrent submissions for the same Atlas turn: exactly one is accepted', async () => {
+    const { code, ids } = await roomWith(['A', 'B', 'C']);
+    await roomOp(code, ids[0], (room, ctx) => {
+      applyAction(room, requireSeat(room, ids[0]), { type: 'start', queue: [{ gameId: 'atlas', settings: { seconds: 30, lives: 1, variant: 'any' } }] }, ctx);
+      (room.game!.state as { letter: string }).letter = 'd';
+      return null;
+    });
+    const submit = (text: string) =>
+      roomOp(
+        code,
+        ids[0],
+        (room, ctx) => {
+          applyAction(room, requireSeat(room, ids[0]), { type: 'submit', text }, ctx);
+          return null;
+        },
+        { actionId: randomUUID(), type: 'submit' },
+      ).then(
+        () => 'ok',
+        (e: GameError) => e.code,
+      );
+    const results = await Promise.all([submit('Delhi'), submit('Dhaka')]);
+    expect(results.filter((r) => r === 'ok')).toHaveLength(1);
+    expect(results.filter((r) => r === 'NOT_YOUR_TURN')).toHaveLength(1);
+    const after = await loadRoom(code);
+    expect((after.state.game!.state as { chain: unknown[] }).chain).toHaveLength(1);
+  });
+
   test('invalid actions change nothing and report a code', async () => {
     const { code, ids } = await roomWith(['A']);
     const before = await loadRoom(code);

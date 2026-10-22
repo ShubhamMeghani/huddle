@@ -23,7 +23,7 @@ async function main() {
     AUTH_URL: `http://localhost:${PORT}`,
     HUDDLE_ADMIN_GRACE_MS: '5000',
     HUDDLE_PRESENCE_MS: '4000',
-    HUDDLE_BREAK_MS: '4000',
+    HUDDLE_BREAK_MS: '8000',
     HUDDLE_SILENCE_MS: '120000',
   };
   delete env.VERCEL;

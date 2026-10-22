@@ -60,8 +60,8 @@ The full stack is in SPEC §3:
 | 3 | Teams and ratings | AUTO | done | d368335 |
 | 4 | Quiz Clash | AUTO | done | 30524a7 |
 | 5 | Draw & Guess | AUTO | done | e5ee1b7 |
-| 6 | Imposter | AUTO | done | phase-6 commit |
-| 7 | Atlas | AUTO | todo | – |
+| 6 | Imposter | AUTO | done | a25a2f0 |
+| 7 | Atlas | AUTO | done | phase-7 commit |
 | 8 | Dumb Charades | AUTO | todo | – |
 | 9 | Most Likely To (Should) and cross-game suites | AUTO | todo | – |
 | 10 | Crews, rankings, awards, recap card | AUTO | todo | – |
@@ -421,7 +421,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-11 | E2E | 4 | pass | `tests/e2e/quiz.spec.ts` · pass @ phase-4 |
 | AC-12 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
 | AC-13 | Unit | 9 | todo | `tests/unit/games/invalid-actions.test.ts` |
-| AC-14 | Unit | 7 | todo | `tests/unit/pipeline.test.ts` |
+| AC-14 | Unit | 7 | pass | `tests/unit/pipeline.test.ts` · pass @ phase-7 (incl. Atlas clause) |
 | AC-15 | Unit | 9 | todo | `tests/unit/views.test.ts` |
 | AC-16 | E2E | 2 | pass | `tests/e2e/sync.spec.ts` · pass @ phase-2 |
 | AC-17 | E2E | 5 | pass | `tests/e2e/draw-rejoin.spec.ts` · pass @ phase-5 |
@@ -434,7 +434,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-24 | Unit | 2 | pass | `tests/unit/timers.test.ts` · pass @ phase-2 |
 | AC-25 | Unit | 2 | pass | `tests/unit/timers.test.ts` · pass @ phase-2 |
 | AC-26 | E2E | 5 | pass | `tests/e2e/afk.spec.ts` · pass @ phase-5 |
-| AC-27 | Unit | 7 | todo | `tests/unit/afk.test.ts` |
+| AC-27 | Unit | 7 | pass | `tests/unit/afk.test.ts` · pass @ phase-7 |
 | AC-28 | Unit | 2 | pass | `tests/unit/timers.test.ts` · pass @ phase-2 |
 | AC-29 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
 | AC-30 | Unit | 2 | pass | `tests/unit/undo.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) |
@@ -474,10 +474,10 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-64 | Unit | 5 | pass | `tests/unit/strokes.test.ts` · pass @ phase-5 |
 | AC-65 | Unit | 5 | pass | `tests/unit/games/draw.test.ts` · pass @ phase-5 |
 | AC-66 | E2E | 5 | pass | `tests/e2e/draw.spec.ts` · pass @ phase-5 |
-| AC-67 | Unit | 7 | todo | `tests/unit/content/places.test.ts` |
-| AC-68 | Unit | 7 | todo | `tests/unit/games/atlas.test.ts` |
-| AC-69 | Unit | 7 | todo | `tests/unit/games/atlas-vote.test.ts` |
-| AC-70 | E2E | 7 | todo | `tests/e2e/atlas.spec.ts` |
+| AC-67 | Unit | 7 | pass | `tests/unit/content/places.test.ts` · pass @ phase-7 (9,766 places) |
+| AC-68 | Unit | 7 | pass | `tests/unit/games/atlas.test.ts` · pass @ phase-7 |
+| AC-69 | Unit | 7 | pass | `tests/unit/games/atlas-vote.test.ts` · pass @ phase-7 |
+| AC-70 | E2E | 7 | pass | `tests/e2e/atlas.spec.ts` · pass @ phase-7 |
 | AC-71 | Unit | 6 | pass | `tests/unit/content/imposter-pairs.test.ts` · pass @ phase-6 (186 pairs) |
 | AC-72 | Unit | 6 | pass | `tests/unit/games/imposter.test.ts` · pass @ phase-6 |
 | AC-73 | E2E | 6 | pass | `tests/e2e/imposter.spec.ts` · pass @ phase-6 |
@@ -523,6 +523,9 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 5 · The demo bots' drawings are generated from simple parametric shapes (`scripts/make-bot-drawings.ts`, 24 words). · Deterministic, reviewable bot art.
 - 2026-10-23 · 6 · An Imposter game has 1–5 rounds (default 3) with new words and a new imposter each round. With two imposters, the crew wins only if the accused is an imposter and their steal guess fails. The +50 good-vote bonus applies whatever the outcome. · SPEC defines a single round; repeated rounds make a fuller game. These details were left open.
 - 2026-10-23 · 6 · E2E specs read final scores from the finished game in the snapshot instead of the scoreboard DOM, and check reveals on all phones in parallel. Local Playwright workers: 3. · The scoreboard break and reveals are short, and loaded WebKit pages are slow; the tests stay strict about values but not about wall-clock luck.
+- 2026-10-23 · 7 · India's 28 states and 8 UTs, their capitals and well-known old names (Bombay, Calcutta, Madras, Orissa, Pondicherry…) come from a curated list in `scripts/build-places.ts`; countries, capitals and cities come from GeoNames. · The GeoNames admin1 data lags recent reorganisations; curated aliases go first so the 12-alternate cap never drops them.
+- 2026-10-23 · 7 · A small `/about` page with the GeoNames attribution was added in Phase 7, not Phase 14. · AC-67 needs it, and it is a one-file page.
+- 2026-10-23 · 7 · E2E scoreboard break raised to 8 s in test mode. · Fewer timing races on loaded iPhone emulation; production stays 30 s.
 
 ## Blockers
 
