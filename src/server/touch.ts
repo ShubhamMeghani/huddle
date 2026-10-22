@@ -1,7 +1,7 @@
 import 'server-only';
 import { getIdentity } from './identity';
 import { roomOp, snapshotFor } from './rooms';
-import { realtimeDriverName, isTestMode } from './env';
+import { realtimeDriverName, isTestMode, presenceMs } from './env';
 import { channelName } from './realtime';
 import { ok } from './http';
 import { cookies } from 'next/headers';
@@ -18,5 +18,6 @@ export async function touch(code: string, withView: boolean) {
     ...snapshotFor(out.room, out.presence, identity, screen),
     realtime: { driver: realtimeDriverName(), channel: channelName(out.room.roomId) },
     testMode: isTestMode(),
+    heartbeatMs: Math.max(1000, Math.floor(presenceMs() / 3)),
   });
 }

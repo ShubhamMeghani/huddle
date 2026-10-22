@@ -55,8 +55,8 @@ The full stack is in SPEC §3:
 
 | Phase | Name | Mode | Status | Commit |
 |---|---|---|---|---|
-| 1 | Deployment skeleton | AUTO (human steps after) | done | phase-1 commit |
-| 2 | Core engine: rooms, sync, rejoin, timers, AFK, admin, queue | AUTO | todo | – |
+| 1 | Deployment skeleton | AUTO (human steps after) | done | 3a4168a |
+| 2 | Core engine: rooms, sync, rejoin, timers, AFK, admin, queue | AUTO | done | phase-2 commit |
 | 3 | Teams and ratings | AUTO | todo | – |
 | 4 | Quiz Clash | AUTO | todo | – |
 | 5 | Draw & Guess | AUTO | todo | – |
@@ -414,31 +414,31 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-4 | Unit | 10 | todo | `tests/unit/claim.test.ts` |
 | AC-5 | Unit | 1 | pass | `tests/unit/realtime-token.test.ts` · pass @ phase-1 (+ 401/403 in tests/e2e/secrets-scan.spec.ts) |
 | AC-6 | E2E | 1 | pass | `tests/e2e/secrets-scan.spec.ts` · pass @ phase-1 |
-| AC-7 | Unit | 2 | todo | `tests/unit/room-code.test.ts` |
-| AC-8 | E2E | 2 | todo | `tests/e2e/rooms.spec.ts` |
-| AC-9 | E2E | 2 | todo | `tests/e2e/rooms.spec.ts` |
-| AC-10 | Unit | 2 | todo | `tests/unit/expiry.test.ts` |
+| AC-7 | Unit | 2 | pass | `tests/unit/room-code.test.ts` · pass @ phase-2 |
+| AC-8 | E2E | 2 | pass | `tests/e2e/rooms.spec.ts` · pass @ phase-2 |
+| AC-9 | E2E | 2 | pass | `tests/e2e/rooms.spec.ts` · pass @ phase-2 |
+| AC-10 | Unit | 2 | pass | `tests/unit/expiry.test.ts` · pass @ phase-2 |
 | AC-11 | E2E | 4 | todo | `tests/e2e/quiz.spec.ts` |
-| AC-12 | E2E | 2 | todo | `tests/e2e/admin.spec.ts` |
+| AC-12 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
 | AC-13 | Unit | 9 | todo | `tests/unit/games/invalid-actions.test.ts` |
 | AC-14 | Unit | 7 | todo | `tests/unit/pipeline.test.ts` |
 | AC-15 | Unit | 9 | todo | `tests/unit/views.test.ts` |
-| AC-16 | E2E | 2 | todo | `tests/e2e/sync.spec.ts` |
+| AC-16 | E2E | 2 | pass | `tests/e2e/sync.spec.ts` · pass @ phase-2 |
 | AC-17 | E2E | 5 | todo | `tests/e2e/draw-rejoin.spec.ts` |
 | AC-18 | Unit | 9 | todo | `tests/unit/rejoin.test.ts` |
 | AC-19 | E2E | 4 | todo | `tests/e2e/reconnect.spec.ts` |
 | AC-20 | E2E | 4 | todo | `tests/e2e/reconnect.spec.ts` |
-| AC-21 | E2E | 2 | todo | `tests/e2e/reclaim.spec.ts` |
-| AC-22 | Unit | 2 | todo | `tests/unit/clock.test.ts` |
-| AC-23 | E2E | 2 | todo | `tests/e2e/clock.spec.ts` |
-| AC-24 | Unit | 2 | todo | `tests/unit/timers.test.ts` |
-| AC-25 | Unit | 2 | todo | `tests/unit/timers.test.ts` |
+| AC-21 | E2E | 2 | pass | `tests/e2e/reclaim.spec.ts` · pass @ phase-2 |
+| AC-22 | Unit | 2 | pass | `tests/unit/clock.test.ts` · pass @ phase-2 |
+| AC-23 | E2E | 2 | pass | `tests/e2e/clock.spec.ts` · pass @ phase-2 |
+| AC-24 | Unit | 2 | pass | `tests/unit/timers.test.ts` · pass @ phase-2 |
+| AC-25 | Unit | 2 | pass | `tests/unit/timers.test.ts` · pass @ phase-2 |
 | AC-26 | E2E | 5 | todo | `tests/e2e/afk.spec.ts` |
 | AC-27 | Unit | 7 | todo | `tests/unit/afk.test.ts` |
-| AC-28 | Unit | 2 | todo | `tests/unit/timers.test.ts` |
-| AC-29 | E2E | 2 | todo | `tests/e2e/admin.spec.ts` |
-| AC-30 | Unit | 2 | todo | `tests/unit/undo.test.ts` |
-| AC-31 | E2E | 2 | todo | `tests/e2e/admin.spec.ts` |
+| AC-28 | Unit | 2 | pass | `tests/unit/timers.test.ts` · pass @ phase-2 |
+| AC-29 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
+| AC-30 | Unit | 2 | pass | `tests/unit/undo.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) |
+| AC-31 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
 | AC-32 | Unit | 9 | todo | `tests/unit/settings.test.ts` |
 | AC-33 | E2E | 5 | todo | `tests/e2e/hostless.spec.ts` |
 | AC-34 | E2E | 8 | todo | `tests/e2e/queue.spec.ts` |
@@ -450,13 +450,13 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-40 | E2E | 13 | todo | `tests/e2e/layout.spec.ts` |
 | AC-41 | E2E | 13 | todo | `tests/e2e/theme.spec.ts` |
 | AC-42 | E2E | 11 | todo | `tests/e2e/leaderboard.spec.ts` |
-| AC-43 | E2E | 2 | todo | `tests/e2e/turn-status.spec.ts` |
+| AC-43 | E2E | 2 | pass | `tests/e2e/turn-status.spec.ts` · pass @ phase-2 |
 | AC-44 | E2E | 13 | todo | `tests/e2e/pwa.spec.ts` |
 | AC-45 | Manual | 16 | Pending (human) | `docs/playtest.md` (H7, H8) |
 | AC-46 | Unit | 9 | todo | `tests/unit/howto.test.ts` |
 | AC-47 | E2E | 12 | todo | `tests/e2e/demo.spec.ts` |
-| AC-48 | Unit | 2 | todo | `tests/unit/results.test.ts` |
-| AC-49 | Unit | 2 | todo | `tests/unit/rate-limit.test.ts` |
+| AC-48 | Unit | 2 | pass | `tests/unit/results.test.ts` · pass @ phase-2 |
+| AC-49 | Unit | 2 | pass | `tests/unit/rate-limit.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) |
 | AC-50 | E2E | 10 | todo | `tests/e2e/crews.spec.ts` |
 | AC-51 | Unit | 10 | todo | `tests/unit/seasons.test.ts` |
 | AC-52 | Unit | 10 | todo | `tests/unit/stats.test.ts` |
@@ -511,6 +511,9 @@ Format: date · phase · decision · reason.
 - 2026-10-22 · 1 · Until Draw & Guess exists, the room admin may post lobby strokes (`turnId: lobby`). The probe uses this. · Lets Phase 1 measure real stroke throughput.
 - 2026-10-22 · 1 · The lobby "Wave" button is the skeleton action. · A harmless, fun action that exercises the full pipeline.
 - 2026-10-22 · 1 · Deploy-check latency budget is 1 s on production, 6 s on the local real-services build. · Locally, every DB round trip goes India → Neon US East; Vercel `iad1` is next to Neon.
+- 2026-10-23 · 2 · Catch-up runs each overdue deadline at its own due time (a virtual clock), so several overdue turns chain exactly. · Matches SPEC §4.3: AFK turns are skipped even while phones are off.
+- 2026-10-23 · 2 · Test mode shortens the presence window (4 s), admin grace (5 s) and break (4 s), with a faster heartbeat. · Lets the hand-off, reclaim and AFK E2E tests run in seconds; production keeps 60 s / 60 s / 30 s.
+- 2026-10-23 · 2 · Team balancing (snake draft plus swaps) is written in Phase 2; Phase 3 feeds it real ratings. · Charades and team Quiz need teams before ratings exist.
 
 ## Blockers
 

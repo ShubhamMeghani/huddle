@@ -149,7 +149,9 @@ export interface RoomState {
   gameCounter: number;
   scoreEvents: ScoreEvent[];
   scoreEventCounter: number;
+  teamScores: Record<string, number>;
   finished: FinishedGame[];
+  lastGame: FinishedGame | null;
   rngSeed: string;
   rngCounter: number;
   botPlan: BotPlanItem[];
@@ -167,7 +169,9 @@ export type Effect =
   | { type: 'gameEnded'; game: FinishedGame }
   | { type: 'nightUpdated' }
   | { type: 'placeSuggestion'; name: string; accepted: boolean }
-  | { type: 'clearStrokes'; turnId: string };
+  | { type: 'clearStrokes'; turnId: string }
+  | { type: 'strokes'; turnId: string; seq: number; ops: unknown[] }
+  | { type: 'questionUsed'; questionId: string };
 
 export interface Presence {
   /** identityId -> last seen epoch ms */
@@ -184,6 +188,11 @@ export interface Ctx {
   testMode: boolean;
   adminGraceMs: number;
   silencePauseMs: number;
+  breakMs: number;
+  /** A seat counts as connected if seen within this window (60 s; shorter in test mode). */
+  presenceMs: number;
+  /** Set while an admin skip forces a deadline: missed-turn (AFK) accounting is suppressed. */
+  skipping?: boolean;
 }
 
 export type Viewer =

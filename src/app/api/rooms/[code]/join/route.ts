@@ -2,7 +2,7 @@ import { getIdentity } from '@/server/identity';
 import { fail, handle, ok, readJson } from '@/server/http';
 import { roomOp } from '@/server/rooms';
 import { codeFrom, type CodeParams } from '@/server/params';
-import { joinRoom } from '@/engine/room';
+import { joinRoom, requestClaim } from '@/engine/room';
 
 export async function POST(req: Request, params: CodeParams) {
   return handle(async () => {
@@ -10,8 +10,13 @@ export async function POST(req: Request, params: CodeParams) {
     const identity = await getIdentity();
     if (!identity) return fail('UNAUTHORIZED');
     const body = await readJson(req);
+    const deviceId = req.headers.get('x-huddle-device')?.slice(0, 64) || null;
     const out = await roomOp(code, identity, (room, ctx) => {
-      const deviceId = req.headers.get('x-huddle-device')?.slice(0, 64) || null;
+      if (typeof body.claimSeatId === 'string') {
+        // "That's me" on a disconnected seat: needs approval (R17).
+        requestClaim(room, body.claimSeatId, { identityId: identity.id, name: identity.name }, ctx);
+        return { pending: true };
+      }
       const seat = joinRoom(room, { identityIds: identity.aliases, identityId: identity.id, name: identity.name, deviceId }, ctx, {
         spectate: body.spectate === true,
       });

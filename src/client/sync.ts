@@ -45,6 +45,7 @@ export function uuid(): string {
 export class RoomSync {
   clock = new ServerClock();
   state: SyncState = { snapshot: null, connection: 'connecting', error: null, testMode: false };
+  private heartbeatMs = 25_000;
   private listeners = new Set<() => void>();
   private strokeListeners = new Set<StrokeListener>();
   private stopped = false;
@@ -107,7 +108,7 @@ export class RoomSync {
     });
     this.heartbeatTimer = setInterval(() => {
       if (document.visibilityState === 'visible') void this.heartbeat();
-    }, 25_000);
+    }, this.heartbeatMs);
   }
 
   stop() {
@@ -134,6 +135,7 @@ export class RoomSync {
           return;
         }
         this.driver = body.realtime?.driver ?? 'local';
+        if (typeof body.heartbeatMs === 'number') this.heartbeatMs = body.heartbeatMs;
         const current = this.state.snapshot;
         if (!current || body.v >= current.v) {
           this.set({ snapshot: { v: body.v, public: body.public, me: body.me }, error: null, testMode: Boolean(body.testMode) });

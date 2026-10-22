@@ -40,3 +40,13 @@ export function silencePauseMs(): number {
   const v = Number(process.env.HUDDLE_SILENCE_MS);
   return isTestMode() && v > 0 ? v : 120_000;
 }
+
+export function presenceMs(): number {
+  const v = Number(process.env.HUDDLE_PRESENCE_MS);
+  return isTestMode() && v > 0 ? v : 60_000;
+}
+
+export function breakMs(): number {
+  const v = Number(process.env.HUDDLE_BREAK_MS);
+  return isTestMode() && v > 0 ? v : 30_000;
+}

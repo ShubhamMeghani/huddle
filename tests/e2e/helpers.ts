@@ -54,3 +54,27 @@ export async function closeAll(players: Player[]) {
 export async function versionOf(page: Page): Promise<number> {
   return Number(await page.getByTestId('room').getAttribute('data-version'));
 }
+
+/** Sends an action through the page's own sync client (same path as a button tap). */
+export async function act(page: Page, type: string, payload: Record<string, unknown> = {}) {
+  return page.evaluate(
+    ([t, p]) => (window as unknown as { __huddleSync: { act: (a: string, b: unknown) => Promise<any> } }).__huddleSync.act(t as string, p),
+    [type, payload] as const,
+  );
+}
+
+export async function startGame(admin: Page, queue: { gameId: string; settings: Record<string, unknown> }[]) {
+  const r1 = await act(admin, 'setQueue', { queue });
+  expect(r1.ok, JSON.stringify(r1)).toBe(true);
+  await admin.getByTestId('start').click();
+  await expect(admin.getByTestId('playing')).toBeVisible();
+}
+
+/** Adds players through the API only (no browser), for bulk seats. */
+export async function apiPlayer(browser: Browser, code: string, name: string) {
+  const ctx = await browser.newContext({ baseURL: (test.info().project.use as { baseURL?: string }).baseURL });
+  const g = await ctx.request.post('/api/identity/guest', { data: { name } });
+  expect(g.ok()).toBe(true);
+  const j = await ctx.request.post(`/api/rooms/${code}/join`, { data: {} });
+  return { ctx, join: await j.json() };
+}

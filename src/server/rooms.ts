@@ -2,11 +2,12 @@ import 'server-only';
 import { randomUUID } from 'node:crypto';
 import { tx, type Tx } from './db';
 import { publish } from './realtime';
-import { adminGraceMs, isTestMode, silencePauseMs } from './env';
+import { adminGraceMs, breakMs, isTestMode, presenceMs, silencePauseMs } from './env';
 import { generateRoomCode } from '@/lib/codes';
 import { roomRng } from '@/engine/rng';
 import {
   catchUp,
+  planBots,
   joinRoom,
   newRoomState,
   privateChanges,
@@ -39,6 +40,8 @@ function makeCtx(room: RoomState, now: number, presence: Record<string, number>)
     testMode: isTestMode(),
     adminGraceMs: adminGraceMs(),
     silencePauseMs: silencePauseMs(),
+    breakMs: breakMs(),
+    presenceMs: presenceMs(),
   };
 }
 
@@ -54,13 +57,15 @@ async function loadPresence(c: Tx, roomId: string): Promise<Record<string, numbe
 
 export async function createRoom(opts: {
   identity: Identity;
+  /** Tests only: force a specific code. */
+  code?: string;
   isDemo?: boolean;
   crewId?: string | null;
   seed?: string;
   setup?: (room: RoomState, ctx: Ctx) => void;
 }): Promise<{ code: string; roomId: string }> {
   for (let attempt = 0; attempt < 12; attempt++) {
-    const code = generateRoomCode();
+    const code = opts.code ?? generateRoomCode();
     const roomId = randomUUID();
     const now = Date.now();
     const room = newRoomState({ roomId, code, isDemo: opts.isDemo, crewId: opts.crewId, now, seed: opts.seed ?? randomUUID() });
@@ -134,6 +139,7 @@ export async function roomOp<T>(
     const ctx = makeCtx(room, now, presence);
     catchUp(room, ctx);
     const result = op(room, ctx);
+    planBots(room, ctx);
     const changed = JSON.stringify(room) !== JSON.stringify(before);
     if (changed) {
       room.v = row.version + 1;
@@ -172,7 +178,7 @@ export async function roomOp<T>(
     await publish(outcome.room.roomId, 'state', {
       v: outcome.room.v,
       serverNow: Date.now(),
-      public: publicView(outcome.room, outcome.presence, Date.now()),
+      public: publicView(outcome.room, outcome.presence, Date.now(), presenceMs()),
       privateFor: privateChanges(outcome.before, outcome.room),
     });
   }
@@ -187,7 +193,7 @@ export function snapshotFor(room: RoomState, presence: Record<string, number>, i
   const viewer = viewerFor(room, identity?.aliases ?? [], screen);
   return {
     v: room.v,
-    public: publicView(room, presence, now),
+    public: publicView(room, presence, now, presenceMs()),
     me: privateView(room, viewer),
   };
 }

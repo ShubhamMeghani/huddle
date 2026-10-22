@@ -1,24 +1,18 @@
 'use client';
-import { useState } from 'react';
-import type { RoomSync, SyncState } from '@/client/sync';
-import { AVATAR_COLORS } from '@/lib/avatars';
-import type { PublicSeat } from '@/engine/room';
+import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import type { SyncState } from '@/client/sync';
 import { deviceId } from '@/client/device';
 import { postJson } from '@/client/api';
+import { Lobby } from './Lobby';
+import { Playing } from './Playing';
+import { BreakView, NightView } from './Scoreboard';
+import { AdminMenu } from './AdminMenu';
+import { Sheet, type RoomProps } from './ui';
+import { HowToSheet } from './HowTo';
+import { GAME_META } from '@/games/meta';
 
-export function Avatar({ seat, size = 40 }: { seat: Pick<PublicSeat, 'avatar' | 'name'>; size?: number }) {
-  const c = AVATAR_COLORS[seat.avatar.color % AVATAR_COLORS.length];
-  return (
-    <span
-      className="inline-flex shrink-0 items-center justify-center rounded-full font-black"
-      style={{ width: size, height: size, background: c.bg, color: c.fg, fontSize: size * 0.5 }}
-      aria-hidden="true"
-      data-avatar-color={seat.avatar.color}
-    >
-      {seat.avatar.emoji}
-    </span>
-  );
-}
+export { Avatar } from './ui';
 
 export function ConnectionPill({ connection }: { connection: SyncState['connection'] }) {
   if (connection === 'live') return null;
@@ -33,68 +27,122 @@ export function ConnectionPill({ connection }: { connection: SyncState['connecti
   );
 }
 
-export function RoomView({ sync, state }: { sync: RoomSync; state: SyncState }) {
+function Notices({ state }: { state: SyncState }) {
+  const notices = state.snapshot!.public.notices;
+  const last = notices[notices.length - 1];
+  const [shown, setShown] = useState<number | null>(null);
+  // Notices that already existed when the room opened are history, not news.
+  const seen = useRef<number | null | undefined>(undefined);
+  useEffect(() => {
+    if (seen.current === undefined) {
+      seen.current = last?.id ?? null;
+      return;
+    }
+    if (!last || last.id === seen.current) return;
+    seen.current = last.id;
+    setShown(last.id);
+    const t = setTimeout(() => setShown(null), 4000);
+    return () => clearTimeout(t);
+  }, [last?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!last || shown !== last.id) return null;
+  return (
+    <div
+      role="status"
+      className="fixed bottom-[calc(env(safe-area-inset-bottom)+84px)] left-1/2 z-30 w-[calc(100%-32px)] max-w-sm -translate-x-1/2 rounded-2xl bg-ink px-4 py-3 text-center font-extrabold text-bg shadow-lg"
+      data-testid="notice"
+    >
+      {last.text}
+    </div>
+  );
+}
+
+function ClaimApprovals({ sync, state }: RoomProps) {
+  const pub = state.snapshot!.public;
+  const me = state.snapshot!.me;
+  const mine = pub.pendingClaims.filter((c) =>
+    me.isAdmin ? c.seatId !== me.seatId : c.seatId === pub.adminSeatId && me.role === 'player' && me.seatId !== c.seatId,
+  );
+  if (!mine.length) return null;
+  return (
+    <div className="flex flex-col gap-2">
+      {mine.map((c) => (
+        <div key={c.seatId} className="card flex flex-col gap-2 p-4" data-testid="claim-request">
+          <p className="font-bold">
+            {c.claimantName} says they are <b>{pub.seats.find((s) => s.id === c.seatId)?.name}</b> on a new device.
+          </p>
+          <div className="flex gap-2">
+            <button className="btn btn-brand flex-1" onClick={() => void sync.act('approveClaim', { seatId: c.seatId })} data-testid="approve-claim">
+              Approve
+            </button>
+            <button className="btn btn-ghost flex-1" onClick={() => void sync.act('denyClaim', { seatId: c.seatId })}>
+              Deny
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function RoomView({ sync, state }: RoomProps) {
   const snap = state.snapshot!;
   const pub = snap.public;
   const me = snap.me;
-  const [copied, setCopied] = useState(false);
-  const link = typeof window !== 'undefined' ? `${window.location.origin}/r/${pub.code}` : `/r/${pub.code}`;
-  const seated = pub.seats.filter((s) => s.status === 'seated');
-  const watching = pub.seats.filter((s) => s.status === 'spectator');
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [howOpen, setHowOpen] = useState(false);
+  const gameId = pub.game?.id ?? pub.queue[pub.queueIndex]?.gameId;
 
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(link);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {}
-  };
+  if (me.role === 'kicked') {
+    return (
+      <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-4 px-4 text-center" data-testid="kicked">
+        <div className="text-6xl">🚪</div>
+        <h1 className="text-3xl font-black">Removed by the admin</h1>
+        <Link href="/" className="btn btn-brand">
+          Home
+        </Link>
+      </main>
+    );
+  }
+  if (me.role === 'none') {
+    return (
+      <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-4 px-4 text-center" data-testid="seat-gone">
+        <h1 className="text-3xl font-black">Seat moved to another device</h1>
+        <Link href="/" className="btn btn-brand">
+          Home
+        </Link>
+      </main>
+    );
+  }
 
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-4 px-4 py-4" data-testid="room" data-version={snap.v}>
+    <main
+      className="mx-auto flex w-full max-w-md flex-1 flex-col gap-4 px-4 py-4"
+      data-testid="room"
+      data-version={snap.v}
+      data-status={pub.status}
+      data-game={pub.status === 'playing' ? pub.game?.id : undefined}
+    >
       <ConnectionPill connection={state.connection} />
-      <header className="card flex items-center justify-between gap-3 p-4">
-        <div>
-          <div className="text-xs font-extrabold uppercase tracking-wide text-muted">Room code</div>
-          <div className="text-4xl font-black tracking-[0.25em]" data-testid="room-code">
+      <header className="flex items-center justify-between gap-2">
+        <div className="flex items-baseline gap-2">
+          <span className="text-xs font-extrabold uppercase tracking-wide text-muted">Room</span>
+          <span className="text-2xl font-black tracking-[0.2em]" data-testid="room-code">
             {pub.code}
-          </div>
+          </span>
         </div>
-        <img src={`/api/rooms/${pub.code}/qr`} alt={`QR code to join room ${pub.code}`} width={96} height={96} className="rounded-xl" data-testid="room-qr" />
+        <div className="flex gap-2">
+          {gameId && GAME_META[gameId] && (
+            <button className="btn btn-ghost !px-3" onClick={() => setHowOpen(true)} aria-label="How to play" data-testid="howto-open">
+              ?
+            </button>
+          )}
+          {me.isAdmin && (
+            <button className="btn btn-ghost !px-3" onClick={() => setAdminOpen(true)} aria-label="Admin controls" data-testid="admin-open">
+              ⚙️
+            </button>
+          )}
+        </div>
       </header>
-      <div className="flex gap-2">
-        <input className="input text-sm" readOnly value={link} aria-label="Join link" data-testid="room-link" />
-        <button className="btn btn-ghost" onClick={copy} data-testid="copy-link">
-          {copied ? 'Copied!' : 'Copy'}
-        </button>
-      </div>
-
-      <section className="card p-4" aria-label="Players">
-        <h2 className="mb-3 text-lg font-black">
-          Players <span className="text-muted">({seated.length}/12)</span>
-        </h2>
-        <ul className="flex flex-col gap-2" data-testid="seat-list">
-          {seated.map((s) => (
-            <li key={s.id} className="flex items-center gap-3" data-testid="seat" data-seat-id={s.id}>
-              <Avatar seat={s} />
-              <span className="flex-1 truncate text-lg font-extrabold">
-                {s.name}
-                {s.id === me.seatId && <span className="ml-2 text-sm text-muted">(you)</span>}
-              </span>
-              {s.id === pub.adminSeatId && <span className="rounded-full bg-accent-soft px-2 py-1 text-xs font-black">ADMIN</span>}
-              <span
-                className={`h-3 w-3 rounded-full ${s.connected ? 'bg-success' : 'bg-line'}`}
-                aria-label={s.connected ? 'online' : 'offline'}
-              />
-            </li>
-          ))}
-        </ul>
-        {watching.length > 0 && (
-          <p className="mt-3 text-sm font-bold text-muted" data-testid="spectators">
-            Watching: {watching.map((s) => s.name).join(', ')}
-          </p>
-        )}
-      </section>
 
       {me.deviceId && me.deviceId !== deviceId() && (
         <div className="card flex items-center justify-between gap-3 p-4" role="alert" data-testid="seat-moved">
@@ -111,23 +159,24 @@ export function RoomView({ sync, state }: { sync: RoomSync; state: SyncState }) 
         </div>
       )}
 
+      <ClaimApprovals sync={sync} state={state} />
+
       {me.role === 'spectator' && (
         <p className="card p-4 font-bold" data-testid="spectator-banner">
           You are watching. You will be seated at the next round.
         </p>
       )}
 
-      <section className="card flex items-center justify-between gap-3 p-4">
-        <div>
-          <div className="text-xs font-extrabold uppercase tracking-wide text-muted">Lobby waves</div>
-          <div className="text-3xl font-black" data-testid="wave-count">
-            {pub.waves}
-          </div>
-        </div>
-        <button className="btn btn-brand text-lg" onClick={() => void sync.act('wave')} disabled={me.role !== 'player'} data-testid="wave">
-          👋 Wave
-        </button>
-      </section>
+      {pub.status === 'lobby' && <Lobby sync={sync} state={state} />}
+      {pub.status === 'playing' && <Playing sync={sync} state={state} />}
+      {pub.status === 'break' && <BreakView sync={sync} state={state} />}
+      {pub.status === 'summary' && <NightView sync={sync} state={state} />}
+
+      <Notices state={state} />
+      <Sheet open={adminOpen} onClose={() => setAdminOpen(false)} title="Admin controls" testId="admin-sheet">
+        <AdminMenu sync={sync} state={state} close={() => setAdminOpen(false)} />
+      </Sheet>
+      {gameId && GAME_META[gameId] && <HowToSheet gameId={gameId} open={howOpen} onClose={() => setHowOpen(false)} />}
     </main>
   );
 }
