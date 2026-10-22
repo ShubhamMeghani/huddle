@@ -1,6 +1,6 @@
 # Huddle: Specification (SPEC.md)
 
-> Version 0.2 · 2026-10-22 · Status: approved for build (decisions recorded in §11)
+> Version 0.3 · 2026-10-22 · Status: approved for build (decisions recorded in §11)
 > Huddle is a party-games web app for Indian friend groups. Everyone plays on their own phone. A laptop or TV can join as an optional display-only big screen.
 
 **How to read this document**
@@ -8,8 +8,8 @@
 - **Requirements** use EARS patterns: *Ubiquitous* ("The system shall…"), *Event* ("When…, the system shall…"), *State* ("While…"), *Unwanted* ("If…, then…") and *Optional* ("Where…"). Each one is tagged **Must** or **Should**.
 - **Acceptance criteria** (AC-n) are pass/fail checks. Each maps to one or more R-numbers and carries one tag:
   - **Unit**: Vitest. This covers pure modules and also API handlers run against a local Postgres in CI.
-  - **E2E**: Playwright with several browser contexts against a local build in CI.
-  - **Deploy**: Playwright or scripted checks against the production Vercel URL.
+  - **E2E**: Playwright with several browser contexts against a local production build (`next build` + `next start`). Every E2E spec runs in two projects: **Chromium with Android phone emulation** and **WebKit with iPhone emulation** (the Safari engine).
+  - **Deploy**: Playwright or scripted checks against the production Vercel URL. These run after the owner pushes `main`; the builder never deploys.
   - **Manual**: a human check. There are only two: the friends playtest and the phone install.
 - "Active player" means a seated player who is not AFK. "Viewer" means anyone receiving data: a player, a spectator or a big screen.
 - All times are server times. IST (Asia/Kolkata) is used wherever a calendar date matters.
@@ -70,17 +70,17 @@ The project succeeds when:
 | Area | Constraint |
 |---|---|
 | Stack (fixed) | Next.js App Router with TypeScript (strict), Tailwind CSS, Vitest, Playwright, Node.js 24 LTS. |
-| Hosting | Vercel Hobby, non-commercial. Serverless functions only: no long-running process and no background loop. Vercel Cron runs at most daily (used only for cleanup). |
+| Hosting | Vercel Hobby, non-commercial. Serverless functions only: no long-running process and no background loop. Vercel Cron runs at most daily (used only for cleanup). Vercel is connected to the public GitHub repo `github.com/ShubhamMeghani/huddle` and deploys production **only when the owner pushes `main`**. The builder never deploys and never pushes. |
 | Database | Neon Postgres via `DATABASE_URL`, server-only. Uses `@neondatabase/serverless` (Pool over WebSocket) in production and `pg` in local and CI runs. Both are reached through one `db` module with the same Pool API. |
 | Realtime | Ably. `ABLY_API_KEY` is server-only. Clients get short-lived tokens (Ably TokenRequests) from `/api/realtime/token`; the root key never reaches the browser. Clients only **subscribe**, and the server does all publishing. |
 | Auth | Auth.js (next-auth v5) with Google as **optional** sign-in, JWT sessions, and `AUTH_SECRET`, `AUTH_GOOGLE_ID` and `AUTH_GOOGLE_SECRET`. Guests never need an account. |
 | AI | No AI APIs at runtime. All content (questions, movies, words, pairs, prompts) is written ahead of time and bundled. |
 | Secrets | Secrets live only in `.env.local` and in Vercel env settings. `.env.local` is never read by tools or agents, and no key is ever pasted into chat. `.env.example` lists variable names with empty values. |
 | Test mode | `HUDDLE_TEST_MODE=1` enables: a seeded RNG header, timers down to 2 s, a test Credentials provider that stands in for Google, a realtime "drop message" hook, and `REALTIME_DRIVER=local` (in-process pub/sub over SSE instead of Ably). Test mode is refused whenever `VERCEL_ENV` is set, so it can never be on in preview or production. |
-| CI | GitHub Actions on `ubuntu-24.04` with a Postgres 16 service container. CI has no Ably or Google secrets: E2E runs use the local realtime driver, and Deploy checks run against production from the developer machine. |
+| CI | GitHub Actions on `ubuntu-24.04` with a Postgres 16 service container. CI has no Ably or Google secrets, so E2E runs use the local realtime driver. Deploy checks run against production from the developer machine after a push. |
 | Time budget | About 3 days, built mostly autonomously by Claude Code. Should items are built last and are the first to be cut. |
 | Free tiers | Must fit Ably Free, Neon Free and Vercel Hobby for a class demo plus about 10 game nights a month (budget in §7). |
-| Devices | Chrome on Android (last 2 versions), Safari on iOS 16+, and desktop Chrome, Firefox, Safari and Edge. Must work at 360 px width. |
+| Devices | Safari on iOS 16+ (the evaluator uses an iPhone) and Chrome on Android (last 2 versions) are primary. Desktop Chrome, Firefox, Safari and Edge must also work. Must work at 360 px width. |
 | Performance | p95 action-to-update latency ≤ 1 s on production. Each route's first-load JS ≤ 250 KB gzipped. |
 | Language | UI in English. Content may use Hinglish and Indian references. |
 | Licensing | GeoNames data is CC BY 4.0, with attribution shown in-app. All other content is original. |
@@ -343,13 +343,13 @@ Outputs to users are defined throughout: per-viewer views, scoreboards, crew pag
 ### 5.8 Core platform: mobile UX, PWA and demo
 
 - **R36 (Must)** The system shall use a bright, light theme by default, whatever the OS colour scheme: a light base, bold saturated accents and playful rounded shapes. It shall offer a dark theme toggle that is remembered per device. All text and essential UI shall meet WCAG 2.2 AA contrast in both themes.
-- **R37 (Must)** The system shall be fully usable at 360 px width with no horizontal scrolling, and primary tap targets of at least 48 × 48 px.
+- **R37 (Must)** The system shall be fully usable at 360 px width with no horizontal scrolling, and primary tap targets of at least 48 × 48 px. Layouts shall use iOS-safe viewport units (`dvh`/`svh`, never bare `100vh`) and respect safe-area insets (`viewport-fit=cover` with `env(safe-area-inset-*)` padding).
 - **R91 (Must)** The system shall give each game a distinct colour identity, used on its screens, buttons and How-to-play sheet: Quiz Clash electric blue, Dumb Charades hot pink, Draw & Guess sunny yellow, Atlas green, Imposter purple, Most Likely To orange. Each accent has a paired text colour that meets AA. Every seated player shall get a colourful avatar (a colour unique within the room plus an emoji the player can change), shown in the lobby, scoreboards and turn indicators.
 - **R92 (Must)** When a celebratory moment happens (a game win, a correct guess, a score change, or a big reveal of an answer, title, imposter or tally), the system shall animate it with confetti on wins, bouncy score changes and full-screen reveal cards. Where the device requests reduced motion (`prefers-reduced-motion: reduce`), the system shall show the same information with no confetti and only instant changes or fades of ≤ 150 ms.
 - **R38 (Must)** While a game is running, every phone shall show an always-visible leaderboard button. It opens live scores and teams as an overlay without pausing the game, losing typed input or hiding the countdown, and the overlay closes automatically when the player must act.
 - **R39 (Must)** The system shall always show each player whether it is their turn ("Your turn" or "Waiting for <name>") and the synced countdown.
-- **R40 (Must)** When a player's turn starts and the device supports vibration (and the player has not turned it off), the system shall vibrate once gently (≤ 200 ms). The app shall play no sounds.
-- **R41 (Must)** The system shall be an installable PWA (manifest, icons, service worker caching the app shell) and shall show a friendly offline screen when there is no network.
+- **R40 (Must)** When a player's turn starts and the device supports vibration (and the player has not turned it off), the system shall vibrate once gently (≤ 200 ms). Where a feature is missing (for example vibration on iOS), the app shall degrade silently, with no error or prompt. The app shall play no sounds.
+- **R41 (Must)** The system shall be an installable PWA (manifest, icons, service worker caching the app shell), installable on Android through Chrome and on iPhone through Safari's "Add to Home Screen" (180 px `apple-touch-icon`, `apple-mobile-web-app-capable` and title meta tags). It shall show a friendly offline screen when there is no network.
 - **R42 (Must)** The system shall give every game a "How to play" sheet with rules, scoring and timers. It is available in the lobby and during play.
 - **R93 (Must)** The system shall publish a privacy page at `/privacy`, reachable without sign-in and linked from the home page and the sign-in prompt. It shall state:
   - what is collected: display names, device token, Google name, email and picture, and game results;
@@ -357,7 +357,7 @@ Outputs to users are defined throughout: per-viewer views, scoreboards, crew pag
   - who processes it: Vercel, Neon, Ably and Google;
   - how long it is kept: rooms for 24 h after last activity, results until deletion is requested;
   - that there are no ads or trackers;
-  - how to contact the owner (`NEXT_PUBLIC_CONTACT_EMAIL`).
+  - how to ask questions or request data deletion: a link to the GitHub Issues page, `https://github.com/ShubhamMeghani/huddle/issues`.
 - **R43 (Must)** When a visitor opens `/demo` on the public production URL, the system shall create a fresh demo room with the visitor as admin and 4 bot players, with no sign-in and a link from the home page.
 - **R44 (Must)** While in a demo room, the system shall let the visitor pick any of the six games with short default timers. Bots shall take plausible actions in each one (answer, act, draw from bundled drawings, guess, name places, give clues, vote), scheduled as server deadlines, so one person can finish every game.
 - **R45 (Must)** When a game ends, the system shall permanently record its results (players, teams, ranks, scores, game-specific stats) independently of room expiry, exactly once.
@@ -399,7 +399,7 @@ Outputs to users are defined throughout: per-viewer views, scoreboards, crew pag
 
 - **R67 (Must)** The system shall bundle at least 500 drawable words (at least 75 India-specific) with difficulties, passing the content checks in §4.8.
 - **R68 (Must)** When a drawing turn starts, the system shall offer only the drawer 3 words. On a choice, the draw timer starts (default 80 s, range 30–120) and the others see only the masked pattern. If no word is chosen within 15 s, then the turn shall be skipped as a missed turn.
-- **R69 (Must)** The system shall give the drawer at least 12 colours, 4 brush sizes, an eraser, undo (last stroke) and clear. Strokes shall appear on all phones and the big screen within 1 s at p95.
+- **R69 (Must)** The system shall give the drawer at least 12 colours, 4 brush sizes, an eraser, undo (last stroke) and clear. Strokes shall appear on all phones and the big screen within 1 s at p95. On touch devices, iOS Safari included, drawing on the canvas shall never scroll, zoom or select the page.
 - **R70 (Must)** The client shall batch and simplify strokes as in §4.5, with no visible quality loss (Hausdorff distance ≤ 1 unit). A reconnecting or newly joining device shall receive the complete drawing of the current turn.
 - **R71 (Must)** When a guesser's message matches the word (case, space and hyphen insensitive), the system shall mark them correct and award `50 + round(250 × remaining / total)`, award the drawer 60 per correct guesser, and show everyone "<name> guessed it!" without the message text.
 - **R72 (Must)** When a guess is within edit distance 1 of the word (2 for words of 8+ letters) and not correct, the system shall tell only that guesser "You're close!".
@@ -496,17 +496,18 @@ Format: **AC-n [Tag] (R#)**, followed by a pass/fail statement. Unless stated ot
 
 ### 6.6 Mobile UX, PWA, demo, persistence
 
-- **AC-40 [E2E] (R37)** At a 360 × 740 viewport, the home page, lobby, each game's main phase, the leaderboard overlay and the crew page all have `scrollWidth ≤ 360`, and every primary button is at least 48 × 48 px.
+- **AC-40 [E2E] (R37)** At a 360 × 740 viewport, and on iPhone emulation, the home page, lobby, each game's main phase, the leaderboard overlay and the crew page all have `scrollWidth ≤ viewport width`, and every primary button is at least 48 × 48 px. The viewport meta has `viewport-fit=cover`, the app shell pads by `env(safe-area-inset-*)`, and no stylesheet uses a bare `100vh`.
+- **AC-88 [E2E] (R69, R37)** *(v0.3)* On WebKit with iPhone emulation, a touch drag on the Draw canvas produces a stroke that the other players receive. During the drag `window.scrollY` and `visualViewport.scale` do not change, and the canvas computes `touch-action: none`.
 - **AC-41 [E2E] (R36)** With no stored preference, the first visit renders the light theme (`data-theme="light"`, page background relative luminance > 0.8), even when the OS prefers dark (emulated). The dark toggle switches themes and survives a reload. axe-core reports zero `color-contrast` violations on the home page, lobby, each game's main phase and the scoreboard, in both themes.
 - **AC-83 [Unit] (R36, R91)** *(v0.2)* In the design-token file, every text/background pair in both themes and every game accent with its paired text colour reaches ≥ 4.5:1 contrast (≥ 3:1 for tokens marked large-text or UI). The 12 avatar colours are pairwise distinct (CIEDE2000 ΔE ≥ 15).
 - **AC-84 [E2E] (R91)** *(v0.2)* Each game's main phase sets `data-game=<id>`, and its accent resolves to that game's token, with six distinct hues. In a 12-player lobby every avatar has a unique colour and an emoji, and a player can change their emoji. Avatars appear in the lobby, the scoreboard and the turn indicator.
 - **AC-85 [E2E] (R92)** *(v0.2)* At a game end the winner's phone shows confetti and the score change animates. Quiz, Charades and Imposter reveals use the full-screen reveal card. With `prefers-reduced-motion: reduce` emulated, no confetti canvas is created and no running animation (`document.getAnimations()`) lasts more than 150 ms, while the same results are shown.
 - **AC-42 [E2E] (R38)** The leaderboard button is visible in every phase of every game. Opening it during a Quiz question shows scores, teams and the countdown, and other players' timers are unaffected. The player can still answer after closing it. In Draw, the overlay auto-closes when that player becomes the drawer, and typed guess text is preserved.
 - **AC-43 [E2E] (R39, R40)** Status reads "Your turn" for the turn owner and "Waiting for <name>" for everyone else. A stubbed `navigator.vibrate` is called once with ≤ 200 ms at turn start. With `vibrate` undefined there are no errors. No `<audio>` element or `AudioContext` is ever created.
-- **AC-44 [E2E] (R41)** The manifest has a name, 192 and 512 px icons, `display: standalone` and a `start_url`. A service worker is active. Reloading while offline shows the offline screen.
-- **AC-45 [Manual] (R41)** On one Android phone (Chrome) and one iPhone (Safari, Add to Home Screen), the app installs, launches full-screen with its icon, and can join a room.
+- **AC-44 [E2E] (R41)** The manifest has a name, 192 and 512 px icons, `display: standalone` and a `start_url`. The page has a 180 px `apple-touch-icon` and the `apple-mobile-web-app-capable` and `apple-mobile-web-app-title` meta tags. A service worker is active. Reloading while offline shows the offline screen.
+- **AC-45 [Manual] (R41)** **Required:** on one Android phone, Chrome's **Install app** installs Huddle; it launches full-screen with its icon and can join a room. **If a friend has an iPhone at the playtest:** in Safari, open the app, play one game, then use **Add to Home Screen** and launch it.
 - **AC-46 [Unit] (R42)** Each of the six game types has How-to-play content with non-empty Rules, Scoring and Timers sections, and the sheet component renders all three.
-- **AC-86 [E2E] (R93)** *(v0.2)* `/privacy` loads without sign-in and is linked from the home page footer and the sign-in prompt. It contains the sections What we collect, Why, Who processes it, How long we keep it, and Contact, and it states that there are no ads or trackers.
+- **AC-86 [E2E] (R93)** *(v0.2)* `/privacy` loads without sign-in and is linked from the home page footer and the sign-in prompt. It contains the sections What we collect, Why, Who processes it, How long we keep it, and Contact. Contact links to `https://github.com/ShubhamMeghani/huddle/issues`. The page states that there are no ads or trackers.
 - **AC-47 [E2E] (R43, R44)** A single browser with no sign-in opens `/demo` and gets a room with 4 bots. Using the game picker, it completes a short round of each of Quiz, Charades, Draw, Atlas, Imposter and Most Likely To, and each ends on a scoreboard with non-zero bot activity.
 - **AC-48 [Unit] (R45)** Processing a game end writes one `games` row and one `game_results` row per participant (rank, score, placement points, stats). Processing the same end twice writes nothing new.
 - **AC-49 [Unit] (R46)** An 11th action within 1 s and a 4th chat message within 2 s return `RATE_LIMITED`.
@@ -557,13 +558,13 @@ Format: **AC-n [Tag] (R#)**, followed by a pass/fail statement. Unless stated ot
 - **AC-87 [Deploy] (R43)** *(v0.2)* On production, a fresh browser with no cookies follows the home-page link to `/demo` and completes a 1-round Quiz against bots in under 2 min.
 - **AC-82 [Manual] (R2, R15, R21, R28, R37, R38)** One real playtest with ≥ 4 friends on their own phones covers ≥ 3 games, a deliberate phone lock, a refresh and a Wi-Fi-off rejoin. At least one player signs in with Google on production and sees their profile name. No score is lost and every phone shows the same countdown. Findings are logged in `docs/playtest.md`.
 
-**Coverage:** 87 ACs: 40 Unit, 38 E2E, 7 Deploy and 2 Manual. Every R1–R93 maps to at least one AC.
+**Coverage:** 88 ACs: 40 Unit, 39 E2E, 7 Deploy and 2 Manual. Every R1–R93 maps to at least one AC.
 
 ---
 
 ## 7. Phase-1 deployment risks
 
-Phase 1 is a **walking skeleton deployed to production before any game is built**. It covers: home → guest name → create/join room → a trivial "+1" counter action → realtime update on every phone → reload and snapshot restore → Google sign-in. Each risk below must be retired on production, with results recorded in `docs/deploy-checks.md`, before Phase 2 starts.
+Phase 1 is a **walking skeleton deployed to production before any game is built**. It covers: home → guest name → create/join room → a trivial "+1" counter action → realtime update on every phone → reload and snapshot restore → Google sign-in. Each risk is first retired on a **local production build** (`next build` + `next start`) against the real Ably app and the Neon `dev` branch, with results in `docs/deploy-checks.md`. The same checks run against production after the owner's first push, which happens once Vercel is imported. Phase 2 does not wait for the production run.
 
 | # | Risk | What can go wrong | Phase-1 proof | Fallback |
 |---|---|---|---|---|
@@ -683,3 +684,4 @@ All v0.1 open questions were resolved on 2026-10-22 by accepting the proposed de
 |---|---|---|
 | v0.1 | 2026-10-22 | First draft from the project brief: 90 requirements (84 Must, 6 Should) and 82 acceptance criteria (39 Unit, 35 E2E, 6 Deploy, 2 Manual). |
 | v0.2 | 2026-10-22 | Decisions: Q1–Q13 accepted as defaults, except Q12, replaced by a design change.<br>Design: the default theme is now bright and light, with dark as a toggle. R36 rewritten. Added R91 (game colour identities and avatars) and R92 (celebrations that respect reduced motion), AC-41 rewritten, and added AC-83–AC-85.<br>Privacy: added R93 (privacy page, needed to publish Google sign-in) and AC-86.<br>Demo: added AC-87 (production `/demo` check).<br>Sign-in testing: AC-79 is now automatable, and the real Google sign-in moved into the AC-82 playtest. P1-3 now hides sign-in when `AUTH_GOOGLE_ID` is unset.<br>Totals: 93 requirements (87 Must, 6 Should) and 87 ACs (40 Unit, 38 E2E, 7 Deploy, 2 Manual). |
+| v0.3 | 2026-10-22 | Delivery: Vercel is Git-connected to the public repo and deploys only on the owner's push; the builder never deploys. Phases are verified on a local production build, and production checks run after a push (§3, §7).<br>iPhone first: every E2E spec also runs on WebKit with iPhone emulation. R37 adds iOS-safe viewport units and safe-area insets, R40 adds silent degradation, R41 adds Safari Add to Home Screen, and R69 rules out page scrolling while drawing. AC-40 and AC-44 extended; added AC-88 (iOS touch drawing). AC-45: Android install required, iPhone check at the playtest if available.<br>Privacy contact is GitHub Issues, not an email (R93, AC-86).<br>Totals: 93 requirements and 88 ACs (40 Unit, 39 E2E, 7 Deploy, 2 Manual). |
