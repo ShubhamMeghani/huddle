@@ -6,6 +6,7 @@ import { QuizGame } from './QuizGame';
 import { DrawGame } from './DrawGame';
 import { ImposterGame } from './ImposterGame';
 import { AtlasGame } from './AtlasGame';
+import { CharadesGame } from './CharadesGame';
 
 export const GAME_COMPONENTS: Record<string, ComponentType<RoomProps>> = {
   ping: PingGame,
@@ -13,4 +14,5 @@ export const GAME_COMPONENTS: Record<string, ComponentType<RoomProps>> = {
   draw: DrawGame,
   imposter: ImposterGame,
   atlas: AtlasGame,
+  charades: CharadesGame,
 };

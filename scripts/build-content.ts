@@ -63,6 +63,23 @@ export function buildPairs(src: string) {
     });
 }
 
+export function eraOf(year: number): 'classic' | 'golden' | 'modern' {
+  return year < 1990 ? 'classic' : year < 2010 ? 'golden' : 'modern';
+}
+
+export function buildMovies(src: string) {
+  const counters: Record<string, number> = {};
+  return src
+    .split(/\r?\n/)
+    .filter((l) => l.trim() && !l.startsWith('#'))
+    .map((line) => {
+      const [industry, title, year, difficulty] = line.split('|').map((x) => x.trim());
+      counters[industry] = (counters[industry] ?? 0) + 1;
+      const y = Number(year);
+      return { id: `${industry === 'bollywood' ? 'bm' : 'hm'}${String(counters[industry]).padStart(3, '0')}`, industry, title, year: y, era: eraOf(y), difficulty };
+    });
+}
+
 const lines = (rows: unknown[]) => '[\n' + rows.map((r) => JSON.stringify(r)).join(',\n') + '\n]\n';
 
 if (process.argv[1] && /build-content\.ts$/.test(process.argv[1])) {
@@ -75,4 +92,7 @@ if (process.argv[1] && /build-content\.ts$/.test(process.argv[1])) {
   const pairs = buildPairs(readFileSync('content/src/imposter-pairs.txt', 'utf8'));
   writeFileSync('content/imposter-pairs.json', lines(pairs));
   console.log(`imposter-pairs.json: ${pairs.length} pairs`);
+  const movies = buildMovies(readFileSync('content/src/movies.txt', 'utf8'));
+  writeFileSync('content/movies.json', lines(movies));
+  console.log(`movies.json: ${movies.length} movies`);
 }

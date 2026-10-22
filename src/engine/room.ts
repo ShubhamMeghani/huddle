@@ -394,9 +394,9 @@ export function applyAction(room: RoomState, seat: Seat, action: GameAction, ctx
       requireAdmin(room, seat);
       if (room.status !== 'break' && room.status !== 'summary') throw new GameError('WRONG_PHASE');
       if (!room.queue.length) throw new GameError('INVALID');
-      if (room.status === 'summary' || room.queueIndex + 1 >= room.queue.length) room.queueIndex = 0;
-      else room.queueIndex = Math.max(0, room.queueIndex);
+      // In a break: replay the game just played. From the night summary: replay the whole queue.
       // Same players and the same teams (R31).
+      if (room.status === 'summary') room.queueIndex = 0;
       startGame(room, ctx);
       addNotice(room, 'Rematch!', ctx, 'admin');
       return;

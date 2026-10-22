@@ -1,0 +1,522 @@
+# Dumb Charades movies: industry|title|year|difficulty. Era is derived from the year (classic < 1990, golden 1990–2009, modern ≥ 2010).
+bollywood|Mother India|1957|medium
+bollywood|Mughal-e-Azam|1960|easy
+bollywood|Pyaasa|1957|hard
+bollywood|Kaagaz Ke Phool|1959|hard
+bollywood|Guide|1965|medium
+bollywood|Awaara|1951|medium
+bollywood|Shree 420|1955|medium
+bollywood|Do Bigha Zamin|1953|hard
+bollywood|Madhumati|1958|hard
+bollywood|Chalti Ka Naam Gaadi|1958|medium
+bollywood|Waqt|1965|medium
+bollywood|Aradhana|1969|medium
+bollywood|Anand|1971|easy
+bollywood|Pakeezah|1972|medium
+bollywood|Bobby|1973|easy
+bollywood|Zanjeer|1973|easy
+bollywood|Abhimaan|1973|hard
+bollywood|Deewaar|1975|easy
+bollywood|Sholay|1975|easy
+bollywood|Chupke Chupke|1975|medium
+bollywood|Amar Akbar Anthony|1977|easy
+bollywood|Don|1978|easy
+bollywood|Trishul|1978|medium
+bollywood|Muqaddar Ka Sikandar|1978|medium
+bollywood|Golmaal|1979|medium
+bollywood|Kaala Patthar|1979|hard
+bollywood|Qurbani|1980|medium
+bollywood|Naseeb|1981|hard
+bollywood|Silsila|1981|medium
+bollywood|Umrao Jaan|1981|medium
+bollywood|Namak Halaal|1982|medium
+bollywood|Coolie|1983|easy
+bollywood|Masoom|1983|medium
+bollywood|Jaane Bhi Do Yaaro|1983|hard
+bollywood|Mr. India|1987|easy
+bollywood|Tezaab|1988|medium
+bollywood|Qayamat Se Qayamat Tak|1988|medium
+bollywood|Maine Pyar Kiya|1989|easy
+bollywood|Chandni|1989|medium
+bollywood|Ram Lakhan|1989|medium
+bollywood|Parinda|1989|hard
+bollywood|Padosan|1968|medium
+bollywood|Seeta Aur Geeta|1972|medium
+bollywood|Karz|1980|medium
+bollywood|Disco Dancer|1982|easy
+bollywood|Hero|1983|medium
+bollywood|Mera Naam Joker|1970|medium
+bollywood|Kati Patang|1970|hard
+bollywood|Amar Prem|1972|hard
+bollywood|Roti Kapda Aur Makaan|1974|medium
+bollywood|Shaan|1980|medium
+bollywood|Karma|1986|medium
+bollywood|Ijaazat|1987|hard
+bollywood|Satte Pe Satta|1982|medium
+bollywood|Junglee|1961|medium
+bollywood|Teesri Manzil|1966|hard
+bollywood|Kashmir Ki Kali|1964|hard
+bollywood|Jewel Thief|1967|hard
+bollywood|Sangam|1964|medium
+bollywood|Naya Daur|1957|hard
+bollywood|Bawarchi|1972|medium
+bollywood|Chashme Buddoor|1981|medium
+bollywood|Agneepath|1990|medium
+bollywood|Dil|1990|easy
+bollywood|Aashiqui|1990|easy
+bollywood|Ghayal|1990|medium
+bollywood|Saajan|1991|medium
+bollywood|Damini|1993|medium
+bollywood|Khalnayak|1993|medium
+bollywood|Baazigar|1993|easy
+bollywood|Darr|1993|easy
+bollywood|Hum Aapke Hain Koun..!|1994|easy
+bollywood|Andaz Apna Apna|1994|easy
+bollywood|1942: A Love Story|1994|medium
+bollywood|Dilwale Dulhania Le Jayenge|1995|easy
+bollywood|Rangeela|1995|easy
+bollywood|Karan Arjun|1995|easy
+bollywood|Coolie No. 1|1995|easy
+bollywood|Raja Hindustani|1996|medium
+bollywood|Dil To Pagal Hai|1997|easy
+bollywood|Border|1997|easy
+bollywood|Pardes|1997|medium
+bollywood|Ishq|1997|medium
+bollywood|Judwaa|1997|easy
+bollywood|Yes Boss|1997|medium
+bollywood|Hero No. 1|1997|medium
+bollywood|Kuch Kuch Hota Hai|1998|easy
+bollywood|Satya|1998|medium
+bollywood|Dil Se..|1998|medium
+bollywood|Ghulam|1998|medium
+bollywood|Hum Dil De Chuke Sanam|1999|easy
+bollywood|Taal|1999|medium
+bollywood|Sarfarosh|1999|medium
+bollywood|Biwi No. 1|1999|medium
+bollywood|Kaho Naa... Pyaar Hai|2000|easy
+bollywood|Mohabbatein|2000|easy
+bollywood|Hera Pheri|2000|easy
+bollywood|Josh|2000|medium
+bollywood|Lagaan|2001|easy
+bollywood|Dil Chahta Hai|2001|easy
+bollywood|Kabhi Khushi Kabhie Gham...|2001|easy
+bollywood|Gadar: Ek Prem Katha|2001|easy
+bollywood|Devdas|2002|easy
+bollywood|Company|2002|hard
+bollywood|Aankhen|2002|medium
+bollywood|Kaante|2002|medium
+bollywood|Koi... Mil Gaya|2003|easy
+bollywood|Munna Bhai M.B.B.S.|2003|easy
+bollywood|Kal Ho Naa Ho|2003|easy
+bollywood|Baghban|2003|medium
+bollywood|Chalte Chalte|2003|medium
+bollywood|Tere Naam|2003|medium
+bollywood|Veer-Zaara|2004|easy
+bollywood|Swades|2004|medium
+bollywood|Main Hoon Na|2004|easy
+bollywood|Dhoom|2004|easy
+bollywood|Hum Tum|2004|medium
+bollywood|Mujhse Shaadi Karogi|2004|medium
+bollywood|Black|2005|medium
+bollywood|Bunty Aur Babli|2005|easy
+bollywood|No Entry|2005|medium
+bollywood|Page 3|2005|hard
+bollywood|Salaam Namaste|2005|medium
+bollywood|Parineeta|2005|medium
+bollywood|Rang De Basanti|2006|easy
+bollywood|Lage Raho Munna Bhai|2006|easy
+bollywood|Krrish|2006|easy
+bollywood|Dhoom 2|2006|easy
+bollywood|Omkara|2006|medium
+bollywood|Khosla Ka Ghosla|2006|hard
+bollywood|Phir Hera Pheri|2006|easy
+bollywood|Golmaal: Fun Unlimited|2006|medium
+bollywood|Fanaa|2006|medium
+bollywood|Chak De! India|2007|easy
+bollywood|Taare Zameen Par|2007|easy
+bollywood|Jab We Met|2007|easy
+bollywood|Om Shanti Om|2007|easy
+bollywood|Bhool Bhulaiyaa|2007|easy
+bollywood|Guru|2007|medium
+bollywood|Namastey London|2007|medium
+bollywood|Welcome|2007|easy
+bollywood|Dhamaal|2007|medium
+bollywood|Ghajini|2008|easy
+bollywood|Rock On!!|2008|medium
+bollywood|Jodhaa Akbar|2008|medium
+bollywood|A Wednesday|2008|hard
+bollywood|Dostana|2008|medium
+bollywood|Jaane Tu... Ya Jaane Na|2008|medium
+bollywood|Rab Ne Bana Di Jodi|2008|easy
+bollywood|Singh Is Kinng|2008|medium
+bollywood|Race|2008|medium
+bollywood|Fashion|2008|medium
+bollywood|3 Idiots|2009|easy
+bollywood|Love Aaj Kal|2009|medium
+bollywood|Wake Up Sid|2009|medium
+bollywood|Dev.D|2009|hard
+bollywood|Kaminey|2009|hard
+bollywood|Wanted|2009|medium
+bollywood|Ajab Prem Ki Ghazab Kahani|2009|medium
+bollywood|Paa|2009|medium
+bollywood|My Name Is Khan|2010|easy
+bollywood|Dabangg|2010|easy
+bollywood|Band Baaja Baaraat|2010|medium
+bollywood|Udaan|2010|hard
+bollywood|Peepli Live|2010|hard
+bollywood|Housefull|2010|medium
+bollywood|Zindagi Na Milegi Dobara|2011|easy
+bollywood|The Dirty Picture|2011|medium
+bollywood|Rockstar|2011|easy
+bollywood|Delhi Belly|2011|medium
+bollywood|Bodyguard|2011|easy
+bollywood|Ra.One|2011|medium
+bollywood|Singham|2011|easy
+bollywood|Kahaani|2012|medium
+bollywood|Barfi!|2012|easy
+bollywood|Gangs of Wasseypur|2012|medium
+bollywood|English Vinglish|2012|medium
+bollywood|Vicky Donor|2012|medium
+bollywood|Paan Singh Tomar|2012|hard
+bollywood|Talaash|2012|medium
+bollywood|Ek Tha Tiger|2012|easy
+bollywood|Rowdy Rathore|2012|medium
+bollywood|OMG: Oh My God!|2012|medium
+bollywood|Yeh Jawaani Hai Deewani|2013|easy
+bollywood|Chennai Express|2013|easy
+bollywood|Bhaag Milkha Bhaag|2013|easy
+bollywood|The Lunchbox|2013|hard
+bollywood|Lootera|2013|hard
+bollywood|Kai Po Che!|2013|medium
+bollywood|Goliyon Ki Raasleela Ram-Leela|2013|medium
+bollywood|Fukrey|2013|medium
+bollywood|Jolly LLB|2013|medium
+bollywood|Special 26|2013|medium
+bollywood|Queen|2014|easy
+bollywood|PK|2014|easy
+bollywood|Haider|2014|hard
+bollywood|Mary Kom|2014|easy
+bollywood|2 States|2014|easy
+bollywood|Kick|2014|easy
+bollywood|Ek Villain|2014|medium
+bollywood|Bajrangi Bhaijaan|2015|easy
+bollywood|Piku|2015|medium
+bollywood|Bajirao Mastani|2015|easy
+bollywood|Masaan|2015|hard
+bollywood|Tanu Weds Manu Returns|2015|medium
+bollywood|Dil Dhadakne Do|2015|medium
+bollywood|Drishyam|2015|medium
+bollywood|Badlapur|2015|hard
+bollywood|Baby|2015|medium
+bollywood|Dangal|2016|easy
+bollywood|Pink|2016|medium
+bollywood|Neerja|2016|medium
+bollywood|Sultan|2016|easy
+bollywood|Ae Dil Hai Mushkil|2016|medium
+bollywood|Udta Punjab|2016|medium
+bollywood|M.S. Dhoni: The Untold Story|2016|easy
+bollywood|Dear Zindagi|2016|medium
+bollywood|Kapoor & Sons|2016|medium
+bollywood|Airlift|2016|medium
+bollywood|Rustom|2016|medium
+bollywood|Tiger Zinda Hai|2017|easy
+bollywood|Hindi Medium|2017|medium
+bollywood|Newton|2017|hard
+bollywood|Toilet: Ek Prem Katha|2017|medium
+bollywood|Secret Superstar|2017|medium
+bollywood|Bareilly Ki Barfi|2017|hard
+bollywood|Golmaal Again|2017|easy
+bollywood|Raees|2017|medium
+bollywood|Padmaavat|2018|easy
+bollywood|Andhadhun|2018|medium
+bollywood|Stree|2018|easy
+bollywood|Raazi|2018|medium
+bollywood|Badhaai Ho|2018|medium
+bollywood|Sanju|2018|easy
+bollywood|Pad Man|2018|medium
+bollywood|Tumbbad|2018|hard
+bollywood|Uri: The Surgical Strike|2019|easy
+bollywood|Gully Boy|2019|easy
+bollywood|Kabir Singh|2019|easy
+bollywood|Article 15|2019|hard
+bollywood|War|2019|easy
+bollywood|Super 30|2019|medium
+bollywood|Chhichhore|2019|medium
+bollywood|Dream Girl|2019|medium
+bollywood|Kesari|2019|medium
+bollywood|Mission Mangal|2019|medium
+bollywood|Housefull 4|2019|medium
+bollywood|Thappad|2020|hard
+bollywood|Tanhaji|2020|medium
+bollywood|Shershaah|2021|easy
+bollywood|Sooryavanshi|2021|medium
+bollywood|Gangubai Kathiawadi|2022|medium
+bollywood|Brahmastra Part One: Shiva|2022|medium
+bollywood|Drishyam 2|2022|medium
+bollywood|Bhool Bhulaiyaa 2|2022|easy
+bollywood|Pathaan|2023|easy
+bollywood|Jawan|2023|easy
+bollywood|Animal|2023|easy
+bollywood|12th Fail|2023|medium
+bollywood|Rocky Aur Rani Kii Prem Kahaani|2023|medium
+bollywood|Dunki|2023|medium
+bollywood|Laapataa Ladies|2024|medium
+bollywood|Stree 2|2024|easy
+bollywood|Fighter|2024|medium
+bollywood|Crew|2024|medium
+bollywood|Munjya|2024|hard
+hollywood|Casablanca|1942|medium
+hollywood|Gone with the Wind|1939|medium
+hollywood|The Wizard of Oz|1939|easy
+hollywood|Citizen Kane|1941|hard
+hollywood|Singin' in the Rain|1952|medium
+hollywood|Roman Holiday|1953|medium
+hollywood|Rear Window|1954|hard
+hollywood|Vertigo|1958|hard
+hollywood|Psycho|1960|medium
+hollywood|Breakfast at Tiffany's|1961|medium
+hollywood|The Sound of Music|1965|easy
+hollywood|Mary Poppins|1964|easy
+hollywood|Lawrence of Arabia|1962|hard
+hollywood|The Godfather|1972|easy
+hollywood|The Godfather Part II|1974|medium
+hollywood|Jaws|1975|easy
+hollywood|Rocky|1976|easy
+hollywood|Taxi Driver|1976|medium
+hollywood|Star Wars|1977|easy
+hollywood|Grease|1978|medium
+hollywood|Superman|1978|easy
+hollywood|Alien|1979|medium
+hollywood|Apocalypse Now|1979|hard
+hollywood|The Empire Strikes Back|1980|medium
+hollywood|The Shining|1980|medium
+hollywood|Raiders of the Lost Ark|1981|medium
+hollywood|E.T. the Extra-Terrestrial|1982|easy
+hollywood|Gandhi|1982|easy
+hollywood|Tootsie|1982|hard
+hollywood|Return of the Jedi|1983|medium
+hollywood|Scarface|1983|medium
+hollywood|Ghostbusters|1984|easy
+hollywood|The Terminator|1984|easy
+hollywood|Back to the Future|1985|easy
+hollywood|The Breakfast Club|1985|medium
+hollywood|Top Gun|1986|easy
+hollywood|Aliens|1986|medium
+hollywood|Dirty Dancing|1987|medium
+hollywood|Die Hard|1988|easy
+hollywood|Rain Man|1988|medium
+hollywood|Who Framed Roger Rabbit|1988|hard
+hollywood|Batman|1989|easy
+hollywood|Dead Poets Society|1989|medium
+hollywood|The Little Mermaid|1989|easy
+hollywood|Indiana Jones and the Last Crusade|1989|medium
+hollywood|Ben-Hur|1959|hard
+hollywood|The Ten Commandments|1956|hard
+hollywood|12 Angry Men|1957|hard
+hollywood|Some Like It Hot|1959|hard
+hollywood|The Exorcist|1973|medium
+hollywood|One Flew Over the Cuckoo's Nest|1975|hard
+hollywood|Annie Hall|1977|hard
+hollywood|Close Encounters of the Third Kind|1977|hard
+hollywood|Blade Runner|1982|medium
+hollywood|Ferris Bueller's Day Off|1986|medium
+hollywood|Stand by Me|1986|medium
+hollywood|Platoon|1986|hard
+hollywood|The Princess Bride|1987|medium
+hollywood|Beetlejuice|1988|medium
+hollywood|Big|1988|medium
+hollywood|Snow White and the Seven Dwarfs|1937|easy
+hollywood|Cinderella|1950|easy
+hollywood|Bambi|1942|easy
+hollywood|Pinocchio|1940|easy
+hollywood|Dumbo|1941|easy
+hollywood|Peter Pan|1953|easy
+hollywood|Lady and the Tramp|1955|medium
+hollywood|The Jungle Book|1967|easy
+hollywood|Home Alone|1990|easy
+hollywood|Ghost|1990|medium
+hollywood|Pretty Woman|1990|medium
+hollywood|Edward Scissorhands|1990|medium
+hollywood|The Silence of the Lambs|1991|medium
+hollywood|Terminator 2: Judgment Day|1991|easy
+hollywood|Beauty and the Beast|1991|easy
+hollywood|Aladdin|1992|easy
+hollywood|Home Alone 2: Lost in New York|1992|easy
+hollywood|The Bodyguard|1992|medium
+hollywood|Sister Act|1992|medium
+hollywood|Jurassic Park|1993|easy
+hollywood|Schindler's List|1993|medium
+hollywood|Mrs. Doubtfire|1993|easy
+hollywood|Groundhog Day|1993|medium
+hollywood|Cool Runnings|1993|medium
+hollywood|The Lion King|1994|easy
+hollywood|Forrest Gump|1994|easy
+hollywood|Pulp Fiction|1994|medium
+hollywood|The Shawshank Redemption|1994|medium
+hollywood|The Mask|1994|easy
+hollywood|Speed|1994|medium
+hollywood|Toy Story|1995|easy
+hollywood|Braveheart|1995|medium
+hollywood|Apollo 13|1995|medium
+hollywood|Jumanji|1995|easy
+hollywood|Se7en|1995|hard
+hollywood|Independence Day|1996|easy
+hollywood|Mission: Impossible|1996|easy
+hollywood|Jerry Maguire|1996|hard
+hollywood|Titanic|1997|easy
+hollywood|Men in Black|1997|easy
+hollywood|Good Will Hunting|1997|medium
+hollywood|Hercules|1997|easy
+hollywood|Liar Liar|1997|medium
+hollywood|Saving Private Ryan|1998|medium
+hollywood|Armageddon|1998|medium
+hollywood|The Truman Show|1998|medium
+hollywood|Mulan|1998|easy
+hollywood|A Bug's Life|1998|medium
+hollywood|Rush Hour|1998|medium
+hollywood|The Matrix|1999|easy
+hollywood|Fight Club|1999|medium
+hollywood|The Sixth Sense|1999|medium
+hollywood|American Pie|1999|medium
+hollywood|Tarzan|1999|easy
+hollywood|Stuart Little|1999|easy
+hollywood|The Mummy|1999|medium
+hollywood|Gladiator|2000|easy
+hollywood|Cast Away|2000|medium
+hollywood|Memento|2000|hard
+hollywood|Erin Brockovich|2000|hard
+hollywood|Meet the Parents|2000|medium
+hollywood|Shrek|2001|easy
+hollywood|Harry Potter and the Philosopher's Stone|2001|easy
+hollywood|The Lord of the Rings: The Fellowship of the Ring|2001|medium
+hollywood|Monsters, Inc.|2001|easy
+hollywood|Ocean's Eleven|2001|medium
+hollywood|A Beautiful Mind|2001|medium
+hollywood|Legally Blonde|2001|medium
+hollywood|Spider-Man|2002|easy
+hollywood|Catch Me If You Can|2002|medium
+hollywood|The Bourne Identity|2002|medium
+hollywood|Ice Age|2002|easy
+hollywood|Finding Nemo|2003|easy
+hollywood|Pirates of the Caribbean: The Curse of the Black Pearl|2003|easy
+hollywood|Love Actually|2003|medium
+hollywood|Kill Bill: Volume 1|2003|medium
+hollywood|Elf|2003|medium
+hollywood|School of Rock|2003|medium
+hollywood|The Incredibles|2004|easy
+hollywood|Shrek 2|2004|easy
+hollywood|Mean Girls|2004|medium
+hollywood|The Notebook|2004|medium
+hollywood|Harry Potter and the Prisoner of Azkaban|2004|medium
+hollywood|Batman Begins|2005|medium
+hollywood|Madagascar|2005|easy
+hollywood|Hitch|2005|medium
+hollywood|Charlie and the Chocolate Factory|2005|easy
+hollywood|Casino Royale|2006|medium
+hollywood|The Devil Wears Prada|2006|medium
+hollywood|Cars|2006|easy
+hollywood|Night at the Museum|2006|easy
+hollywood|Happy Feet|2006|easy
+hollywood|The Departed|2006|hard
+hollywood|The Prestige|2006|medium
+hollywood|300|2006|medium
+hollywood|Ratatouille|2007|easy
+hollywood|Transformers|2007|easy
+hollywood|No Country for Old Men|2007|hard
+hollywood|The Dark Knight|2008|easy
+hollywood|WALL-E|2008|easy
+hollywood|Iron Man|2008|easy
+hollywood|Kung Fu Panda|2008|easy
+hollywood|Slumdog Millionaire|2008|easy
+hollywood|Mamma Mia!|2008|medium
+hollywood|Twilight|2008|medium
+hollywood|Avatar|2009|easy
+hollywood|Up|2009|easy
+hollywood|The Hangover|2009|medium
+hollywood|Inglourious Basterds|2009|hard
+hollywood|Inception|2010|easy
+hollywood|Toy Story 3|2010|easy
+hollywood|The Social Network|2010|medium
+hollywood|Black Swan|2010|medium
+hollywood|Shutter Island|2010|medium
+hollywood|Tangled|2010|easy
+hollywood|Despicable Me|2010|easy
+hollywood|Harry Potter and the Deathly Hallows Part 2|2011|medium
+hollywood|The Hangover Part II|2011|medium
+hollywood|Fast Five|2011|medium
+hollywood|The Avengers|2012|easy
+hollywood|Life of Pi|2012|medium
+hollywood|The Dark Knight Rises|2012|medium
+hollywood|Skyfall|2012|medium
+hollywood|Django Unchained|2012|medium
+hollywood|The Hunger Games|2012|easy
+hollywood|Frozen|2013|easy
+hollywood|Gravity|2013|medium
+hollywood|The Wolf of Wall Street|2013|medium
+hollywood|Interstellar|2014|easy
+hollywood|Guardians of the Galaxy|2014|easy
+hollywood|Gone Girl|2014|medium
+hollywood|Whiplash|2014|hard
+hollywood|Big Hero 6|2014|easy
+hollywood|The Grand Budapest Hotel|2014|hard
+hollywood|The Lego Movie|2014|easy
+hollywood|Inside Out|2015|easy
+hollywood|Mad Max: Fury Road|2015|medium
+hollywood|The Martian|2015|medium
+hollywood|Jurassic World|2015|easy
+hollywood|Star Wars: The Force Awakens|2015|medium
+hollywood|Minions|2015|easy
+hollywood|The Revenant|2015|medium
+hollywood|Zootopia|2016|easy
+hollywood|Moana|2016|easy
+hollywood|La La Land|2016|medium
+hollywood|Deadpool|2016|easy
+hollywood|Doctor Strange|2016|medium
+hollywood|Hidden Figures|2016|hard
+hollywood|Arrival|2016|hard
+hollywood|Sing|2016|easy
+hollywood|Coco|2017|easy
+hollywood|Get Out|2017|medium
+hollywood|Wonder Woman|2017|easy
+hollywood|Dunkirk|2017|medium
+hollywood|Thor: Ragnarok|2017|medium
+hollywood|Logan|2017|medium
+hollywood|Baby Driver|2017|hard
+hollywood|Jumanji: Welcome to the Jungle|2017|easy
+hollywood|Black Panther|2018|easy
+hollywood|Bohemian Rhapsody|2018|easy
+hollywood|A Quiet Place|2018|medium
+hollywood|Avengers: Infinity War|2018|easy
+hollywood|Aquaman|2018|easy
+hollywood|Mission: Impossible Fallout|2018|medium
+hollywood|Avengers: Endgame|2019|easy
+hollywood|Joker|2019|easy
+hollywood|Parasite|2019|medium
+hollywood|Once Upon a Time in Hollywood|2019|hard
+hollywood|1917|2019|medium
+hollywood|Knives Out|2019|medium
+hollywood|Captain Marvel|2019|easy
+hollywood|Frozen II|2019|easy
+hollywood|Ford v Ferrari|2019|hard
+hollywood|Tenet|2020|medium
+hollywood|Soul|2020|medium
+hollywood|Dune|2021|medium
+hollywood|Spider-Man: No Way Home|2021|easy
+hollywood|Encanto|2021|easy
+hollywood|Free Guy|2021|medium
+hollywood|Top Gun: Maverick|2022|easy
+hollywood|Everything Everywhere All at Once|2022|hard
+hollywood|Avatar: The Way of Water|2022|easy
+hollywood|The Batman|2022|medium
+hollywood|Puss in Boots: The Last Wish|2022|medium
+hollywood|Oppenheimer|2023|easy
+hollywood|Barbie|2023|easy
+hollywood|Spider-Man: Across the Spider-Verse|2023|medium
+hollywood|Wonka|2023|medium
+hollywood|The Super Mario Bros. Movie|2023|easy
+hollywood|Elemental|2023|medium
+hollywood|Inside Out 2|2024|easy
+hollywood|Dune: Part Two|2024|medium
+hollywood|Deadpool & Wolverine|2024|medium
+hollywood|Wicked|2024|medium
+hollywood|Moana 2|2024|easy

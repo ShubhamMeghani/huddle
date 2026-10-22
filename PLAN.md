@@ -61,8 +61,8 @@ The full stack is in SPEC §3:
 | 4 | Quiz Clash | AUTO | done | 30524a7 |
 | 5 | Draw & Guess | AUTO | done | e5ee1b7 |
 | 6 | Imposter | AUTO | done | a25a2f0 |
-| 7 | Atlas | AUTO | done | phase-7 commit |
-| 8 | Dumb Charades | AUTO | todo | – |
+| 7 | Atlas | AUTO | done | f52618c |
+| 8 | Dumb Charades | AUTO | done | phase-8 commit |
 | 9 | Most Likely To (Should) and cross-game suites | AUTO | todo | – |
 | 10 | Crews, rankings, awards, recap card | AUTO | todo | – |
 | 11 | Leaderboard button and big screen | AUTO | todo | – |
@@ -441,7 +441,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-31 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
 | AC-32 | Unit | 9 | todo | `tests/unit/settings.test.ts` |
 | AC-33 | E2E | 5 | pass | `tests/e2e/hostless.spec.ts` · pass @ phase-5 |
-| AC-34 | E2E | 8 | todo | `tests/e2e/queue.spec.ts` |
+| AC-34 | E2E | 8 | pass | `tests/e2e/queue.spec.ts` · pass @ phase-8 |
 | AC-35 | Unit | 3 | pass | `tests/unit/teams.test.ts` · pass @ phase-3 |
 | AC-36 | E2E | 3 | pass | `tests/e2e/teams.spec.ts` · pass @ phase-3 |
 | AC-37 | Unit | 3 | pass | `tests/unit/ratings.test.ts` · pass @ phase-3 |
@@ -467,9 +467,9 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-57 | Unit | 4 | pass | `tests/unit/games/quiz.test.ts` · pass @ phase-4 |
 | AC-58 | E2E | 4 | pass | `tests/e2e/quiz.spec.ts` · pass @ phase-4 |
 | AC-59 | Unit | 4 | pass | `tests/unit/games/quiz-reports.test.ts` · pass @ phase-4 |
-| AC-60 | Unit | 8 | todo | `tests/unit/content/movies.test.ts` |
-| AC-61 | Unit | 8 | todo | `tests/unit/games/charades.test.ts` |
-| AC-62 | E2E | 8 | todo | `tests/e2e/charades.spec.ts` |
+| AC-60 | Unit | 8 | pass | `tests/unit/content/movies.test.ts` · pass @ phase-8 (266 + 255 movies) |
+| AC-61 | Unit | 8 | pass | `tests/unit/games/charades.test.ts` · pass @ phase-8 |
+| AC-62 | E2E | 8 | pass | `tests/e2e/charades.spec.ts` · pass @ phase-8 |
 | AC-63 | Unit | 5 | pass | `tests/unit/content/draw-words.test.ts` · pass @ phase-5 (592 words, 91 India) |
 | AC-64 | Unit | 5 | pass | `tests/unit/strokes.test.ts` · pass @ phase-5 |
 | AC-65 | Unit | 5 | pass | `tests/unit/games/draw.test.ts` · pass @ phase-5 |
@@ -526,6 +526,8 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 7 · India's 28 states and 8 UTs, their capitals and well-known old names (Bombay, Calcutta, Madras, Orissa, Pondicherry…) come from a curated list in `scripts/build-places.ts`; countries, capitals and cities come from GeoNames. · The GeoNames admin1 data lags recent reorganisations; curated aliases go first so the 12-alternate cap never drops them.
 - 2026-10-23 · 7 · A small `/about` page with the GeoNames attribution was added in Phase 7, not Phase 14. · AC-67 needs it, and it is a one-file page.
 - 2026-10-23 · 7 · E2E scoreboard break raised to 8 s in test mode. · Fewer timing races on loaded iPhone emulation; production stays 30 s.
+- 2026-10-23 · 8 · Rematch from a scoreboard break replays the game just played; from the night summary it replays the whole queue, with the same players and teams either way. · R31 allows either; AC-34 expects Charades to be replayed after Quiz → Charades.
+- 2026-10-23 · 8 · The Charades actor also sees the year, industry, era and word count. · The word count is the classic first gesture.
 
 ## Blockers
 
