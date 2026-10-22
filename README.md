@@ -1,2 +1,2 @@
-﻿# GameNight
-Party games for friends, on everyone's phone.
+﻿# Huddle
+Game night for your crew.
