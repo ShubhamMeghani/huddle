@@ -1,0 +1,151 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* Bright, light party theme by default (R36); dark is an opt-in toggle. */
+:root {
+  color-scheme: light;
+  --bg: #fff7ed;
+  --bg-2: #fdebd8;
+  --surface: #ffffff;
+  --surface-2: #f6f0ff;
+  --ink: #1b1530;
+  --muted: #554d6b;
+  --line: #e6dcf2;
+  --brand: #6d28d9;
+  --on-brand: #ffffff;
+  --accent: var(--brand);
+  --on-accent: var(--on-brand);
+  --accent-soft: #efe7ff;
+  --danger: #b4123c;
+  --on-danger: #ffffff;
+  --success: #0b7a45;
+  --warn: #8a5300;
+  --shadow: 0 6px 0 rgba(27, 21, 48, 0.12);
+  --radius: 22px;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #110d1f;
+  --bg-2: #1a1430;
+  --surface: #1e1834;
+  --surface-2: #272043;
+  --ink: #f6f3ff;
+  --muted: #c3bbdc;
+  --line: #3a3160;
+  --brand: #b79cff;
+  --on-brand: #160f2a;
+  --accent-soft: #2c2350;
+  --danger: #ff7a9b;
+  --on-danger: #1a0610;
+  --success: #5ee2a0;
+  --warn: #ffc566;
+  --shadow: 0 6px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* Per-game colour identity (R91). Each accent is paired with a text colour meeting AA. */
+[data-game='quiz'] { --accent: #1d4ed8; --on-accent: #ffffff; --accent-soft: #e0e9ff; }
+[data-game='charades'] { --accent: #ff2e88; --on-accent: #1a0010; --accent-soft: #ffe3f0; }
+[data-game='draw'] { --accent: #ffc400; --on-accent: #1f1600; --accent-soft: #fff4c2; }
+[data-game='atlas'] { --accent: #0f8a4f; --on-accent: #ffffff; --accent-soft: #dcf7e8; }
+[data-game='imposter'] { --accent: #7c3aed; --on-accent: #ffffff; --accent-soft: #efe5ff; }
+[data-game='mlt'] { --accent: #ff7a00; --on-accent: #1f0d00; --accent-soft: #ffe8d2; }
+[data-game='ping'] { --accent: #0e7490; --on-accent: #ffffff; --accent-soft: #d8f3f8; }
+[data-theme='dark'] [data-game='quiz'], [data-theme='dark'][data-game='quiz'] { --accent: #7aa2ff; --on-accent: #0b1330; --accent-soft: #1b2650; }
+[data-theme='dark'] [data-game='charades'], [data-theme='dark'][data-game='charades'] { --accent: #ff6aa8; --on-accent: #22000f; --accent-soft: #3a1328; }
+[data-theme='dark'] [data-game='draw'], [data-theme='dark'][data-game='draw'] { --accent: #ffd23f; --on-accent: #1f1600; --accent-soft: #3a3010; }
+[data-theme='dark'] [data-game='atlas'], [data-theme='dark'][data-game='atlas'] { --accent: #3fd68a; --on-accent: #04180d; --accent-soft: #10331f; }
+[data-theme='dark'] [data-game='imposter'], [data-theme='dark'][data-game='imposter'] { --accent: #b28bff; --on-accent: #160a30; --accent-soft: #2a1d4d; }
+[data-theme='dark'] [data-game='mlt'], [data-theme='dark'][data-game='mlt'] { --accent: #ff9a3d; --on-accent: #1f0d00; --accent-soft: #3a220c; }
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+  --color-on-danger: var(--on-danger);
+  --color-success: var(--success);
+  --color-warn: var(--warn);
+  --font-sans: ui-rounded, 'SF Pro Rounded', 'Nunito', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --radius-xl2: var(--radius);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iOS-safe shell (R37): dynamic viewport units and safe-area insets, never bare 100vh. */
+.app-shell {
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.btn {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid transparent;
+  transition: transform 120ms ease;
+  touch-action: manipulation;
+  user-select: none;
+}
+.btn:active { transform: translateY(2px) scale(0.98); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: var(--on-accent); box-shadow: var(--shadow); }
+.btn-brand { background: var(--brand); color: var(--on-brand); box-shadow: var(--shadow); }
+.btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.btn-danger { background: var(--danger); color: var(--on-danger); }
+
+.input {
+  min-height: 52px;
+  width: 100%;
+  border-radius: 16px;
+  border: 2px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0 16px;
+  font-size: 18px; /* ≥16px stops iOS zoom-on-focus */
+  font-weight: 700;
+}
+.input:focus { outline: 3px solid var(--accent); outline-offset: 1px; }
+
+:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

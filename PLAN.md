@@ -55,7 +55,7 @@ The full stack is in SPEC §3:
 
 | Phase | Name | Mode | Status | Commit |
 |---|---|---|---|---|
-| 1 | Deployment skeleton | AUTO (human steps after) | todo | – |
+| 1 | Deployment skeleton | AUTO (human steps after) | done | phase-1 commit |
 | 2 | Core engine: rooms, sync, rejoin, timers, AFK, admin, queue | AUTO | todo | – |
 | 3 | Teams and ratings | AUTO | todo | – |
 | 4 | Quiz Clash | AUTO | todo | – |
@@ -408,12 +408,12 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 
 | ID | Type | Phase | Status | Evidence |
 |---|---|---|---|---|
-| AC-1 | Unit | 1 | todo | `tests/unit/identity.test.ts` |
-| AC-2 | E2E | 1 | todo | `tests/e2e/identity.spec.ts` |
-| AC-3 | E2E | 1 | todo | `tests/e2e/auth.spec.ts` |
+| AC-1 | Unit | 1 | pass | `tests/unit/identity.test.ts` · pass @ phase-1 |
+| AC-2 | E2E | 1 | pass | `tests/e2e/identity.spec.ts` · pass @ phase-1 |
+| AC-3 | E2E | 1 | pass | `tests/e2e/auth.spec.ts` · pass @ phase-1 |
 | AC-4 | Unit | 10 | todo | `tests/unit/claim.test.ts` |
-| AC-5 | Unit | 1 | todo | `tests/unit/realtime-token.test.ts` |
-| AC-6 | E2E | 1 | todo | `tests/e2e/secrets-scan.spec.ts` |
+| AC-5 | Unit | 1 | pass | `tests/unit/realtime-token.test.ts` · pass @ phase-1 (+ 401/403 in tests/e2e/secrets-scan.spec.ts) |
+| AC-6 | E2E | 1 | pass | `tests/e2e/secrets-scan.spec.ts` · pass @ phase-1 |
 | AC-7 | Unit | 2 | todo | `tests/unit/room-code.test.ts` |
 | AC-8 | E2E | 2 | todo | `tests/e2e/rooms.spec.ts` |
 | AC-9 | E2E | 2 | todo | `tests/e2e/rooms.spec.ts` |
@@ -484,11 +484,11 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-74 | Unit | 9 | todo | `tests/unit/games/mlt.test.ts` |
 | AC-75 | E2E | 9 | todo | `tests/e2e/mlt.spec.ts` |
 | AC-76 | Deploy | 16 | Pending (human) | GitHub Actions run (after H6) |
-| AC-77 | Deploy | 16 | Pending (human) | `tests/deploy/realtime.spec.ts` (local proof in Phase 1) |
-| AC-78 | Deploy | 16 | Pending (human) | `tests/deploy/neon.spec.ts` (local proof in Phase 1) |
+| AC-77 | Deploy | 16 | Pending (human) | `tests/deploy/realtime.spec.ts` (local proof in Phase 1) · local real-services proof passed in phase 1 |
+| AC-78 | Deploy | 16 | Pending (human) | `tests/deploy/neon.spec.ts` (local proof in Phase 1) · local proof (restart) passed in phase 1 |
 | AC-79 | Deploy | 16 | Pending (human) | `tests/deploy/google.spec.ts` (needs H5) |
-| AC-80 | Deploy | 16 | Pending (human) | `tests/deploy/six-browsers.spec.ts` (local proof in Phases 1 and 15) |
-| AC-81 | Deploy | 16 | Pending (human) | `scripts/probe-draw.ts` → `docs/deploy-checks.md` (local probe in Phase 1) |
+| AC-80 | Deploy | 16 | Pending (human) | `tests/deploy/six-browsers.spec.ts` (local proof in Phases 1 and 15) · 6-browser skeleton passed locally in phase 1 |
+| AC-81 | Deploy | 16 | Pending (human) | `scripts/probe-draw.ts` → `docs/deploy-checks.md` (local probe in Phase 1) · local probe passed in phase 1 (4.15/s, 0 errors, 1.33 % of quota) |
 | AC-82 | Manual | 16 | Pending (human) | `docs/playtest.md` (H8) |
 | AC-83 | Unit | 13 | todo | `tests/unit/design-tokens.test.ts` |
 | AC-84 | E2E | 13 | todo | `tests/e2e/design.spec.ts` |
@@ -505,6 +505,12 @@ Format: date · phase · decision · reason.
 
 - 2026-10-22 · plan · Tests and E2E use a throwaway local Postgres (`embedded-postgres`, verified working on this machine); CI uses a Postgres service. · Neon is in US East, so local round-trips from India would make tests slow; Neon `dev` is kept for the real-services checks.
 - 2026-10-22 · plan · Engine features are tested with an internal `ping` game that exists only in test mode. · Proves the engine before any real game exists.
+- 2026-10-22 · 1 · All tables are created in `001_core.sql` instead of one migration per phase. · Fewer moving parts; later migrations only alter.
+- 2026-10-22 · 1 · E2E and `test:real` share one production build made with sentinel secrets (`scripts/build.ts`). · Server secrets are read at runtime, so the secret-leak scan (AC-6) checks a real bundle.
+- 2026-10-22 · 1 · Seats remember the active device (`deviceId`). Opening a room where you have a seat makes that device active, and the other device shows "seat moved". · Implements AC-3's seat-moved notice and gives signed-in players a clean device hand-over.
+- 2026-10-22 · 1 · Until Draw & Guess exists, the room admin may post lobby strokes (`turnId: lobby`). The probe uses this. · Lets Phase 1 measure real stroke throughput.
+- 2026-10-22 · 1 · The lobby "Wave" button is the skeleton action. · A harmless, fun action that exercises the full pipeline.
+- 2026-10-22 · 1 · Deploy-check latency budget is 1 s on production, 6 s on the local real-services build. · Locally, every DB round trip goes India → Neon US East; Vercel `iad1` is next to Neon.
 
 ## Blockers
 
