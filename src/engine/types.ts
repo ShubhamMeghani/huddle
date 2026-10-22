@@ -105,6 +105,8 @@ export interface FinishedGame {
   startedAt: number;
   endedAt: number;
   teamGame: boolean;
+  /** Fun-only games (Most Likely To, decision Q6) count for night stats but not season points. */
+  excludeFromSeason?: boolean;
   /** Final standings, one row per participating seat. */
   rows: {
     seatId: SeatId;

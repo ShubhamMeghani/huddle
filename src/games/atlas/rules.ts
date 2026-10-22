@@ -94,6 +94,8 @@ interface AtlasState {
   vote: { name: string; proposer: SeatId; votes: Record<SeatId, boolean>; remainingMs: number } | null;
   winner: SeatId | null;
   stats: Record<SeatId, { placesNamed: number }>;
+  /** Phase id in which the current bot decided to blank (decided once per turn, not re-rolled). */
+  botBlank?: number;
 }
 
 const st = (room: RoomState) => room.game!.state as AtlasState;
@@ -248,7 +250,11 @@ export const atlas: GameModule = {
   bot(room, seat, ctx) {
     const s = st(room);
     if (room.phase.kind === 'turn' && room.phase.turnSeatId === seat.id) {
-      if (ctx.rng() > 0.85) return null; // sometimes the bot blanks and runs out of time
+      if (s.botBlank === room.phase.id) return null;
+      if (ctx.rng() > 0.85) {
+        s.botBlank = room.phase.id; // sometimes the bot blanks and runs out of time
+        return null;
+      }
       const used = new Set(s.used);
       const options = PLACES.filter((p) => inVariant(p, s.variant) && !used.has(p.id) && fold(p.name)[0] === s.letter && p.kind !== 'capital');
       if (!options.length) return null;

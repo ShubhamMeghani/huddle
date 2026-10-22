@@ -62,8 +62,8 @@ The full stack is in SPEC §3:
 | 5 | Draw & Guess | AUTO | done | e5ee1b7 |
 | 6 | Imposter | AUTO | done | a25a2f0 |
 | 7 | Atlas | AUTO | done | f52618c |
-| 8 | Dumb Charades | AUTO | done | phase-8 commit |
-| 9 | Most Likely To (Should) and cross-game suites | AUTO | todo | – |
+| 8 | Dumb Charades | AUTO | done | ad25162 |
+| 9 | Most Likely To (Should) and cross-game suites | AUTO | done | phase-9 commit |
 | 10 | Crews, rankings, awards, recap card | AUTO | todo | – |
 | 11 | Leaderboard button and big screen | AUTO | todo | – |
 | 12 | Demo with bots | AUTO | todo | – |
@@ -420,12 +420,12 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-10 | Unit | 2 | pass | `tests/unit/expiry.test.ts` · pass @ phase-2 |
 | AC-11 | E2E | 4 | pass | `tests/e2e/quiz.spec.ts` · pass @ phase-4 |
 | AC-12 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
-| AC-13 | Unit | 9 | todo | `tests/unit/games/invalid-actions.test.ts` |
+| AC-13 | Unit | 9 | pass | `tests/unit/games/invalid-actions.test.ts` · pass @ phase-9 (6 games, via the DB pipeline) |
 | AC-14 | Unit | 7 | pass | `tests/unit/pipeline.test.ts` · pass @ phase-7 (incl. Atlas clause) |
-| AC-15 | Unit | 9 | todo | `tests/unit/views.test.ts` |
+| AC-15 | Unit | 9 | pass | `tests/unit/views.test.ts` · pass @ phase-9 |
 | AC-16 | E2E | 2 | pass | `tests/e2e/sync.spec.ts` · pass @ phase-2 |
 | AC-17 | E2E | 5 | pass | `tests/e2e/draw-rejoin.spec.ts` · pass @ phase-5 |
-| AC-18 | Unit | 9 | todo | `tests/unit/rejoin.test.ts` |
+| AC-18 | Unit | 9 | pass | `tests/unit/rejoin.test.ts` · pass @ phase-9 |
 | AC-19 | E2E | 4 | pass | `tests/e2e/reconnect.spec.ts` · pass @ phase-4 |
 | AC-20 | E2E | 4 | pass | `tests/e2e/reconnect.spec.ts` · pass @ phase-4 |
 | AC-21 | E2E | 2 | pass | `tests/e2e/reclaim.spec.ts` · pass @ phase-2 |
@@ -439,13 +439,13 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-29 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
 | AC-30 | Unit | 2 | pass | `tests/unit/undo.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) |
 | AC-31 | E2E | 2 | pass | `tests/e2e/admin.spec.ts` · pass @ phase-2 |
-| AC-32 | Unit | 9 | todo | `tests/unit/settings.test.ts` |
+| AC-32 | Unit | 9 | pass | `tests/unit/settings.test.ts` · pass @ phase-9 |
 | AC-33 | E2E | 5 | pass | `tests/e2e/hostless.spec.ts` · pass @ phase-5 |
 | AC-34 | E2E | 8 | pass | `tests/e2e/queue.spec.ts` · pass @ phase-8 |
 | AC-35 | Unit | 3 | pass | `tests/unit/teams.test.ts` · pass @ phase-3 |
 | AC-36 | E2E | 3 | pass | `tests/e2e/teams.spec.ts` · pass @ phase-3 |
 | AC-37 | Unit | 3 | pass | `tests/unit/ratings.test.ts` · pass @ phase-3 |
-| AC-38 | Unit | 9 | todo | `tests/unit/secrets.test.ts` |
+| AC-38 | Unit | 9 | pass | `tests/unit/secrets.test.ts` · pass @ phase-9 |
 | AC-39 | E2E | 15 | todo | `tests/e2e/secrets-sniff.spec.ts` |
 | AC-40 | E2E | 13 | todo | `tests/e2e/layout.spec.ts` |
 | AC-41 | E2E | 13 | todo | `tests/e2e/theme.spec.ts` |
@@ -453,7 +453,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-43 | E2E | 2 | pass | `tests/e2e/turn-status.spec.ts` · pass @ phase-2 |
 | AC-44 | E2E | 13 | todo | `tests/e2e/pwa.spec.ts` |
 | AC-45 | Manual | 16 | Pending (human) | `docs/playtest.md` (H7, H8) |
-| AC-46 | Unit | 9 | todo | `tests/unit/howto.test.ts` |
+| AC-46 | Unit | 9 | pass | `tests/unit/howto.test.ts` · pass @ phase-9 |
 | AC-47 | E2E | 12 | todo | `tests/e2e/demo.spec.ts` |
 | AC-48 | Unit | 2 | pass | `tests/unit/results.test.ts` · pass @ phase-2 |
 | AC-49 | Unit | 2 | pass | `tests/unit/rate-limit.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) |
@@ -481,8 +481,8 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-71 | Unit | 6 | pass | `tests/unit/content/imposter-pairs.test.ts` · pass @ phase-6 (186 pairs) |
 | AC-72 | Unit | 6 | pass | `tests/unit/games/imposter.test.ts` · pass @ phase-6 |
 | AC-73 | E2E | 6 | pass | `tests/e2e/imposter.spec.ts` · pass @ phase-6 |
-| AC-74 | Unit | 9 | todo | `tests/unit/games/mlt.test.ts` |
-| AC-75 | E2E | 9 | todo | `tests/e2e/mlt.spec.ts` |
+| AC-74 | Unit | 9 | pass | `tests/unit/games/mlt.test.ts` · pass @ phase-9 (159 prompts) |
+| AC-75 | E2E | 9 | pass | `tests/e2e/mlt.spec.ts` · pass @ phase-9 |
 | AC-76 | Deploy | 16 | Pending (human) | GitHub Actions run (after H6) |
 | AC-77 | Deploy | 16 | Pending (human) | `tests/deploy/realtime.spec.ts` (local proof in Phase 1) · local real-services proof passed in phase 1 |
 | AC-78 | Deploy | 16 | Pending (human) | `tests/deploy/neon.spec.ts` (local proof in Phase 1) · local proof (restart) passed in phase 1 |
@@ -528,6 +528,9 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 7 · E2E scoreboard break raised to 8 s in test mode. · Fewer timing races on loaded iPhone emulation; production stays 30 s.
 - 2026-10-23 · 8 · Rematch from a scoreboard break replays the game just played; from the night summary it replays the whole queue, with the same players and teams either way. · R31 allows either; AC-34 expects Charades to be replayed after Quiz → Charades.
 - 2026-10-23 · 8 · The Charades actor also sees the year, industry, era and word count. · The word count is the classic first gesture.
+- 2026-10-23 · 9 · Most Likely To results are recorded with `excludeFromSeason` and zero placement points (decision Q6). A player's own phone is told only *whether* it voted, never whom; the choice is remembered on that phone. · R89 says the app never sends or keeps who voted for whom.
+- 2026-10-23 · 9 · The cross-game suites drive every game to the end with bots (`tests/helpers/drive.ts`), checking secrets, view size and rejoin stability at every step. · One driver covers every phase of every game.
+- 2026-10-23 · 9 · Fixed: an Atlas bot's "blank this turn" decision is now made once per turn instead of re-rolled every tick. · The re-roll meant bots never ran out of time, so all-bot Atlas games never ended.
 
 ## Blockers
 

@@ -80,6 +80,13 @@ export function buildMovies(src: string) {
     });
 }
 
+export function buildPrompts(src: string) {
+  return src
+    .split(/\r?\n/)
+    .filter((l) => l.trim() && !l.startsWith('#'))
+    .map((text, i) => ({ id: `mlt${String(i + 1).padStart(3, '0')}`, text: text.trim() }));
+}
+
 const lines = (rows: unknown[]) => '[\n' + rows.map((r) => JSON.stringify(r)).join(',\n') + '\n]\n';
 
 if (process.argv[1] && /build-content\.ts$/.test(process.argv[1])) {
@@ -95,4 +102,7 @@ if (process.argv[1] && /build-content\.ts$/.test(process.argv[1])) {
   const movies = buildMovies(readFileSync('content/src/movies.txt', 'utf8'));
   writeFileSync('content/movies.json', lines(movies));
   console.log(`movies.json: ${movies.length} movies`);
+  const prompts = buildPrompts(readFileSync('content/src/mlt-prompts.txt', 'utf8'));
+  writeFileSync('content/mlt-prompts.json', lines(prompts));
+  console.log(`mlt-prompts.json: ${prompts.length} prompts`);
 }

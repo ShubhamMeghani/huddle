@@ -124,7 +124,12 @@ export function placementPoints(scores: number[]): number[] {
 }
 
 /** Ends the current game: standings, results effect, then a scoreboard break (R30). */
-export function finishGame(room: RoomState, ctx: Ctx, stats: Record<SeatId, Record<string, number>> = {}) {
+export function finishGame(
+  room: RoomState,
+  ctx: Ctx,
+  stats: Record<SeatId, Record<string, number>> = {},
+  opts: { excludeFromSeason?: boolean } = {},
+) {
   const g = room.game;
   if (!g) return;
   const teamGame = Boolean(room.teams?.length) && Object.keys(room.teamScores).length > 0;
@@ -172,7 +177,8 @@ export function finishGame(room: RoomState, ctx: Ctx, stats: Record<SeatId, Reco
     startedAt: g.startedAt,
     endedAt: ctx.now,
     teamGame,
-    rows: rows.sort((a, b) => a.rank - b.rank),
+    ...(opts.excludeFromSeason ? { excludeFromSeason: true } : {}),
+    rows: rows.sort((a, b) => a.rank - b.rank).map((r) => (opts.excludeFromSeason ? { ...r, placementPoints: 0 } : r)),
   };
   room.finished.push(finished);
   room.lastGame = finished;
