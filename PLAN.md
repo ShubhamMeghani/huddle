@@ -66,8 +66,8 @@ The full stack is in SPEC §3:
 | 9 | Most Likely To (Should) and cross-game suites | AUTO | done | bc8f1ad |
 | 10 | Crews, rankings, awards, recap card | AUTO | done | 9358d76 |
 | 11 | Leaderboard button and big screen | AUTO | done | 6811ed5 |
-| 12 | Demo with bots | AUTO | done | phase-12 commit |
-| 13 | Design and PWA (iPhone-first) | AUTO | todo | – |
+| 12 | Demo with bots | AUTO | done | ae34a0d |
+| 13 | Design and PWA (iPhone-first) | AUTO | done | phase-13 commit |
 | 14 | Privacy page | AUTO | todo | – |
 | 15 | Full multi-player E2E suite and verification | AUTO | todo | – |
 | 16 | Human steps and acceptance | HUMAN, then AUTO | todo | – |
@@ -447,11 +447,11 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-37 | Unit | 3 | pass | `tests/unit/ratings.test.ts` · pass @ phase-3 |
 | AC-38 | Unit | 9 | pass | `tests/unit/secrets.test.ts` · pass @ phase-9 |
 | AC-39 | E2E | 15 | todo | `tests/e2e/secrets-sniff.spec.ts` |
-| AC-40 | E2E | 13 | todo | `tests/e2e/layout.spec.ts` |
-| AC-41 | E2E | 13 | todo | `tests/e2e/theme.spec.ts` |
+| AC-40 | E2E | 13 | pass | `tests/e2e/layout.spec.ts` · pass @ phase-13 |
+| AC-41 | E2E | 13 | pass | `tests/e2e/theme.spec.ts` · pass @ phase-13 (axe, both themes) |
 | AC-42 | E2E | 11 | pass | `tests/e2e/leaderboard.spec.ts` · pass @ phase-11 |
 | AC-43 | E2E | 2 | pass | `tests/e2e/turn-status.spec.ts` · pass @ phase-2 |
-| AC-44 | E2E | 13 | todo | `tests/e2e/pwa.spec.ts` |
+| AC-44 | E2E | 13 | pass | `tests/e2e/pwa.spec.ts` · pass @ phase-13 |
 | AC-45 | Manual | 16 | Pending (human) | `docs/playtest.md` (H7, H8) |
 | AC-46 | Unit | 9 | pass | `tests/unit/howto.test.ts` · pass @ phase-9 |
 | AC-47 | E2E | 12 | pass | `tests/e2e/demo.spec.ts` · pass @ phase-12 |
@@ -490,9 +490,9 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-80 | Deploy | 16 | Pending (human) | `tests/deploy/six-browsers.spec.ts` (local proof in Phases 1 and 15) · 6-browser skeleton passed locally in phase 1 |
 | AC-81 | Deploy | 16 | Pending (human) | `scripts/probe-draw.ts` → `docs/deploy-checks.md` (local probe in Phase 1) · local probe passed in phase 1 (4.15/s, 0 errors, 1.33 % of quota) |
 | AC-82 | Manual | 16 | Pending (human) | `docs/playtest.md` (H8) |
-| AC-83 | Unit | 13 | todo | `tests/unit/design-tokens.test.ts` |
-| AC-84 | E2E | 13 | todo | `tests/e2e/design.spec.ts` |
-| AC-85 | E2E | 13 | todo | `tests/e2e/celebrations.spec.ts` |
+| AC-83 | Unit | 13 | pass | `tests/unit/design-tokens.test.ts` · pass @ phase-13 |
+| AC-84 | E2E | 13 | pass | `tests/e2e/design.spec.ts` · pass @ phase-13 |
+| AC-85 | E2E | 13 | pass | `tests/e2e/celebrations.spec.ts` · pass @ phase-13 |
 | AC-86 | E2E | 14 | todo | `tests/e2e/privacy.spec.ts` |
 | AC-87 | Deploy | 16 | Pending (human) | `tests/deploy/demo.spec.ts` · tests/deploy/demo.spec.ts written; runs after H6 |
 | AC-88 | E2E | 5 | pass | `tests/e2e/draw-touch.spec.ts` · pass @ phase-5 |
@@ -538,6 +538,11 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 11 · The leaderboard overlay is a non-modal panel above the game, which stays mounted underneath and keeps typed input. It closes when the player's `mustAct` turns on. · R38 without pausing or interrupting the game.
 - 2026-10-23 · 12 · The demo picker sends only a game id (`demoStart`); the server applies preset short rules, shortened further in test mode. Demo bots are seat-only identities (`bot:<uuid>`) with no database rows. · One tap per game for the evaluator, with deterministic, fast E2E coverage.
 - 2026-10-23 · 12 · `npm run ci` now takes about 10 minutes locally (both device projects, including the all-games demo test). · Accepted; CI runs two workers with one retry.
+- 2026-10-23 · 13 · `src/lib/design-tokens.ts` is the single source of colour values (a unit test checks contrast and that `globals.css` matches). Each game also has a text-safe `--accent-ink`. · Draw's sunny yellow is unreadable as text, so accent-coloured text now uses the ink variant.
+- 2026-10-23 · 13 · Faded quiz options use a solid muted surface instead of opacity; the "You won!" card no longer combines `.card` with an accent background. · axe found the opacity version and an unlayered-CSS override that broke contrast.
+- 2026-10-23 · 13 · Realtime counts as down until it actually connects. Test mode has a `huddle-test-no-realtime` hook. · WebKit can't intercept EventSource in Playwright, and a stream stuck "connecting" must still fall back to polling (R16).
+- 2026-10-23 · 13 · One avatar colour changed (indigo → light pink). · The CIEDE2000 check found indigo too close to violet (ΔE 10.5).
+- 2026-10-23 · 13 · The offline page uses a plain `<a href="/">` (lint exception). · Offline, a full reload is the right "try again".
 
 ## Blockers
 

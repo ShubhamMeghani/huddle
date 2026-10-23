@@ -31,7 +31,7 @@ export function CharadesGame({ sync, state }: RoomProps) {
       {mine.actor && mine.movie && (kind === 'act' || kind === 'steal') && (
         <div className="card flex flex-col gap-3 p-5 text-center" data-testid="charades-actor">
           <div className="text-xs font-black uppercase tracking-wide text-muted">Act this out. No talking!</div>
-          <div className="text-3xl font-black text-accent" data-testid="charades-title">
+          <div className="text-3xl font-black text-accent-ink" data-testid="charades-title">
             {mine.movie.title}
           </div>
           <div className="font-bold text-muted">
@@ -77,9 +77,9 @@ export function CharadesGame({ sync, state }: RoomProps) {
       )}
 
       {kind === 'reveal' && v.last && (
-        <div className="card p-5 text-center" data-testid="charades-reveal" data-result={v.last.result}>
+        <div className="reveal-card card p-5 text-center" data-testid="charades-reveal" data-result={v.last.result} data-reveal-card="true">
           <p className="text-sm font-black uppercase tracking-wide text-muted">The movie was</p>
-          <p className="text-3xl font-black text-accent" data-testid="charades-revealed-title">
+          <p className="text-3xl font-black text-accent-ink" data-testid="charades-revealed-title">
             {v.last.title}
           </p>
           <p className="font-bold">
@@ -95,7 +95,7 @@ export function CharadesGame({ sync, state }: RoomProps) {
       <section className="card p-4" aria-label="Team scores">
         <ul className="flex flex-col gap-1" data-testid="charades-scores">
           {(pub.teams ?? []).map((t) => (
-            <li key={t.id} className={`flex justify-between font-black ${t.id === v.teamId ? 'text-accent' : ''}`} data-testid="team-score" data-team-id={t.id}>
+            <li key={t.id} className={`flex justify-between font-black ${t.id === v.teamId ? 'text-accent-ink' : ''}`} data-testid="team-score" data-team-id={t.id}>
               <span>{t.name}</span>
               <span data-testid="team-score-value">{pub.teamScores[t.id] ?? 0}</span>
             </li>

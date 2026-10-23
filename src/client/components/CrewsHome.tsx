@@ -47,7 +47,7 @@ export function CrewsHome({ me, ensureName }: { me: Me | null; ensureName: () =>
     <section className="card flex flex-col gap-3 p-5" aria-label="Crews">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-black">Your crews</h2>
-        <button className="btn btn-ghost !min-h-11 text-sm" onClick={() => setOpen(!open)} data-testid="crew-new">
+        <button className="btn btn-ghost text-sm" onClick={() => setOpen(!open)} data-testid="crew-new">
           ＋ New crew
         </button>
       </div>

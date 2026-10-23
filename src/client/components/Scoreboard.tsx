@@ -2,6 +2,7 @@
 import { GAME_META } from '@/games/meta';
 import type { PublicView } from '@/engine/room';
 import { RecapShare } from './RecapShare';
+import { Confetti } from './Confetti';
 import { DemoPicker } from './Demo';
 import { Avatar, Countdown, type RoomProps } from './ui';
 
@@ -23,7 +24,7 @@ export function Standings({ rows, state, testId = 'standings' }: { rows: Row[]; 
               {r.name}
               {team && <span className="ml-2 text-sm text-muted">{team.name}</span>}
             </span>
-            <span className="font-black tabular-nums" data-testid="standing-score">
+            <span key={r.score} className="bump font-black tabular-nums" data-testid="standing-score">
               {r.score}
             </span>
           </li>
@@ -38,8 +39,15 @@ export function BreakView({ sync, state }: RoomProps) {
   const me = state.snapshot!.me;
   const last = pub.lastGame;
   const next = pub.queue[pub.queueIndex + 1];
+  const iWon = Boolean(last && me.seatId && last.rows.some((r) => r.seatId === me.seatId && r.rank === 1));
   return (
     <section className="flex flex-col gap-4" data-testid="break">
+      {iWon && <Confetti />}
+      {iWon && (
+        <div className="reveal-card rounded-[22px] bg-accent p-5 text-center text-2xl font-black text-on-accent shadow-lg" data-testid="you-won">
+          🎉 You won!
+        </div>
+      )}
       <div className="card flex items-center justify-between gap-3 p-4">
         <div>
           <div className="text-sm font-black uppercase tracking-wide text-muted">Scoreboard</div>

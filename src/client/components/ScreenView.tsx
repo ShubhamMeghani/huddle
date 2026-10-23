@@ -64,7 +64,7 @@ function ScreenBody({ sync, state }: RoomProps) {
       <ConnectionPill connection={state.connection} />
       <header className="flex items-center justify-between gap-6">
         <div className="text-5xl font-black">
-          Huddle<span className="text-brand">.</span> {meta && <span className="text-accent">{meta.emoji} {meta.title}</span>}
+          Huddle<span className="text-brand">.</span> {meta && <span className="text-accent-ink">{meta.emoji} {meta.title}</span>}
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right">

@@ -29,6 +29,7 @@ test('AC-20 with realtime blocked entirely, a phone follows a 3-question quiz by
   const a = await newPlayer(browser, 'Asha');
   const b = await newPlayer(browser, 'Blocked');
   await b.context.route('**/api/realtime/stream**', (route) => route.abort());
+  await b.context.addInitScript(() => localStorage.setItem('huddle-test-no-realtime', '1')); // WebKit ignores routes for EventSource
   const code = await createRoom(a);
   await joinRoom(b, code);
   await startGame(a.page, quizQueue(3, 25));

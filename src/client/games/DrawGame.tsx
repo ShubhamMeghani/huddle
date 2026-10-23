@@ -105,7 +105,7 @@ export function DrawGame({ sync, state }: RoomProps) {
       )}
       {kind === 'turnEnd' && v.lastWord && (
         <p className="card p-4 text-center text-xl font-black" data-testid="draw-reveal">
-          The word was <span className="text-accent">{v.lastWord}</span>
+          The word was <span className="text-accent-ink">{v.lastWord}</span>
         </p>
       )}
 
@@ -133,7 +133,7 @@ export function DrawGame({ sync, state }: RoomProps) {
             {SIZES.map((s, i) => (
               <button
                 key={s}
-                className={`btn !min-h-11 !px-3 ${tool.size === i ? 'btn-primary' : 'btn-ghost'}`}
+                className={`btn !px-3 ${tool.size === i ? 'btn-primary' : 'btn-ghost'}`}
                 aria-label={`Brush size ${i + 1}`}
                 aria-pressed={tool.size === i}
                 onClick={() => setTool({ ...tool, size: i })}
@@ -142,13 +142,13 @@ export function DrawGame({ sync, state }: RoomProps) {
                 <span className="inline-block rounded-full bg-current" style={{ width: 6 + i * 5, height: 6 + i * 5 }} />
               </button>
             ))}
-            <button className={`btn !min-h-11 !px-3 ${tool.eraser ? 'btn-primary' : 'btn-ghost'}`} aria-pressed={tool.eraser} onClick={() => setTool({ ...tool, eraser: !tool.eraser })} data-testid="tool-eraser">
+            <button className={`btn !px-3 ${tool.eraser ? 'btn-primary' : 'btn-ghost'}`} aria-pressed={tool.eraser} onClick={() => setTool({ ...tool, eraser: !tool.eraser })} data-testid="tool-eraser">
               🧽 Eraser
             </button>
-            <button className="btn btn-ghost !min-h-11 !px-3" onClick={() => api.current?.undo()} data-testid="tool-undo">
+            <button className="btn btn-ghost !px-3" onClick={() => api.current?.undo()} data-testid="tool-undo">
               ↩ Undo
             </button>
-            <button className="btn btn-ghost !min-h-11 !px-3" onClick={() => api.current?.clear()} data-testid="tool-clear">
+            <button className="btn btn-ghost !px-3" onClick={() => api.current?.clear()} data-testid="tool-clear">
               🗑 Clear
             </button>
           </div>

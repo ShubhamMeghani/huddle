@@ -13,10 +13,10 @@ export function TeamsPanel({ sync, state }: RoomProps) {
         <h2 className="text-lg font-black">Teams</h2>
         {me.isAdmin && (
           <div className="flex gap-2">
-            <button className="btn btn-ghost !min-h-11 !px-3 text-sm" onClick={() => void sync.act('setTeams', { mode: 'balance', count: teams?.length ?? 2 })} data-testid="teams-balance">
+            <button className="btn btn-ghost !px-3 text-sm" onClick={() => void sync.act('setTeams', { mode: 'balance', count: teams?.length ?? 2 })} data-testid="teams-balance">
               ⚖️ Balance
             </button>
-            <button className="btn btn-ghost !min-h-11 !px-3 text-sm" onClick={() => void sync.act('setTeams', { mode: 'shuffle', count: teams?.length ?? 2 })} data-testid="teams-shuffle">
+            <button className="btn btn-ghost !px-3 text-sm" onClick={() => void sync.act('setTeams', { mode: 'shuffle', count: teams?.length ?? 2 })} data-testid="teams-shuffle">
               🔀
             </button>
           </div>
@@ -27,7 +27,7 @@ export function TeamsPanel({ sync, state }: RoomProps) {
           {[2, 3, 4].map((n) => (
             <button
               key={n}
-              className={`btn !min-h-11 !px-4 text-sm ${(teams?.length ?? 2) === n ? 'btn-primary' : 'btn-ghost'}`}
+              className={`btn !px-4 text-sm ${(teams?.length ?? 2) === n ? 'btn-primary' : 'btn-ghost'}`}
               aria-pressed={(teams?.length ?? 2) === n}
               onClick={() => void sync.act('setTeams', { mode: 'balance', count: n })}
               data-testid={`teams-count-${n}`}

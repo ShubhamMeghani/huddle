@@ -119,7 +119,7 @@ export function SettingsForm({
                     type="button"
                     disabled={disabled}
                     aria-pressed={on}
-                    className={`btn !min-h-11 !px-3 text-sm ${on ? 'btn-primary' : 'btn-ghost'}`}
+                    className={`btn !px-3 text-sm ${on ? 'btn-primary' : 'btn-ghost'}`}
                     onClick={() => {
                       const next = on ? selected.filter((x) => x !== o.value) : [...selected, o.value];
                       if (next.length >= (f.minSelected ?? 1)) onChange({ ...value, [key]: next });

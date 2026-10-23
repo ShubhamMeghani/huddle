@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { GAME_META } from '@/games/meta';
 import { GAME_COMPONENTS } from '@/client/games';
-import { Countdown, seatName, type RoomProps } from './ui';
+import { Avatar, Countdown, seatName, type RoomProps } from './ui';
 import { LeaderboardButton } from './Leaderboard';
 
 /** Gentle vibration when it becomes your turn (R40); silently does nothing where unsupported (iOS). */
@@ -21,6 +21,7 @@ function useTurnVibration(mustAct: boolean) {
 export function TurnStatus({ state }: Pick<RoomProps, 'state'>) {
   const pub = state.snapshot!.public;
   const me = state.snapshot!.me;
+  const turnSeat = pub.seats.find((s) => s.id === (pub.phase.turnSeatId ?? (me.game?.mustAct ? me.seatId : null)));
   const mustAct = Boolean(me.game?.mustAct);
   let text: string;
   if (pub.paused) text = 'Paused';
@@ -29,8 +30,11 @@ export function TurnStatus({ state }: Pick<RoomProps, 'state'>) {
   else if (me.role !== 'player') text = 'Watching';
   else text = 'Waiting for others';
   return (
-    <div className={`text-lg font-black ${mustAct ? 'text-accent' : 'text-muted'}`} role="status" data-testid="turn-status" data-must-act={mustAct}>
-      {text}
+    <div className="flex items-center gap-2">
+      {turnSeat && <Avatar seat={turnSeat} size={28} />}
+      <div className={`text-lg font-black ${mustAct ? 'text-accent-ink' : 'text-muted'}`} role="status" data-testid="turn-status" data-must-act={mustAct}>
+        {text}
+      </div>
     </div>
   );
 }
@@ -48,7 +52,7 @@ export function Playing({ sync, state }: RoomProps) {
     <section className="flex flex-1 flex-col gap-4" data-game={game.id} data-testid="playing">
       <div className="card flex items-center justify-between gap-3 p-4">
         <div className="min-w-0">
-          <div className="text-sm font-black uppercase tracking-wide text-accent">
+          <div className="text-sm font-black uppercase tracking-wide text-accent-ink">
             {meta?.emoji} {meta?.title}
           </div>
           <TurnStatus state={state} />

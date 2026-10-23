@@ -34,7 +34,7 @@ export function LiveLeaderboard({ state, big = false }: Pick<RoomProps, 'state'>
                 {team && <span className="ml-2 text-sm font-bold text-muted">{team.name}</span>}
                 {s.afk && <span className="ml-2 text-xs font-black text-warn">AFK</span>}
               </span>
-              <span className="font-black tabular-nums" data-testid="lb-score">
+              <span key={s.score} className="bump font-black tabular-nums" data-testid="lb-score">
                 {teamMode ? '' : s.score}
               </span>
             </li>

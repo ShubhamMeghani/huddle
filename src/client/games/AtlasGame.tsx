@@ -41,7 +41,7 @@ export function AtlasGame({ sync, state }: RoomProps) {
       <div className="card flex items-center justify-between gap-3 p-4">
         <div>
           <div className="text-xs font-black uppercase tracking-wide text-muted">{VARIANT[v.variant]} · next place starts with</div>
-          <div className="text-6xl font-black text-accent" data-testid="atlas-letter">
+          <div className="text-6xl font-black text-accent-ink" data-testid="atlas-letter">
             {v.letter.toUpperCase()}
           </div>
         </div>

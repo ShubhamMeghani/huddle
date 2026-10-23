@@ -69,9 +69,10 @@ export function QuizGame({ sync, state }: RoomProps) {
               key={i}
               className="btn min-h-16 w-full justify-start !rounded-2xl text-left text-lg"
               style={{
-                background: v.reveal && isCorrect ? 'var(--success)' : TILE[i],
-                color: '#fff',
-                opacity: faded ? 0.45 : 1,
+                // Faded options stay readable (solid muted surface, not transparency) so contrast holds.
+                background: v.reveal && isCorrect ? '#0b7a45' : faded ? 'var(--surface-2)' : TILE[i],
+                color: faded ? 'var(--ink)' : '#fff',
+                border: faded ? '2px solid var(--line)' : undefined,
                 outline: isMine ? '4px solid var(--ink)' : undefined,
                 outlineOffset: 2,
               }}
@@ -99,11 +100,11 @@ export function QuizGame({ sync, state }: RoomProps) {
         </p>
       )}
       {v.reveal && (
-        <div className="card flex flex-col gap-2 p-4" data-testid="quiz-reveal">
+        <div className="reveal-card card flex flex-col gap-2 p-4" data-testid="quiz-reveal" data-reveal-card="true">
           <p className="text-lg font-black" data-testid="quiz-my-points">
             {me.seatId && v.reveal.points[me.seatId] ? `+${v.reveal.points[me.seatId]} points` : me.role === 'player' ? 'No points this time' : 'Answer revealed'}
           </p>
-          <button className="btn btn-ghost !min-h-11 self-start text-sm" onClick={() => setReportOpen(true)} disabled={Boolean(reported)} data-testid="report-question">
+          <button className="btn btn-ghost self-start text-sm" onClick={() => setReportOpen(true)} disabled={Boolean(reported)} data-testid="report-question">
             {reported ? 'Reported, thanks' : '🚩 Report question'}
           </button>
         </div>

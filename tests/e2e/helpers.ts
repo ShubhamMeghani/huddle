@@ -122,3 +122,25 @@ export async function opDigest(page: Page): Promise<string | null> {
 export function snapshotOf(page: Page): Promise<any> {
   return page.evaluate(() => (window as unknown as { __huddleSync: { state: { snapshot: unknown } } }).__huddleSync.state.snapshot);
 }
+
+/** Opens a fresh demo room in `page` (visitor is admin, 4 bots). */
+export async function openDemo(page: Page) {
+  await page.goto('/demo');
+  await expect(page.getByTestId('demo-start')).toHaveAttribute('data-ready', 'true');
+  await page.getByTestId('demo-go').click();
+  await expect(page.getByTestId('demo-picker')).toBeVisible();
+}
+
+export const GAME_IDS = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt'] as const;
+
+/** In a demo room: start `id`, run `check` on its main phase, then end it as admin and return to a scoreboard. */
+export async function visitEachGame(page: Page, check: (id: (typeof GAME_IDS)[number]) => Promise<void>) {
+  for (const id of GAME_IDS) {
+    await page.getByTestId(`demo-${id}`).click();
+    await expect(page.getByTestId('playing')).toHaveAttribute('data-game', id);
+    await check(id);
+    await page.getByTestId('admin-open').click();
+    await page.getByTestId('admin-end-game').click();
+    await expect(page.getByTestId('break')).toBeVisible();
+  }
+}

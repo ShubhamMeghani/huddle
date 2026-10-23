@@ -42,7 +42,7 @@ export function ImposterGame({ sync, state }: RoomProps) {
       {playing && mine.word && kind !== 'reveal' && (
         <div className="card p-4 text-center" data-testid="imposter-word-card">
           <div className="text-xs font-black uppercase tracking-wide text-muted">Your secret word</div>
-          <div className="text-3xl font-black text-accent" data-testid="imposter-word">
+          <div className="text-3xl font-black text-accent-ink" data-testid="imposter-word">
             {mine.word}
           </div>
           {mine.isImposter && <div className="mt-1 font-black text-danger">You are the imposter! Blend in.</div>}
@@ -151,7 +151,7 @@ export function ImposterGame({ sync, state }: RoomProps) {
       )}
 
       {kind === 'reveal' && v.reveal && (
-        <div className="card flex flex-col gap-2 p-5 text-center" data-testid="imposter-reveal" data-outcome={v.reveal.outcome}>
+        <div className="reveal-card card flex flex-col gap-2 p-5 text-center" data-testid="imposter-reveal" data-outcome={v.reveal.outcome} data-reveal-card="true">
           <div className="text-5xl">{v.reveal.outcome === 'crew' ? '🎉' : '🕵️'}</div>
           <p className="text-2xl font-black" data-testid="imposter-outcome">
             {v.reveal.outcome === 'crew' ? 'The crew caught the imposter!' : v.reveal.outcome === 'steal' ? 'Imposter steals the win!' : 'The imposter got away!'}
@@ -160,7 +160,7 @@ export function ImposterGame({ sync, state }: RoomProps) {
             Imposter: {v.reveal.imposters.map((id) => seatName(pub, id)).join(' & ')}
           </p>
           <p className="font-bold">
-            Crew word: <span className="text-accent">{v.reveal.crewWord}</span> · Imposter word: <span className="text-accent">{v.reveal.imposterWord}</span>
+            Crew word: <span className="text-accent-ink">{v.reveal.crewWord}</span> · Imposter word: <span className="text-accent-ink">{v.reveal.imposterWord}</span>
           </p>
           {v.reveal.guess && <p className="text-sm font-bold text-muted">Imposter guessed “{v.reveal.guess}”</p>}
           {v.tally && (

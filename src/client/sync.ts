@@ -231,6 +231,12 @@ export class RoomSync {
   }
 
   private connectRealtime() {
+    // Realtime counts as down until it actually connects: a stream stuck "connecting" also triggers polling (R16).
+    this.markDown();
+    // Test-mode hook: simulate a transport that is blocked entirely (WebKit can't intercept EventSource).
+    try {
+      if (this.state.testMode && localStorage.getItem('huddle-test-no-realtime') === '1') return;
+    } catch {}
     if (this.driver === 'local') return this.connectLocal();
     void this.connectAbly();
   }

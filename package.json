@@ -22,7 +22,8 @@
     "db:migrate": "node --env-file=.env.local --import tsx scripts/migrate.ts",
     "env:check": "tsx scripts/env-check.ts",
     "ci": "npm run lint && npm run typecheck && npm test && npm run test:e2e",
-    "build:content": "tsx scripts/build-content.ts && tsx scripts/make-bot-drawings.ts"
+    "build:content": "tsx scripts/build-content.ts && tsx scripts/make-bot-drawings.ts",
+    "build:icons": "tsx scripts/make-icons.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",

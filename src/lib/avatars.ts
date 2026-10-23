@@ -8,7 +8,7 @@ export const AVATAR_COLORS = [
   { bg: '#00B86B', fg: '#00140B' },
   { bg: '#00C2C7', fg: '#001A1B' },
   { bg: '#1E90FF', fg: '#00101F' },
-  { bg: '#3D3DDB', fg: '#FFFFFF' },
+  { bg: '#FFB3C1', fg: '#2A0A12' },
   { bg: '#8A2BE2', fg: '#FFFFFF' },
   { bg: '#E040FB', fg: '#1A001D' },
   { bg: '#8B5A2B', fg: '#FFFFFF' },

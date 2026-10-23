@@ -95,7 +95,7 @@ export function CrewPage({ id }: { id: string }) {
         <h1 className="text-3xl font-black" data-testid="crew-title">
           {data.crew.name}
         </h1>
-        <Link className="btn btn-ghost !min-h-11 text-sm" href="/">
+        <Link className="btn btn-ghost text-sm" href="/">
           Home
         </Link>
       </header>
@@ -117,7 +117,7 @@ export function CrewPage({ id }: { id: string }) {
       <section className="card p-4" aria-label="Season leaderboard">
         <div className="mb-3 flex items-center justify-between gap-2">
           <h2 className="text-lg font-black">Season</h2>
-          <select className="input !min-h-11 !w-auto" value={data.season} onChange={(e) => setSeason(e.target.value)} aria-label="Season" data-testid="season-select">
+          <select className="input !w-auto" value={data.season} onChange={(e) => setSeason(e.target.value)} aria-label="Season" data-testid="season-select">
             {[...new Set([data.season, ...data.seasons])].map((s) => (
               <option key={s} value={s}>
                 {monthLabel(s)}
@@ -171,7 +171,7 @@ export function CrewPage({ id }: { id: string }) {
         <div className="mt-3 flex flex-wrap items-center gap-2" data-testid="h2h">
           <span className="font-black">Head-to-head</span>
           {(['a', 'b'] as const).map((k) => (
-            <select key={k} className="input !min-h-11 !w-auto" value={h2h[k]} onChange={(e) => setH2h({ ...h2h, [k]: e.target.value, r: undefined })} aria-label={`Player ${k.toUpperCase()}`}>
+            <select key={k} className="input !w-auto" value={h2h[k]} onChange={(e) => setH2h({ ...h2h, [k]: e.target.value, r: undefined })} aria-label={`Player ${k.toUpperCase()}`}>
               <option value="">Pick…</option>
               {data.members.map((m) => (
                 <option key={m.identityId} value={m.identityId}>

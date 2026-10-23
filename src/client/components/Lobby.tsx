@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { GAME_META } from '@/games/meta';
 import { defaultsOf } from '@/games/settings';
 import type { GameConfig } from '@/engine/types';
-import { Avatar, type RoomProps } from './ui';
+import { Avatar, Sheet, type RoomProps } from './ui';
+import { AVATAR_EMOJIS } from '@/lib/avatars';
 import { SettingsForm } from './SettingsForm';
 import { TeamsPanel } from './TeamsPanel';
 import { CrewLink } from './CrewLink';
 import { DemoPicker } from './Demo';
 
-export function PlayerList({ state }: Pick<RoomProps, 'state'>) {
+export function PlayerList({ state, onPickAvatar }: Pick<RoomProps, 'state'> & { onPickAvatar?: () => void }) {
   const pub = state.snapshot!.public;
   const me = state.snapshot!.me;
   const seated = pub.seats.filter((s) => s.status === 'seated');
@@ -22,7 +23,13 @@ export function PlayerList({ state }: Pick<RoomProps, 'state'>) {
       <ul className="flex flex-col gap-2" data-testid="seat-list">
         {seated.map((s) => (
           <li key={s.id} className="flex items-center gap-3" data-testid="seat" data-seat-id={s.id}>
-            <Avatar seat={s} />
+            {s.id === me.seatId && onPickAvatar ? (
+              <button className="rounded-full" onClick={onPickAvatar} aria-label="Change your avatar" data-testid="my-avatar">
+                <Avatar seat={s} />
+              </button>
+            ) : (
+              <Avatar seat={s} />
+            )}
             <span className="flex-1 truncate text-lg font-extrabold">
               {s.name}
               {s.id === me.seatId && <span className="ml-2 text-sm text-muted">(you)</span>}
@@ -49,6 +56,7 @@ export function Lobby({ sync, state }: RoomProps) {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<number | null>(null);
+  const [picking, setPicking] = useState(false);
   const link = typeof window !== 'undefined' ? `${window.location.origin}/r/${pub.code}` : `/r/${pub.code}`;
   const games = Object.values(GAME_META).filter((g) => !g.testOnly || state.testMode);
   const queue = pub.queue;
@@ -79,7 +87,7 @@ export function Lobby({ sync, state }: RoomProps) {
           <div className="text-4xl font-black tracking-[0.25em]" data-testid="lobby-code">
             {pub.code}
           </div>
-          <button className="btn btn-ghost mt-2 !min-h-11 text-sm" onClick={copy} data-testid="copy-link">
+          <button className="btn btn-ghost mt-2 text-sm" onClick={copy} data-testid="copy-link">
             {copied ? 'Copied!' : '🔗 Copy link'}
           </button>
         </div>
@@ -91,7 +99,25 @@ export function Lobby({ sync, state }: RoomProps) {
       </p>
 
       <DemoPicker sync={sync} state={state} />
-      <PlayerList state={state} />
+      <PlayerList state={state} onPickAvatar={() => setPicking(true)} />
+      <Sheet open={picking} onClose={() => setPicking(false)} title="Pick your avatar" testId="avatar-sheet">
+        <div className="grid grid-cols-6 gap-2">
+          {AVATAR_EMOJIS.map((e, i) => (
+            <button
+              key={e}
+              className="btn btn-ghost !px-0 text-2xl"
+              aria-label={`Avatar ${e}`}
+              onClick={() => {
+                void sync.act('setAvatar', { emoji: e });
+                setPicking(false);
+              }}
+              data-testid={`emoji-${i}`}
+            >
+              {e}
+            </button>
+          ))}
+        </div>
+      </Sheet>
 
       <section className="card flex flex-col gap-3 p-4" aria-label="Game queue">
         <h2 className="text-lg font-black">Tonight&apos;s games</h2>
@@ -108,11 +134,11 @@ export function Lobby({ sync, state }: RoomProps) {
                   <span className="flex-1 font-extrabold">{m?.title}</span>
                   {me.isAdmin && (
                     <>
-                      <button className="btn btn-ghost !min-h-11 !px-3 text-sm" onClick={() => setEditing(editing === i ? null : i)} data-testid={`edit-${i}`}>
+                      <button className="btn btn-ghost !px-3 text-sm" onClick={() => setEditing(editing === i ? null : i)} data-testid={`edit-${i}`}>
                         Rules
                       </button>
                       <button
-                        className="btn btn-ghost !min-h-11 !px-3 text-sm"
+                        className="btn btn-ghost !px-3 text-sm"
                         aria-label={`Remove ${m?.title}`}
                         onClick={() => void saveQueue(queue.filter((_, j) => j !== i))}
                       >
@@ -141,7 +167,7 @@ export function Lobby({ sync, state }: RoomProps) {
             {games.map((g) => (
               <button
                 key={g.id}
-                className="btn btn-ghost !min-h-11 text-sm"
+                className="btn btn-ghost text-sm"
                 data-game={g.id}
                 onClick={() => void saveQueue([...queue, { gameId: g.id, settings: defaultsOf(g.settings) }])}
                 data-testid={`add-${g.id}`}

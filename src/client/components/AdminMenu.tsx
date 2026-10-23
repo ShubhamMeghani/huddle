@@ -51,11 +51,11 @@ export function AdminMenu({ sync, state, close }: RoomProps & { close: () => voi
               <Avatar seat={s} size={32} />
               <span className="flex-1 truncate font-bold">{s.name}</span>
               {!s.isBot && s.status === 'seated' && (
-                <button className="btn btn-ghost !min-h-11 !px-3 text-sm" onClick={() => run('transferAdmin', { seatId: s.id })} data-testid="make-admin">
+                <button className="btn btn-ghost !px-3 text-sm" onClick={() => run('transferAdmin', { seatId: s.id })} data-testid="make-admin">
                   👑
                 </button>
               )}
-              <button className="btn btn-ghost !min-h-11 !px-3 text-sm text-danger" onClick={() => run('kick', { seatId: s.id })} aria-label={`Remove ${s.name}`} data-testid="kick">
+              <button className="btn btn-ghost !px-3 text-sm text-danger" onClick={() => run('kick', { seatId: s.id })} aria-label={`Remove ${s.name}`} data-testid="kick">
                 Remove
               </button>
             </li>
