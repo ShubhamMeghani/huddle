@@ -159,6 +159,8 @@ export class RoomSync {
         const current = this.state.snapshot;
         if (!current || body.v >= current.v) {
           this.set({ snapshot: { v: body.v, public: body.public, me: body.me }, error: null, testMode: Boolean(body.testMode) });
+        } else {
+          this.refetchQueued = true; // a newer update overtook this response: fetch again so `me` is current too
         }
         this.scheduleTick();
       } catch {
@@ -178,7 +180,7 @@ export class RoomSync {
     if (!this.state.testMode || typeof window === 'undefined') return;
     const w = window as unknown as { __huddleLog?: string[] };
     w.__huddleLog ??= [];
-    w.__huddleLog.push(`${name} ${JSON.stringify(data)}`);
+    w.__huddleLog.push(`${Date.now()} ${name} ${JSON.stringify(data)}`);
     if (w.__huddleLog.length > 2000) w.__huddleLog.shift();
   }
 
@@ -284,11 +286,12 @@ export class RoomSync {
     if (this.tickTimer) clearTimeout(this.tickTimer);
     const wake = this.state.snapshot?.public.nextWakeAt;
     if (wake == null) return;
-    const delay = Math.max(0, wake - this.clock.now()) + Math.floor(Math.random() * 300);
+    // Wait until the deadline has certainly passed on the server: an early tick only costs the room a request.
+    const delay = Math.max(0, wake - this.clock.safeNow()) + Math.floor(Math.random() * 300);
     this.tickTimer = setTimeout(async () => {
       const body = await this.request(`/api/rooms/${this.code}/tick`, { method: 'POST' }).catch(() => null);
       if (body?.ok && this.state.snapshot && body.v > this.state.snapshot.v) void this.fetchSnapshot();
-      else if (body?.ok) this.tickTimer = setTimeout(() => this.scheduleTick(), 1000);
+      else if (body?.ok) this.tickTimer = setTimeout(() => this.scheduleTick(), 1000 + Math.floor(Math.random() * 1000));
     }, Math.min(delay, 2 ** 31 - 1));
   }
 

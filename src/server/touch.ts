@@ -1,6 +1,6 @@
 import 'server-only';
 import { getIdentity } from './identity';
-import { roomOp, snapshotFor } from './rooms';
+import { peekRoom, roomOp, snapshotFor } from './rooms';
 import { realtimeDriverName, isTestMode, presenceMs } from './env';
 import { channelName } from './realtime';
 import { ok } from './http';
@@ -20,7 +20,8 @@ export async function touch(code: string, withView: boolean, wantsScreen = false
   const identity = await getIdentity();
   const screenCookie = (await cookies()).get(SCREEN_COOKIE)?.value;
   // A registered big screen views the room display-only, even if this browser also has a player identity.
-  const out = await roomOp(code, wantsScreen ? null : identity, () => null);
+  const who = wantsScreen ? null : identity;
+  const out = (await peekRoom(code, who)) ?? (await roomOp(code, who, () => null));
   const screen = wantsScreen && isScreenFor(out.room, screenCookie);
   if (!withView) return ok({ v: out.room.v });
   return ok({

@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { randomUUID } from 'node:crypto';
-import { roomOp, requireSeat } from '@/server/rooms';
+import { peekRoom, roomOp, requireSeat } from '@/server/rooms';
+import { pool, q } from '@/server/db';
 import { applyAction } from '@/engine/room';
 import { GameError } from '@/engine/types';
 import type { Identity } from '@/server/identity';
@@ -19,6 +20,27 @@ function wave(code: string, who: Identity, actionId = randomUUID()) {
 }
 
 describe('room pipeline', () => {
+  test('a no-op touch reads without the row lock; once a deadline passes it defers to the locked path', async () => {
+    const { code, ids } = await roomWith(['A', 'B']);
+    await roomOp(code, ids[0], (room, ctx) => {
+      applyAction(room, requireSeat(room, ids[0]), { type: 'start', queue: [{ gameId: 'ping', settings: { mode: 'all', rounds: 1, turnSeconds: 10 } }] }, ctx);
+      return null;
+    });
+    const before = await loadRoom(code);
+    // Another transaction holds the row lock: a peek must not wait for it.
+    const holder = await pool().connect();
+    await holder.query('BEGIN');
+    await holder.query('select 1 from rooms where code = $1 for update', [code]);
+    const peeked = await peekRoom(code, ids[1]);
+    await holder.query('ROLLBACK');
+    holder.release();
+    expect(peeked?.room.v).toBe(before.version);
+    expect((await loadRoom(code)).version).toBe(before.version);
+
+    await q(`update rooms set state = jsonb_set(state, '{phase,deadline}', to_jsonb($2::bigint)) where code = $1`, [code, Date.now() - 1]);
+    expect(await peekRoom(code, ids[1])).toBeNull();
+  });
+
   test('AC-14 the same actionId is applied once and both responses are identical', async () => {
     const { code, ids } = await roomWith(['A', 'B']);
     const before = await loadRoom(code);

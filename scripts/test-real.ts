@@ -50,8 +50,14 @@ async function main() {
   await waitUp();
   const pw = ['node_modules/@playwright/test/cli.js', 'test', '-c', 'playwright.deploy.config.ts'];
   let failures = 0;
+  const only = process.argv.indexOf('--grep'); // `--grep <pattern>`: run just those deploy tests
+  if (only > 0) {
+    failures += run([...pw, '--grep', process.argv[only + 1]]) ? 1 : 0;
+    server.kill();
+    process.exit(failures ? 1 : 0);
+  }
   if (!process.argv.includes('--probe-only')) {
-    failures += run([...pw, '--grep', 'AC-77|@skeleton|@before-restart']) ? 1 : 0;
+    failures += run([...pw, '--grep', 'AC-77|AC-80|AC-87|@skeleton|@before-restart']) ? 1 : 0;
     server.kill();
     await new Promise((r) => setTimeout(r, 2000));
     server = startServer();

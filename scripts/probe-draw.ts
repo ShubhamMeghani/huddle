@@ -72,14 +72,20 @@ async function main() {
   const channel = snap.json.realtime.channel as string;
 
   const sendTimes = new Map<number, number>();
+  let turnId = 'lobby';
   const latencies: number[] = [];
   let delivered = 0;
   const closers: (() => void)[] = [];
 
   for (let i = 0; i < SUBSCRIBERS; i++) {
     const v = new Client(BASE);
-    await v.req('/api/identity/guest', { method: 'POST', body: { name: `Viewer${i + 1}` } });
-    await v.req(`/api/rooms/${code}/join`, { method: 'POST', body: { spectate: i === SUBSCRIBERS - 1 } });
+    const isScreen = i === SUBSCRIBERS - 1; // the 7th subscriber is a real big screen
+    if (isScreen) {
+      await v.req(`/api/rooms/${code}/screen`, { method: 'POST', body: {} });
+    } else {
+      await v.req('/api/identity/guest', { method: 'POST', body: { name: `Viewer${i + 1}` } });
+      await v.req(`/api/rooms/${code}/join`, { method: 'POST', body: {} });
+    }
     const onMsg = (seq: number) => {
       delivered++;
       const t0 = sendTimes.get(seq);
@@ -124,6 +130,15 @@ async function main() {
     }
   }
 
+  // A real Draw & Guess turn: the admin is the first drawer and picks a word.
+  const act = (type: string, payload: Record<string, unknown> = {}) =>
+    admin.req(`/api/rooms/${code}/actions`, { method: 'POST', body: { actionId: crypto.randomUUID(), type, payload } });
+  const started = await act('start', { queue: [{ gameId: 'draw', settings: { rounds: 1, drawSeconds: 120, hints: 0, words: 'mixed' } }] });
+  if (!started.json?.ok) throw new Error(`could not start draw: ${started.json?.code}`);
+  const chose = await act('choose', { index: 0 });
+  if (!chose.json?.ok) throw new Error(`could not choose a word: ${chose.json?.code}`);
+  turnId = (await admin.req(`/api/rooms/${code}/snapshot`)).json.public.game.view.turnId;
+
   const batches = synthesize();
   const start = Date.now();
   const results: { status: number; at: number; bytes: number }[] = [];
@@ -134,7 +149,7 @@ async function main() {
           setTimeout(async () => {
             const bytes = Buffer.byteLength(JSON.stringify(b.ops));
             sendTimes.set(seq, Date.now());
-            const post = () => admin.req(`/api/rooms/${code}/strokes`, { method: 'POST', body: { turnId: 'lobby', seq, ops: b.ops } }).catch(() => ({ status: 0, json: null }));
+            const post = () => admin.req(`/api/rooms/${code}/strokes`, { method: 'POST', body: { turnId, seq, ops: b.ops } }).catch(() => ({ status: 0, json: null }));
             let r = await post();
             if (r.status === 429 || r.status === 0) {
               await new Promise((w) => setTimeout(w, 400)); // client behaviour: retry once, same seq (idempotent)
@@ -178,7 +193,7 @@ async function main() {
 
   const lines = [
     '',
-    `### Drawing-throughput probe · ${new Date().toISOString()} · ${BASE.includes('localhost') ? 'local production build' : 'production'} · driver ${driver}`,
+    `### Drawing-throughput probe (real Draw turn) · ${new Date().toISOString()} · ${BASE.includes('localhost') ? 'local production build' : 'production'} · driver ${driver}`,
     '',
     `| Metric | Value | Budget |`,
     `|---|---|---|`,

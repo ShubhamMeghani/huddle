@@ -19,6 +19,19 @@ export async function newPlayer(browser: Browser, name: string): Promise<Player>
   return { name, context, page };
 }
 
+/**
+ * WebKit shares one network process (and its 6-connections-per-host limit) across contexts, and each phone in a
+ * room holds an open event stream in test mode, so a 7th phone could never load and the 6th could not send. Real phones
+ * are separate devices: every phone after the first 4 gets its own browser, leaving connections free for requests.
+ */
+const PHONES_PER_BROWSER = 4;
+const extraBrowsers = new WeakMap<BrowserContext, Browser>();
+
+async function browserFor(browser: Browser, index: number): Promise<Browser> {
+  if (index < PHONES_PER_BROWSER) return browser;
+  return browser.browserType().launch();
+}
+
 export async function createRoom(p: Player, seed?: string): Promise<string> {
   if (seed) await p.context.setExtraHTTPHeaders({ 'x-huddle-seed': seed });
   await p.page.goto('/');
@@ -31,7 +44,7 @@ export async function createRoom(p: Player, seed?: string): Promise<string> {
 }
 
 export async function joinRoom(p: Player, code: string, opts: { spectate?: boolean } = {}) {
-  await p.page.goto(`/r/${code}`);
+  await p.page.goto(`/r/${code}`, { waitUntil: 'domcontentloaded' });
   await expect(p.page.getByTestId('join-screen')).toHaveAttribute('data-ready', 'true');
   await p.page.getByTestId('join-name').fill(p.name);
   await p.page.getByTestId(opts.spectate ? 'watch-button' : 'join-button').click();
@@ -40,7 +53,12 @@ export async function joinRoom(p: Player, code: string, opts: { spectate?: boole
 
 /** A room with `names.length` players; the first creates it. */
 export async function roomOf(browser: Browser, names: string[], seed?: string): Promise<{ code: string; players: Player[] }> {
-  const players = await Promise.all(names.map((n) => newPlayer(browser, n)));
+  const players = await Promise.all(names.map(async (n, i) => {
+    const b = await browserFor(browser, i);
+    const p = await newPlayer(b, n);
+    if (b !== browser) extraBrowsers.set(p.context, b);
+    return p;
+  }));
   const code = await createRoom(players[0], seed);
   for (const p of players.slice(1)) await joinRoom(p, code);
   for (const p of players) await expect(p.page.getByTestId('seat')).toHaveCount(names.length);
@@ -48,7 +66,10 @@ export async function roomOf(browser: Browser, names: string[], seed?: string): 
 }
 
 export async function closeAll(players: Player[]) {
-  await Promise.all(players.map((p) => p.context.close().catch(() => {})));
+  await Promise.all(players.map(async (p) => {
+    await p.context.close().catch(() => {});
+    await extraBrowsers.get(p.context)?.close().catch(() => {});
+  }));
 }
 
 export async function versionOf(page: Page): Promise<number> {
@@ -145,4 +166,40 @@ export async function visitEachGame(page: Page, check: (id: (typeof GAME_IDS)[nu
     await page.getByTestId('admin-end-game').click();
     await expect(page.getByTestId('break')).toBeVisible();
   }
+}
+
+/** Plays along on one phone: does whatever the phone asks until `untilTestId` appears. */
+export async function playUntil(page: Page, untilTestId: string, timeoutMs = 600_000) {
+  const tap = async (id: string) => {
+    const el = page.getByTestId(id).first();
+    if ((await el.isVisible().catch(() => false)) && (await el.isEnabled().catch(() => false))) {
+      await el.click({ timeout: 2000 }).catch(() => {});
+      return true;
+    }
+    return false;
+  };
+  const fill = async (id: string, text: string, send: string) => {
+    const el = page.getByTestId(id);
+    if (await el.isVisible().catch(() => false)) {
+      await el.fill(text, { timeout: 2000 }).catch(() => {});
+      await tap(send);
+    }
+  };
+  const end = Date.now() + timeoutMs;
+  while (Date.now() < end) {
+    if (page.isClosed()) throw new Error('page closed');
+    if (await page.getByTestId(untilTestId).isVisible().catch(() => false)) return;
+    await tap('quiz-option-0');
+    if (await tap('draw-choice-0')) await drawLine(page, [200, 200], [700, 500]).catch(() => {});
+    await tap('charades-guessed');
+    await tap('steal-none');
+    await fill('clue-input', 'mystery', 'clue-send');
+    await tap('imposter-ready');
+    await tap('vote-for');
+    await fill('guess-word-input', 'pizza', 'guess-word-send');
+    await tap('mlt-vote-for');
+    await tap('atlas-accept');
+    await page.waitForTimeout(400);
+  }
+  throw new Error(`did not reach ${untilTestId}`);
 }

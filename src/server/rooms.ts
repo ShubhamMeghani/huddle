@@ -111,6 +111,53 @@ export async function createRoom(opts: {
  * Locks the row, replays idempotent actions, runs catch-up, applies `op`, bumps the version
  * when anything changed, records the action, updates presence and publishes after commit.
  */
+/** Loads what every op needs: presence, a working copy of the state, and the context. */
+async function prepare(c: Tx, row: { id: string; state: RoomState; version: number }, now: number) {
+  const presence = await loadPresence(c, row.id);
+  const before = row.state;
+  const room = structuredClone(before);
+  room.v = row.version;
+  const ctx = makeCtx(room, now, presence);
+  if (room.status !== 'playing') {
+    ctx.ratings = await loadRatings(c, room);
+    const ex = await c.query('select question_id from question_reports group by question_id having count(*) >= 3');
+    ctx.excludedQuestions = ex.rows.map((r: { question_id: string }) => r.question_id);
+  }
+  return { presence, before, room, ctx };
+}
+
+/**
+ * Snapshot, tick and heartbeat usually change nothing. They run catch-up on an unlocked read first and take the
+ * row lock only when something is due, so a room's phones never queue behind each other's no-op requests.
+ * Returns null when the locked path must run.
+ */
+export async function peekRoom(code: string, identity: Identity | null): Promise<OpOutcome<null> | null> {
+  const now = Date.now();
+  return tx(async (c) => {
+    const rows = await c.query(
+      `select id, state, version, last_activity_at < now() - interval '1 minute' as idle from rooms
+       where code = $1 and ended_at is null and expires_at > now()`,
+      [code],
+    );
+    if (rows.rowCount === 0) throw new GameError('ROOM_NOT_FOUND');
+    const row = rows.rows[0];
+    if (row.idle) return null; // the locked path also extends the room's expiry
+    const { presence, before, room, ctx } = await prepare(c, row, now);
+    catchUp(room, ctx);
+    planBots(room, ctx);
+    if (ctx.effects.length || JSON.stringify(room) !== JSON.stringify({ ...before, v: row.version })) return null;
+    if (identity) {
+      await c.query(
+        `insert into presence (room_id, identity_id, last_seen_at) values ($1, $2, now())
+         on conflict (room_id, identity_id) do update set last_seen_at = now()`,
+        [row.id, identity.id],
+      );
+      presence[identity.id] = now;
+    }
+    return { room, result: null, changed: false, presence, serverNow: now, private: null };
+  });
+}
+
 export async function roomOp<T>(
   code: string,
   identity: Identity | null,
@@ -144,16 +191,7 @@ export async function roomOp<T>(
         };
       }
     }
-    const presence = await loadPresence(c, row.id);
-    const before = row.state as RoomState;
-    const room = structuredClone(before);
-    room.v = row.version;
-    const ctx = makeCtx(room, now, presence);
-    if (room.status !== 'playing') {
-      ctx.ratings = await loadRatings(c, room);
-      const ex = await c.query('select question_id from question_reports group by question_id having count(*) >= 3');
-      ctx.excludedQuestions = ex.rows.map((r: { question_id: string }) => r.question_id);
-    }
+    const { presence, before, room, ctx } = await prepare(c, row, now);
     catchUp(room, ctx);
     const result = op(room, ctx);
     planBots(room, ctx);

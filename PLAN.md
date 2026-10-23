@@ -68,8 +68,8 @@ The full stack is in SPEC §3:
 | 11 | Leaderboard button and big screen | AUTO | done | 6811ed5 |
 | 12 | Demo with bots | AUTO | done | ae34a0d |
 | 13 | Design and PWA (iPhone-first) | AUTO | done | 8d721a5 |
-| 14 | Privacy page | AUTO | done | phase-14 commit |
-| 15 | Full multi-player E2E suite and verification | AUTO | todo | – |
+| 14 | Privacy page | AUTO | done | bf25834 |
+| 15 | Full multi-player E2E suite and verification | AUTO | done | phase-15 commit |
 | 16 | Human steps and acceptance | HUMAN, then AUTO | todo | – |
 
 If time runs short, cut Should items in this order: recap card (10.7) → big screen (11.2) → Most Likely To (9.1–9.2). Log each cut and mark its ACs `cut`. The steal rule (R65) is a Must, so cutting it would be a SPEC change (rule 4).
@@ -446,7 +446,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-36 | E2E | 3 | pass | `tests/e2e/teams.spec.ts` · pass @ phase-3 |
 | AC-37 | Unit | 3 | pass | `tests/unit/ratings.test.ts` · pass @ phase-3 |
 | AC-38 | Unit | 9 | pass | `tests/unit/secrets.test.ts` · pass @ phase-9 |
-| AC-39 | E2E | 15 | todo | `tests/e2e/secrets-sniff.spec.ts` |
+| AC-39 | E2E | 15 | pass | `tests/e2e/secrets-sniff.spec.ts` (phase-15 commit) |
 | AC-40 | E2E | 13 | pass | `tests/e2e/layout.spec.ts` · pass @ phase-13 |
 | AC-41 | E2E | 13 | pass | `tests/e2e/theme.spec.ts` · pass @ phase-13 (axe, both themes) |
 | AC-42 | E2E | 11 | pass | `tests/e2e/leaderboard.spec.ts` · pass @ phase-11 |
@@ -484,17 +484,17 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-74 | Unit | 9 | pass | `tests/unit/games/mlt.test.ts` · pass @ phase-9 (159 prompts) |
 | AC-75 | E2E | 9 | pass | `tests/e2e/mlt.spec.ts` · pass @ phase-9 |
 | AC-76 | Deploy | 16 | Pending (human) | GitHub Actions run (after H6) |
-| AC-77 | Deploy | 16 | Pending (human) | `tests/deploy/realtime.spec.ts` (local proof in Phase 1) · local real-services proof passed in phase 1 |
-| AC-78 | Deploy | 16 | Pending (human) | `tests/deploy/neon.spec.ts` (local proof in Phase 1) · local proof (restart) passed in phase 1 |
+| AC-77 | Deploy | 16 | Pending (human) | `tests/deploy/realtime.spec.ts` (local proof in Phase 1) · local real-services proof passed in phase 1 · local re-run passed in phase 15 (p95 2.9 s locally) |
+| AC-78 | Deploy | 16 | Pending (human) | `tests/deploy/neon.spec.ts` (local proof in Phase 1) · local proof (restart) passed in phase 1 · local restart re-run passed in phase 15 |
 | AC-79 | Deploy | 16 | Pending (human) | `tests/deploy/google.spec.ts` (needs H5) |
-| AC-80 | Deploy | 16 | Pending (human) | `tests/deploy/six-browsers.spec.ts` (local proof in Phases 1 and 15) · 6-browser skeleton passed locally in phase 1 |
-| AC-81 | Deploy | 16 | Pending (human) | `scripts/probe-draw.ts` → `docs/deploy-checks.md` (local probe in Phase 1) · local probe passed in phase 1 (4.15/s, 0 errors, 1.33 % of quota) |
+| AC-80 | Deploy | 16 | Pending (human) | `tests/deploy/six-browsers.spec.ts` (local proof in Phases 1 and 15) · 6-browser skeleton passed locally in phase 1 · Quiz + Draw version passed locally in phase 15 (6 real browsers, reload mid-turn, identical scoreboards; p95 4.4 s / strokes 5.3 s locally) |
+| AC-81 | Deploy | 16 | Pending (human) | `scripts/probe-draw.ts` → `docs/deploy-checks.md` (local probe in Phase 1) · local probe passed in phase 1 (4.15/s, 0 errors, 1.33 % of quota) · real Draw-turn probe passed locally in phase 15 (4.15/s, 0 errors, 1.33 % of quota) |
 | AC-82 | Manual | 16 | Pending (human) | `docs/playtest.md` (H8) |
 | AC-83 | Unit | 13 | pass | `tests/unit/design-tokens.test.ts` · pass @ phase-13 |
 | AC-84 | E2E | 13 | pass | `tests/e2e/design.spec.ts` · pass @ phase-13 |
 | AC-85 | E2E | 13 | pass | `tests/e2e/celebrations.spec.ts` · pass @ phase-13 |
 | AC-86 | E2E | 14 | pass | `tests/e2e/privacy.spec.ts` · pass @ phase-14 |
-| AC-87 | Deploy | 16 | Pending (human) | `tests/deploy/demo.spec.ts` · tests/deploy/demo.spec.ts written; runs after H6 |
+| AC-87 | Deploy | 16 | Pending (human) | `tests/deploy/demo.spec.ts` · tests/deploy/demo.spec.ts written; runs after H6 · passed locally in phase 15 (79 s) |
 | AC-88 | E2E | 5 | pass | `tests/e2e/draw-touch.spec.ts` · pass @ phase-5 |
 
 ---
@@ -543,6 +543,11 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 13 · Realtime counts as down until it actually connects. Test mode has a `huddle-test-no-realtime` hook. · WebKit can't intercept EventSource in Playwright, and a stream stuck "connecting" must still fall back to polling (R16).
 - 2026-10-23 · 13 · One avatar colour changed (indigo → light pink). · The CIEDE2000 check found indigo too close to violet (ΔE 10.5).
 - 2026-10-23 · 13 · The offline page uses a plain `<a href="/">` (lint exception). · Offline, a full reload is the right "try again".
+- 2026-10-23 · 15 · Rooms with more than 4 phones give every further phone its own Playwright browser. · Playwright's WebKit shares one network process (6 connections per host) across contexts, and each phone holds an open event stream in test mode, so phones 7 and 8 never loaded. Real phones are separate devices; production uses Ably WebSockets.
+- 2026-10-23 · 15 · The sniffing test (AC-39) treats a capture as "before the reveal" when it arrived before the reveal showed and is not itself a `reveal`/`turnEnd` state. The test-mode log stamps each frame with its arrival time. · A loaded iPhone emulator can paint a frame seconds after it arrives, so a wall-clock margin flagged the reveal frames themselves.
+- 2026-10-23 · 15 · Snapshot, tick and heartbeat first run catch-up on an unlocked read (`peekRoom`) and take the row lock only when something is due or the room needs its expiry extended. · The six-browser run against Neon showed every request in a room queueing on the row lock (~0.9 s each from India), so private views arrived 14 s late and answers missed the question timer.
+- 2026-10-23 · 15 · Phones schedule ticks on `safeNow()`, a lower bound on server time (`serverNow − tRecv`), and back off 1–2 s after a no-op tick. A snapshot that an update overtook is fetched again. The countdown still uses the midpoint estimate (AC-22). · `serverNow` is stamped as the response leaves, so slow responses made the midpoint estimate run ahead: phones ticked early and repeatedly, which fed the lock queue.
+- 2026-10-23 · 15 · AC-80's test starts a 5-question quiz (production minimum), plays the 3 questions the AC asks for, and the admin ends it. Latency runs from the moment the tap is sent. · Production settings reject 3 questions; the old timer also counted waiting for the options to unlock.
 
 ## Blockers
 
