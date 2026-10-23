@@ -67,8 +67,8 @@ The full stack is in SPEC §3:
 | 10 | Crews, rankings, awards, recap card | AUTO | done | 9358d76 |
 | 11 | Leaderboard button and big screen | AUTO | done | 6811ed5 |
 | 12 | Demo with bots | AUTO | done | ae34a0d |
-| 13 | Design and PWA (iPhone-first) | AUTO | done | phase-13 commit |
-| 14 | Privacy page | AUTO | todo | – |
+| 13 | Design and PWA (iPhone-first) | AUTO | done | 8d721a5 |
+| 14 | Privacy page | AUTO | done | phase-14 commit |
 | 15 | Full multi-player E2E suite and verification | AUTO | todo | – |
 | 16 | Human steps and acceptance | HUMAN, then AUTO | todo | – |
 
@@ -493,7 +493,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-83 | Unit | 13 | pass | `tests/unit/design-tokens.test.ts` · pass @ phase-13 |
 | AC-84 | E2E | 13 | pass | `tests/e2e/design.spec.ts` · pass @ phase-13 |
 | AC-85 | E2E | 13 | pass | `tests/e2e/celebrations.spec.ts` · pass @ phase-13 |
-| AC-86 | E2E | 14 | todo | `tests/e2e/privacy.spec.ts` |
+| AC-86 | E2E | 14 | pass | `tests/e2e/privacy.spec.ts` · pass @ phase-14 |
 | AC-87 | Deploy | 16 | Pending (human) | `tests/deploy/demo.spec.ts` · tests/deploy/demo.spec.ts written; runs after H6 |
 | AC-88 | E2E | 5 | pass | `tests/e2e/draw-touch.spec.ts` · pass @ phase-5 |
 

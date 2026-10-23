@@ -57,6 +57,8 @@ export async function versionOf(page: Page): Promise<number> {
 
 /** Sends an action through the page's own sync client (same path as a button tap). */
 export async function act(page: Page, type: string, payload: Record<string, unknown> = {}) {
+  // After a reload the sync client starts asynchronously: wait until it has its first snapshot.
+  await page.waitForFunction(() => Boolean((window as unknown as { __huddleSync?: { state: { snapshot: unknown } } }).__huddleSync?.state.snapshot));
   return page.evaluate(
     ([t, p]) => (window as unknown as { __huddleSync: { act: (a: string, b: unknown) => Promise<any> } }).__huddleSync.act(t as string, p),
     [type, payload] as const,
