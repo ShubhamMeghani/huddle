@@ -8,6 +8,9 @@ test('AC-55 a big screen joins by code, is not a player, shows the lobby QR, the
   const bodies: string[] = [];
   screen.on('response', async (r) => {
     if (r.url().includes('/api/realtime/stream')) return;
+    // Room data arrives in documents and API responses. Static bundles are the same for every room (AC-6 scans them
+    // for secrets) and contain words like "queue" as plain code, which would match a random Draw word.
+    if (!['document', 'fetch', 'xhr'].includes(r.request().resourceType())) return;
     try {
       bodies.push(await r.text());
     } catch {}

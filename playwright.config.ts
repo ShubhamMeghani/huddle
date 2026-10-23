@@ -6,14 +6,20 @@ const PORT = 3100;
 export default defineConfig({
   testDir: 'tests/e2e',
   timeout: 90_000,
+  // Fail with a report well before the CI job limit (40 min) instead of being cancelled without one.
+  globalTimeout: process.env.CI ? 25 * 60_000 : undefined,
   expect: { timeout: 10_000 },
   fullyParallel: true,
   workers: process.env.CI ? 2 : 3,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : [['list']],
+  reporter: process.env.CI ? [['list'], ['github'], ['html', { open: 'never' }]] : [['list']],
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'retain-on-failure',
+    // Video only on the CI retry of a failing test: recording every page in every run costs enough CPU to make
+    // WebKit's timing-sensitive steps flaky under full-suite load. Traces include a filmstrip on every failure.
+    video: 'on-first-retry',
+    screenshot: 'only-on-failure',
     actionTimeout: 15_000,
   },
   projects: [

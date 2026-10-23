@@ -32,8 +32,10 @@ test('AC-42 the leaderboard button is on every game; it shows scores, teams and 
 
   // Every other game shows the button too.
   for (const id of ['draw', 'imposter', 'atlas', 'charades', 'mlt']) {
-    await a.page.getByTestId('admin-open').click();
-    await a.page.getByTestId('admin-end-game').click();
+    // A game nobody plays can end by itself (Draw skips each unchosen turn), so end it through the sync client and
+    // accept "already over"; the admin menu's End game is covered by AC-29.
+    const end = await act(a.page, 'endGame');
+    expect(end.ok || end.code === 'WRONG_PHASE', JSON.stringify(end)).toBe(true);
     await expect(a.page.getByTestId('break')).toBeVisible();
     await a.page.getByTestId('continue').click();
     await expect(a.page.getByTestId('playing')).toHaveAttribute('data-game', id);

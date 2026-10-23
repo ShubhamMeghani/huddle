@@ -13,23 +13,28 @@ export function deviceOptions() {
   return Object.fromEntries(pick.filter((k) => use[k] !== undefined).map((k) => [k, use[k]]));
 }
 
-export async function newPlayer(browser: Browser, name: string): Promise<Player> {
-  const context = await browser.newContext(deviceOptions());
+export async function newPlayer(browser: Browser, name: string, baseURL?: string): Promise<Player> {
+  const context = await browser.newContext({ ...deviceOptions(), ...(baseURL ? { baseURL } : {}) });
   const page = await context.newPage();
   return { name, context, page };
 }
 
 /**
  * WebKit shares one network process (and its 6-connections-per-host limit) across contexts, and each phone in a
- * room holds an open event stream in test mode, so a 7th phone could never load and the 6th could not send. Real phones
- * are separate devices: every phone after the first 4 gets its own browser, leaving connections free for requests.
+ * room holds an open event stream in test mode, so a 7th phone could never load and the 6th could not send. Real
+ * phones are separate devices: every 4 phones use another loopback name for the same server, which WebKit pools
+ * separately. All phones stay in the test's own browser, so Playwright always cleans them up.
  */
-const PHONES_PER_BROWSER = 4;
-const extraBrowsers = new WeakMap<BrowserContext, Browser>();
+const PHONES_PER_HOST = 4;
+const LOOPBACK_HOSTS = ['localhost', '127.0.0.1', '[::1]'];
 
-async function browserFor(browser: Browser, index: number): Promise<Browser> {
-  if (index < PHONES_PER_BROWSER) return browser;
-  return browser.browserType().launch();
+function baseUrlFor(index: number): string | undefined {
+  if (index < PHONES_PER_HOST) return undefined;
+  const host = LOOPBACK_HOSTS[Math.floor(index / PHONES_PER_HOST)];
+  if (!host) throw new Error(`roomOf supports at most ${PHONES_PER_HOST * LOOPBACK_HOSTS.length} phones`);
+  const url = new URL((test.info().project.use as { baseURL: string }).baseURL);
+  url.hostname = host;
+  return url.origin;
 }
 
 export async function createRoom(p: Player, seed?: string): Promise<string> {
@@ -53,12 +58,7 @@ export async function joinRoom(p: Player, code: string, opts: { spectate?: boole
 
 /** A room with `names.length` players; the first creates it. */
 export async function roomOf(browser: Browser, names: string[], seed?: string): Promise<{ code: string; players: Player[] }> {
-  const players = await Promise.all(names.map(async (n, i) => {
-    const b = await browserFor(browser, i);
-    const p = await newPlayer(b, n);
-    if (b !== browser) extraBrowsers.set(p.context, b);
-    return p;
-  }));
+  const players = await Promise.all(names.map((n, i) => newPlayer(browser, n, baseUrlFor(i))));
   const code = await createRoom(players[0], seed);
   for (const p of players.slice(1)) await joinRoom(p, code);
   for (const p of players) await expect(p.page.getByTestId('seat')).toHaveCount(names.length);
@@ -66,10 +66,7 @@ export async function roomOf(browser: Browser, names: string[], seed?: string): 
 }
 
 export async function closeAll(players: Player[]) {
-  await Promise.all(players.map(async (p) => {
-    await p.context.close().catch(() => {});
-    await extraBrowsers.get(p.context)?.close().catch(() => {});
-  }));
+  await Promise.all(players.map((p) => p.context.close().catch(() => {})));
 }
 
 export async function versionOf(page: Page): Promise<number> {
@@ -198,7 +195,7 @@ export async function visitEachGame(page: Page, check: (id: (typeof GAME_IDS)[nu
 }
 
 /** Plays along on one phone: does whatever the phone asks until `untilTestId` appears. */
-export async function playUntil(page: Page, untilTestId: string, timeoutMs = 600_000) {
+export async function playUntil(page: Page, untilTestId: string, timeoutMs = 120_000) {
   const tap = async (id: string) => {
     const el = page.getByTestId(id).first();
     if ((await el.isVisible().catch(() => false)) && (await el.isEnabled().catch(() => false))) {

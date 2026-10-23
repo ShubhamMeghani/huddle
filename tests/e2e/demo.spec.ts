@@ -1,5 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
-import { act, actionPacer, drawLine, GAME_IDS, openDemo, snapshotOf } from './helpers';
+import { expect, test } from '@playwright/test';
+import { act, actionPacer, GAME_IDS, openDemo, playUntil, snapshotOf } from './helpers';
 
 // Regression (first CI run): six demo games started and ended back to back sent 12 admin actions in under a
 // second; the 11th, the Most Likely To start, was rate limited (R46) and silently dropped. Driving the sync client
@@ -36,40 +36,8 @@ test('AC-49 a demo start rejected by the rate limit is shown to the player, and 
   pacer.stop();
 });
 
-/** The visitor plays along: whatever their phone asks them to do, they do. */
-async function playAlong(page: Page) {
-  const tap = async (id: string) => {
-    const el = page.getByTestId(id).first();
-    if ((await el.isVisible().catch(() => false)) && (await el.isEnabled().catch(() => false))) {
-      await el.click().catch(() => {});
-      return true;
-    }
-    return false;
-  };
-  const fill = async (id: string, text: string, send: string) => {
-    const el = page.getByTestId(id);
-    if (await el.isVisible().catch(() => false)) {
-      await el.fill(text).catch(() => {});
-      await tap(send);
-    }
-  };
-  for (let i = 0; i < 1200; i++) {
-    if (await page.getByTestId('break').isVisible().catch(() => false)) return;
-    await tap('quiz-option-0');
-    if (await tap('draw-choice-0')) await drawLine(page, [200, 200], [700, 500]).catch(() => {});
-    await tap('charades-guessed');
-    await fill('clue-input', 'mystery', 'clue-send');
-    await tap('imposter-ready');
-    await tap('vote-for');
-    await fill('guess-word-input', 'pizza', 'guess-word-send');
-    await tap('mlt-vote-for');
-    await page.waitForTimeout(400);
-  }
-  throw new Error('game did not reach the scoreboard');
-}
-
 test('AC-47 one browser, no sign-in: /demo gives a room with 4 bots, and every game can be finished alone with real bot play', async ({ page }) => {
-  test.setTimeout(600_000);
+  test.setTimeout(300_000); // ~3 min on a 4-core Linux runner
   await page.goto('/');
   await page.getByTestId('demo-link').click();
   await expect(page.getByTestId('demo-start')).toHaveAttribute('data-ready', 'true');
@@ -81,7 +49,7 @@ test('AC-47 one browser, no sign-in: /demo gives a room with 4 bots, and every g
   for (const id of ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt']) {
     await page.getByTestId(`demo-${id}`).click();
     await expect(page.getByTestId('playing')).toHaveAttribute('data-game', id);
-    await playAlong(page);
+    await playUntil(page, 'break', 120_000); // the visitor does whatever their phone asks
     const last = (await snapshotOf(page)).public.lastGame;
     expect(last.gameId).toBe(id);
     const botRows = (last.rows as { name: string; score: number; stats: Record<string, number> }[]).filter((r) => r.name.startsWith('Bot'));

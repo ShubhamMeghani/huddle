@@ -61,8 +61,10 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm run test:e2e -- --project=${{ matrix.project }} --workers=2
+        # Playwright's globalTimeout (25 min) ends the run with a report before this does.
+        timeout-minutes: 30
       - uses: actions/upload-artifact@v4
-        if: failure()
+        if: always()
         with:
           name: playwright-report-${{ matrix.project }}
           path: |

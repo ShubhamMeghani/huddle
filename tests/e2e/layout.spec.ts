@@ -39,7 +39,10 @@ test('AC-40 every main screen fits the phone width with 48 px primary buttons, i
     await page.getByTestId('leaderboard-open').click();
     await expect(page.getByTestId('leaderboard')).toBeVisible();
     await checkLayout(page, `${id} leaderboard overlay`);
-    await page.getByTestId('leaderboard-close').click();
+    // The overlay also closes itself when it becomes this player's turn (AC-42), so it may be gone already.
+    const close = page.getByTestId('leaderboard-close');
+    if (await close.isVisible()) await close.click({ timeout: 2_000 }).catch(() => {});
+    await expect(page.getByTestId('leaderboard')).toBeHidden();
   });
   await checkLayout(page, 'scoreboard');
 
