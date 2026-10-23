@@ -63,8 +63,8 @@ The full stack is in SPEC §3:
 | 6 | Imposter | AUTO | done | a25a2f0 |
 | 7 | Atlas | AUTO | done | f52618c |
 | 8 | Dumb Charades | AUTO | done | ad25162 |
-| 9 | Most Likely To (Should) and cross-game suites | AUTO | done | phase-9 commit |
-| 10 | Crews, rankings, awards, recap card | AUTO | todo | – |
+| 9 | Most Likely To (Should) and cross-game suites | AUTO | done | bc8f1ad |
+| 10 | Crews, rankings, awards, recap card | AUTO | done | phase-10 commit |
 | 11 | Leaderboard button and big screen | AUTO | todo | – |
 | 12 | Demo with bots | AUTO | todo | – |
 | 13 | Design and PWA (iPhone-first) | AUTO | todo | – |
@@ -411,7 +411,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-1 | Unit | 1 | pass | `tests/unit/identity.test.ts` · pass @ phase-1 |
 | AC-2 | E2E | 1 | pass | `tests/e2e/identity.spec.ts` · pass @ phase-1 |
 | AC-3 | E2E | 1 | pass | `tests/e2e/auth.spec.ts` · pass @ phase-1 |
-| AC-4 | Unit | 10 | todo | `tests/unit/claim.test.ts` |
+| AC-4 | Unit | 10 | pass | `tests/unit/claim.test.ts` · pass @ phase-10 |
 | AC-5 | Unit | 1 | pass | `tests/unit/realtime-token.test.ts` · pass @ phase-1 (+ 401/403 in tests/e2e/secrets-scan.spec.ts) |
 | AC-6 | E2E | 1 | pass | `tests/e2e/secrets-scan.spec.ts` · pass @ phase-1 |
 | AC-7 | Unit | 2 | pass | `tests/unit/room-code.test.ts` · pass @ phase-2 |
@@ -457,11 +457,11 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-47 | E2E | 12 | todo | `tests/e2e/demo.spec.ts` |
 | AC-48 | Unit | 2 | pass | `tests/unit/results.test.ts` · pass @ phase-2 |
 | AC-49 | Unit | 2 | pass | `tests/unit/rate-limit.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) |
-| AC-50 | E2E | 10 | todo | `tests/e2e/crews.spec.ts` |
-| AC-51 | Unit | 10 | todo | `tests/unit/seasons.test.ts` |
-| AC-52 | Unit | 10 | todo | `tests/unit/stats.test.ts` |
-| AC-53 | Unit | 10 | todo | `tests/unit/awards.test.ts` |
-| AC-54 | E2E | 10 | todo | `tests/e2e/recap.spec.ts` |
+| AC-50 | E2E | 10 | pass | `tests/e2e/crews.spec.ts` · pass @ phase-10 |
+| AC-51 | Unit | 10 | pass | `tests/unit/seasons.test.ts` · pass @ phase-10 |
+| AC-52 | Unit | 10 | pass | `tests/unit/stats.test.ts` · pass @ phase-10 |
+| AC-53 | Unit | 10 | pass | `tests/unit/awards.test.ts` · pass @ phase-10 |
+| AC-54 | E2E | 10 | pass | `tests/e2e/recap.spec.ts` · pass @ phase-10 |
 | AC-55 | E2E | 11 | todo | `tests/e2e/screen.spec.ts` |
 | AC-56 | Unit | 4 | pass | `tests/unit/content/quiz.test.ts` · pass @ phase-4 (439 questions) |
 | AC-57 | Unit | 4 | pass | `tests/unit/games/quiz.test.ts` · pass @ phase-4 |
@@ -531,6 +531,9 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 9 · Most Likely To results are recorded with `excludeFromSeason` and zero placement points (decision Q6). A player's own phone is told only *whether* it voted, never whom; the choice is remembered on that phone. · R89 says the app never sends or keeps who voted for whom.
 - 2026-10-23 · 9 · The cross-game suites drive every game to the end with bots (`tests/helpers/drive.ts`), checking secrets, view size and rejoin stability at every step. · One driver covers every phase of every game.
 - 2026-10-23 · 9 · Fixed: an Atlas bot's "blank this turn" decision is now made once per turn instead of re-rolled every tick. · The re-roll meant bots never ran out of time, so all-bot Atlas games never ended.
+- 2026-10-23 · 10 · Fastest Finger across several quizzes in one night uses the correct-answer-weighted mean of each game's median time. The Most AFK tie-break counts missed turns per game. · Only per-game numbers are stored; with one quiz per night this equals the true median.
+- 2026-10-23 · 10 · Crew stats count a claimed guest's games as the claiming user's (canonical identity = `merged_into` or self), and only crew members appear on the leaderboard. · Supports R3 and R49 together.
+- 2026-10-23 · 10 · The recap card is drawn from the stored night summary with `next/og`, without emoji glyphs. · Works after the room has expired, and needs no external emoji CDN.
 
 ## Blockers
 

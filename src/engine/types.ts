@@ -41,6 +41,8 @@ export interface Seat {
   missedTurns: number;
   afk: boolean;
   afkSkips: number;
+  /** Turns missed in the current game (Most AFK tie-break). */
+  missedTotal?: number;
   isBot: boolean;
   teamId: string | null;
   score: number;

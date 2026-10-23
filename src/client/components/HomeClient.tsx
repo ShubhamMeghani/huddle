@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getJson, postJson, type Me } from '@/client/api';
 import { ThemeToggle } from './ThemeToggle';
+import { ClaimBanner, CrewsHome } from './CrewsHome';
 
 export function HomeClient() {
   const router = useRouter();
@@ -113,6 +114,9 @@ export function HomeClient() {
           {error}
         </p>
       )}
+
+      {me?.identity?.kind === 'user' && me.identity.guestId && <ClaimBanner />}
+      <CrewsHome me={me} ensureName={ensureName} />
 
       <nav className="mt-auto flex flex-wrap items-center justify-center gap-4 pt-4 text-sm font-bold text-muted">
         {me?.google || me?.testSignIn ? <Link href="/signin">Sign in</Link> : null}

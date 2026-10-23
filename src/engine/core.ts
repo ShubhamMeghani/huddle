@@ -68,6 +68,7 @@ export function turnMissed(room: RoomState, seatId: SeatId, ctx: Ctx) {
   const s = seatById(room, seatId);
   if (!s || s.isBot || s.status !== 'seated') return;
   s.missedTurns += 1;
+  s.missedTotal = (s.missedTotal ?? 0) + 1;
   if (s.missedTurns >= 2 && !s.afk) {
     s.afk = true;
     addNotice(room, `${s.name} is AFK and will be skipped until they're back`, ctx);
@@ -152,7 +153,7 @@ export function finishGame(
           score: tScores[ti],
           rank: tRanks[ti],
           placementPoints: tPP[ti],
-          stats: { ...(stats[s.id] ?? {}), personal: s.score, afkSkips: s.afkSkips },
+          stats: { ...(stats[s.id] ?? {}), personal: s.score, afkSkips: s.afkSkips, missed: s.missedTotal ?? 0 },
         };
       });
   } else {
@@ -167,7 +168,7 @@ export function finishGame(
       score: s.score,
       rank: r[i],
       placementPoints: pp[i],
-      stats: { ...(stats[s.id] ?? {}), afkSkips: s.afkSkips },
+      stats: { ...(stats[s.id] ?? {}), afkSkips: s.afkSkips, missed: s.missedTotal ?? 0 },
     }));
   }
   const finished: FinishedGame = {

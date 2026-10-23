@@ -6,6 +6,7 @@ import type { GameConfig } from '@/engine/types';
 import { Avatar, type RoomProps } from './ui';
 import { SettingsForm } from './SettingsForm';
 import { TeamsPanel } from './TeamsPanel';
+import { CrewLink } from './CrewLink';
 
 export function PlayerList({ state }: Pick<RoomProps, 'state'>) {
   const pub = state.snapshot!.public;
@@ -148,6 +149,7 @@ export function Lobby({ sync, state }: RoomProps) {
       </section>
 
       <TeamsPanel sync={sync} state={state} />
+      <CrewLink state={state} />
 
       {me.isAdmin && (
         <button className="btn btn-brand w-full text-lg" disabled={!queue.length} onClick={start} data-testid="start">

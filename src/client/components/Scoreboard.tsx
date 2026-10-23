@@ -1,6 +1,7 @@
 'use client';
 import { GAME_META } from '@/games/meta';
 import type { PublicView } from '@/engine/room';
+import { RecapShare } from './RecapShare';
 import { Avatar, Countdown, type RoomProps } from './ui';
 
 type Row = { seatId: string; name: string; teamId: string | null; score: number; rank: number; placementPoints: number };
@@ -108,6 +109,25 @@ export function NightView({ sync, state }: RoomProps) {
           testId="night-standings"
         />
       </div>
+      {pub.awards.length > 0 && (
+        <div className="card p-4" data-testid="awards">
+          <h3 className="mb-2 font-black">Awards</h3>
+          <ul className="flex flex-col gap-2">
+            {pub.awards.map((a) => (
+              <li key={a.award} className="flex items-center gap-3" data-testid="award" data-award={a.award}>
+                <span className="text-2xl" aria-hidden>
+                  {a.emoji}
+                </span>
+                <span className="flex-1">
+                  <span className="font-black">{a.award}</span> · <span className="font-bold">{a.name}</span>
+                  <span className="block text-sm font-semibold text-muted">{a.detail}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <RecapShare roomId={pub.roomId} />
       <div className="card p-4">
         <h3 className="mb-2 font-black">Games</h3>
         <ul className="flex flex-col gap-1">

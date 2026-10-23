@@ -5,6 +5,7 @@ import { metaOf, GAME_META } from '@/games/meta';
 import { validateSettings } from '@/games/settings';
 import { hasModule, moduleOf } from '@/games/registry';
 import { balanceTeams } from './teams';
+import { computeAwards } from './awards';
 import { strengthFor } from './elo';
 import {
   activeSeats,
@@ -184,6 +185,8 @@ export function startGame(room: RoomState, ctx: Ctx) {
   for (const s of room.seats) {
     s.score = 0;
     s.missedTurns = 0;
+    s.afkSkips = 0; // per-game stats (Most AFK sums them across the night)
+    s.missedTotal = 0;
   }
   room.scoreEvents = [];
   room.teamScores = room.teams && room.seats.some((s) => s.teamId) ? Object.fromEntries(room.teams.map((t) => [t.id, 0])) : {};
@@ -584,6 +587,7 @@ export function publicView(room: RoomState, presence: Record<string, number>, no
     lastGame: strip(room.lastGame),
     night: room.finished.map((g) => ({ gameNo: g.gameNo, gameId: g.gameId, rows: g.rows.map(({ identityId: _i, ...r }) => r) })),
     pendingClaims: room.pendingClaims.map((c) => ({ seatId: c.seatId, claimantName: c.claimantName })),
+    awards: room.status === 'summary' ? computeAwards(room.finished) : [],
     undoAvailable: room.scoreEvents.some((e) => !e.undone),
     nextWakeAt: nextWakeAt(room),
   };
