@@ -6,6 +6,7 @@ import { validateSettings } from '@/games/settings';
 import { hasModule, moduleOf } from '@/games/registry';
 import { balanceTeams } from './teams';
 import { computeAwards } from './awards';
+import { DEMO_GAMES, demoSettings } from '@/games/demo';
 import { strengthFor } from './elo';
 import {
   activeSeats,
@@ -388,6 +389,18 @@ export function applyAction(room: RoomState, seat: Seat, action: GameAction, ctx
       startGame(room, ctx);
       addNotice(room, `${metaOf(room.game!.id).title} started`, ctx, 'admin');
       return;
+    case 'demoStart': {
+      // Demo rooms: one tap starts any game with short preset rules (R44).
+      requireAdmin(room, seat);
+      if (!room.isDemo) throw new GameError('INVALID');
+      if (room.status === 'playing') throw new GameError('WRONG_PHASE');
+      const gameId = action.gameId as GameId;
+      if (!DEMO_GAMES.includes(gameId)) throw new GameError('INVALID');
+      room.queue = [{ gameId, settings: validateSettings(metaOf(gameId).settings, demoSettings(gameId, ctx.testMode), ctx.testMode) }];
+      room.queueIndex = 0;
+      startGame(room, ctx);
+      return;
+    }
     case 'continue':
       requireAdmin(room, seat);
       if (room.status !== 'break') throw new GameError('WRONG_PHASE');

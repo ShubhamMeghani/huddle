@@ -7,6 +7,7 @@ import { Avatar, type RoomProps } from './ui';
 import { SettingsForm } from './SettingsForm';
 import { TeamsPanel } from './TeamsPanel';
 import { CrewLink } from './CrewLink';
+import { DemoPicker } from './Demo';
 
 export function PlayerList({ state }: Pick<RoomProps, 'state'>) {
   const pub = state.snapshot!.public;
@@ -89,6 +90,7 @@ export function Lobby({ sync, state }: RoomProps) {
         Got a laptop or TV? Open <b>/screen</b> on it and enter <b>{pub.code}</b> to use it as a big screen.
       </p>
 
+      <DemoPicker sync={sync} state={state} />
       <PlayerList state={state} />
 
       <section className="card flex flex-col gap-3 p-4" aria-label="Game queue">

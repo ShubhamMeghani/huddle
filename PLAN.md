@@ -65,8 +65,8 @@ The full stack is in SPEC §3:
 | 8 | Dumb Charades | AUTO | done | ad25162 |
 | 9 | Most Likely To (Should) and cross-game suites | AUTO | done | bc8f1ad |
 | 10 | Crews, rankings, awards, recap card | AUTO | done | 9358d76 |
-| 11 | Leaderboard button and big screen | AUTO | done | phase-11 commit |
-| 12 | Demo with bots | AUTO | todo | – |
+| 11 | Leaderboard button and big screen | AUTO | done | 6811ed5 |
+| 12 | Demo with bots | AUTO | done | phase-12 commit |
 | 13 | Design and PWA (iPhone-first) | AUTO | todo | – |
 | 14 | Privacy page | AUTO | todo | – |
 | 15 | Full multi-player E2E suite and verification | AUTO | todo | – |
@@ -454,7 +454,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-44 | E2E | 13 | todo | `tests/e2e/pwa.spec.ts` |
 | AC-45 | Manual | 16 | Pending (human) | `docs/playtest.md` (H7, H8) |
 | AC-46 | Unit | 9 | pass | `tests/unit/howto.test.ts` · pass @ phase-9 |
-| AC-47 | E2E | 12 | todo | `tests/e2e/demo.spec.ts` |
+| AC-47 | E2E | 12 | pass | `tests/e2e/demo.spec.ts` · pass @ phase-12 |
 | AC-48 | Unit | 2 | pass | `tests/unit/results.test.ts` · pass @ phase-2 |
 | AC-49 | Unit | 2 | pass | `tests/unit/rate-limit.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) |
 | AC-50 | E2E | 10 | pass | `tests/e2e/crews.spec.ts` · pass @ phase-10 |
@@ -494,7 +494,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-84 | E2E | 13 | todo | `tests/e2e/design.spec.ts` |
 | AC-85 | E2E | 13 | todo | `tests/e2e/celebrations.spec.ts` |
 | AC-86 | E2E | 14 | todo | `tests/e2e/privacy.spec.ts` |
-| AC-87 | Deploy | 16 | Pending (human) | `tests/deploy/demo.spec.ts` |
+| AC-87 | Deploy | 16 | Pending (human) | `tests/deploy/demo.spec.ts` · tests/deploy/demo.spec.ts written; runs after H6 |
 | AC-88 | E2E | 5 | pass | `tests/e2e/draw-touch.spec.ts` · pass @ phase-5 |
 
 ---
@@ -536,6 +536,8 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 10 · The recap card is drawn from the stored night summary with `next/og`, without emoji glyphs. · Works after the room has expired, and needs no external emoji CDN.
 - 2026-10-23 · 11 · Big screens register through an httpOnly cookie scoped to "roomId.token" (max 2 per room). Screen requests carry `x-huddle-screen: 1`, so a laptop that is also a player's browser still shows only the public view. The screen reuses each game's phone component in a display layout. · One game UI per game; the screen never gets a private view.
 - 2026-10-23 · 11 · The leaderboard overlay is a non-modal panel above the game, which stays mounted underneath and keeps typed input. It closes when the player's `mustAct` turns on. · R38 without pausing or interrupting the game.
+- 2026-10-23 · 12 · The demo picker sends only a game id (`demoStart`); the server applies preset short rules, shortened further in test mode. Demo bots are seat-only identities (`bot:<uuid>`) with no database rows. · One tap per game for the evaluator, with deterministic, fast E2E coverage.
+- 2026-10-23 · 12 · `npm run ci` now takes about 10 minutes locally (both device projects, including the all-games demo test). · Accepted; CI runs two workers with one retry.
 
 ## Blockers
 

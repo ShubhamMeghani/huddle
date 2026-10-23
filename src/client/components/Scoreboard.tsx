@@ -2,6 +2,7 @@
 import { GAME_META } from '@/games/meta';
 import type { PublicView } from '@/engine/room';
 import { RecapShare } from './RecapShare';
+import { DemoPicker } from './Demo';
 import { Avatar, Countdown, type RoomProps } from './ui';
 
 type Row = { seatId: string; name: string; teamId: string | null; score: number; rank: number; placementPoints: number };
@@ -56,6 +57,7 @@ export function BreakView({ sync, state }: RoomProps) {
           <Standings rows={last.rows} state={state} />
         </div>
       )}
+      <DemoPicker sync={sync} state={state} />
       {me.isAdmin && (
         <div className="grid grid-cols-2 gap-2">
           <button className="btn btn-brand col-span-2" onClick={() => void sync.act('continue')} data-testid="continue">
@@ -127,6 +129,7 @@ export function NightView({ sync, state }: RoomProps) {
           </ul>
         </div>
       )}
+      <DemoPicker sync={sync} state={state} />
       <RecapShare roomId={pub.roomId} />
       <div className="card p-4">
         <h3 className="mb-2 font-black">Games</h3>

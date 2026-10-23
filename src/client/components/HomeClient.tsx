@@ -118,6 +118,10 @@ export function HomeClient() {
       {me?.identity?.kind === 'user' && me.identity.guestId && <ClaimBanner />}
       <CrewsHome me={me} ensureName={ensureName} />
 
+      <Link href="/demo" className="btn btn-ghost w-full" data-testid="demo-link">
+        🤖 Play alone with bots (demo)
+      </Link>
+
       <nav className="mt-auto flex flex-wrap items-center justify-center gap-4 pt-4 text-sm font-bold text-muted">
         {me?.google || me?.testSignIn ? <Link href="/signin">Sign in</Link> : null}
         <Link href="/privacy">Privacy</Link>
