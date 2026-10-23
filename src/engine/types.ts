@@ -166,6 +166,8 @@ export interface RoomState {
   pendingClaims: PendingClaim[];
   /** Per-room memory that outlives single games (e.g. quiz questions already used, R61). */
   memory: Record<string, unknown>;
+  /** Registered big-screen tokens (display-only viewers, max 2 per room, decision Q8). */
+  screens?: string[];
   /** Lobby "wave" counter: the Phase 1 skeleton action. */
   waves: number;
   /** Rate limiting: per-seat recent action timestamps (pruned). */

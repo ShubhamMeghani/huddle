@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { GAME_META } from '@/games/meta';
 import { GAME_COMPONENTS } from '@/client/games';
 import { Countdown, seatName, type RoomProps } from './ui';
+import { LeaderboardButton } from './Leaderboard';
 
 /** Gentle vibration when it becomes your turn (R40); silently does nothing where unsupported (iOS). */
 function useTurnVibration(mustAct: boolean) {
@@ -73,6 +74,8 @@ export function Playing({ sync, state }: RoomProps) {
       )}
 
       {Game ? <Game sync={sync} state={state} /> : <p className="font-bold">Loading game…</p>}
+      <div className="h-20" aria-hidden />
+      <LeaderboardButton sync={sync} state={state} />
     </section>
   );
 }

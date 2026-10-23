@@ -60,7 +60,10 @@ export class RoomSync {
   private refetchQueued = false;
   private cleanups: (() => void)[] = [];
 
-  constructor(public code: string) {}
+  constructor(
+    public code: string,
+    private opts: { screen?: boolean } = {},
+  ) {}
 
   subscribe(fn: () => void) {
     this.listeners.add(fn);
@@ -79,7 +82,8 @@ export class RoomSync {
 
   private async request(path: string, init?: RequestInit): Promise<any> {
     const t0 = Date.now();
-    const res = await fetch(path, { ...init, cache: 'no-store', headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) } });
+    const extra: Record<string, string> = this.opts.screen ? { 'x-huddle-screen': '1' } : {};
+    const res = await fetch(path, { ...init, cache: 'no-store', headers: { 'Content-Type': 'application/json', ...extra, ...(init?.headers ?? {}) } });
     const t1 = Date.now();
     const body = await res.json().catch(() => ({}));
     if (typeof body.serverNow === 'number') this.clock.addSample(t0, t1, body.serverNow);
@@ -119,9 +123,12 @@ export class RoomSync {
       window.removeEventListener('offline', onOffline);
       window.removeEventListener('online', onOnline);
     });
-    this.heartbeatTimer = setInterval(() => {
-      if (document.visibilityState === 'visible') void this.heartbeat();
-    }, this.heartbeatMs);
+    // Screens don't hold a seat, so they don't send presence heartbeats; they still resync on wake.
+    if (!this.opts.screen) {
+      this.heartbeatTimer = setInterval(() => {
+        if (document.visibilityState === 'visible') void this.heartbeat();
+      }, this.heartbeatMs);
+    }
   }
 
   stop() {

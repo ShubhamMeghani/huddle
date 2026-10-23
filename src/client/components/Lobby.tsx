@@ -85,6 +85,9 @@ export function Lobby({ sync, state }: RoomProps) {
         <img src={`/api/rooms/${pub.code}/qr`} alt={`QR code to join room ${pub.code}`} width={112} height={112} className="rounded-xl" data-testid="room-qr" />
       </section>
       <input className="sr-only" readOnly value={link} aria-label="Join link" data-testid="room-link" />
+      <p className="text-center text-sm font-semibold text-muted">
+        Got a laptop or TV? Open <b>/screen</b> on it and enter <b>{pub.code}</b> to use it as a big screen.
+      </p>
 
       <PlayerList state={state} />
 

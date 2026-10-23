@@ -7,6 +7,7 @@ import { tokenRequest } from '@/server/realtime';
 import { normalizeCode } from '@/lib/codes';
 import { seatOf } from '@/engine/room';
 import type { RoomState } from '@/engine/types';
+import { isScreenFor } from '@/server/touch';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,7 +22,7 @@ export async function GET(req: Request) {
     );
     if (!rows[0]) return fail('ROOM_NOT_FOUND');
     const identity = await getIdentity();
-    const screen = (await cookies()).get(SCREEN_COOKIE)?.value === rows[0].id;
+    const screen = isScreenFor(rows[0].state, (await cookies()).get(SCREEN_COOKIE)?.value);
     if (!identity && !screen) return fail('UNAUTHORIZED');
     const seat = identity ? seatOf(rows[0].state, identity.aliases) : undefined;
     if (!screen && (!seat || seat.status === 'kicked')) {

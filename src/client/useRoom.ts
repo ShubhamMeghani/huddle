@@ -4,8 +4,8 @@ import { RoomSync, type SyncState } from './sync';
 
 const EMPTY: SyncState = { snapshot: null, connection: 'connecting', error: null, testMode: false };
 
-export function useRoomSync(code: string): { sync: RoomSync; state: SyncState } {
-  const sync = useMemo(() => new RoomSync(code), [code]);
+export function useRoomSync(code: string, screen = false): { sync: RoomSync; state: SyncState } {
+  const sync = useMemo(() => new RoomSync(code, { screen }), [code, screen]);
   useEffect(() => {
     void sync.start();
     return () => sync.stop();

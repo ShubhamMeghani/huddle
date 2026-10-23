@@ -64,8 +64,8 @@ The full stack is in SPEC §3:
 | 7 | Atlas | AUTO | done | f52618c |
 | 8 | Dumb Charades | AUTO | done | ad25162 |
 | 9 | Most Likely To (Should) and cross-game suites | AUTO | done | bc8f1ad |
-| 10 | Crews, rankings, awards, recap card | AUTO | done | phase-10 commit |
-| 11 | Leaderboard button and big screen | AUTO | todo | – |
+| 10 | Crews, rankings, awards, recap card | AUTO | done | 9358d76 |
+| 11 | Leaderboard button and big screen | AUTO | done | phase-11 commit |
 | 12 | Demo with bots | AUTO | todo | – |
 | 13 | Design and PWA (iPhone-first) | AUTO | todo | – |
 | 14 | Privacy page | AUTO | todo | – |
@@ -449,7 +449,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-39 | E2E | 15 | todo | `tests/e2e/secrets-sniff.spec.ts` |
 | AC-40 | E2E | 13 | todo | `tests/e2e/layout.spec.ts` |
 | AC-41 | E2E | 13 | todo | `tests/e2e/theme.spec.ts` |
-| AC-42 | E2E | 11 | todo | `tests/e2e/leaderboard.spec.ts` |
+| AC-42 | E2E | 11 | pass | `tests/e2e/leaderboard.spec.ts` · pass @ phase-11 |
 | AC-43 | E2E | 2 | pass | `tests/e2e/turn-status.spec.ts` · pass @ phase-2 |
 | AC-44 | E2E | 13 | todo | `tests/e2e/pwa.spec.ts` |
 | AC-45 | Manual | 16 | Pending (human) | `docs/playtest.md` (H7, H8) |
@@ -462,7 +462,7 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-52 | Unit | 10 | pass | `tests/unit/stats.test.ts` · pass @ phase-10 |
 | AC-53 | Unit | 10 | pass | `tests/unit/awards.test.ts` · pass @ phase-10 |
 | AC-54 | E2E | 10 | pass | `tests/e2e/recap.spec.ts` · pass @ phase-10 |
-| AC-55 | E2E | 11 | todo | `tests/e2e/screen.spec.ts` |
+| AC-55 | E2E | 11 | pass | `tests/e2e/screen.spec.ts` · pass @ phase-11 |
 | AC-56 | Unit | 4 | pass | `tests/unit/content/quiz.test.ts` · pass @ phase-4 (439 questions) |
 | AC-57 | Unit | 4 | pass | `tests/unit/games/quiz.test.ts` · pass @ phase-4 |
 | AC-58 | E2E | 4 | pass | `tests/e2e/quiz.spec.ts` · pass @ phase-4 |
@@ -534,6 +534,8 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 10 · Fastest Finger across several quizzes in one night uses the correct-answer-weighted mean of each game's median time. The Most AFK tie-break counts missed turns per game. · Only per-game numbers are stored; with one quiz per night this equals the true median.
 - 2026-10-23 · 10 · Crew stats count a claimed guest's games as the claiming user's (canonical identity = `merged_into` or self), and only crew members appear on the leaderboard. · Supports R3 and R49 together.
 - 2026-10-23 · 10 · The recap card is drawn from the stored night summary with `next/og`, without emoji glyphs. · Works after the room has expired, and needs no external emoji CDN.
+- 2026-10-23 · 11 · Big screens register through an httpOnly cookie scoped to "roomId.token" (max 2 per room). Screen requests carry `x-huddle-screen: 1`, so a laptop that is also a player's browser still shows only the public view. The screen reuses each game's phone component in a display layout. · One game UI per game; the screen never gets a private view.
+- 2026-10-23 · 11 · The leaderboard overlay is a non-modal panel above the game, which stays mounted underneath and keeps typed input. It closes when the player's `mustAct` turns on. · R38 without pausing or interrupting the game.
 
 ## Blockers
 
