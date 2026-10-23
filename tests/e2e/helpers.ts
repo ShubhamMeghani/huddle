@@ -1,5 +1,5 @@
 /* Multi-player helpers: each player is its own browser context with the project's device emulation. */
-import { expect, test, type Browser, type BrowserContext, type Page } from '@playwright/test';
+import { expect, test, type Browser, type BrowserContext, type Page, type Request } from '@playwright/test';
 
 export interface Player {
   name: string;
@@ -156,15 +156,44 @@ export async function openDemo(page: Page) {
 
 export const GAME_IDS = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt'] as const;
 
+/**
+ * The server accepts at most 10 actions per seat in any second (R46) and rejects the rest with RATE_LIMITED.
+ * Tracks this page's action requests so a fast loop can wait until the next one will be accepted.
+ */
+export function actionPacer(page: Page) {
+  const sent: number[] = [];
+  const onRequest = (r: Request) => {
+    if (r.method() === 'POST' && /^\/api\/rooms\/[^/]+\/actions$/.test(new URL(r.url()).pathname)) sent.push(Date.now());
+  };
+  page.on('request', onRequest);
+  return {
+    /** Resolves once the 10th most recent action is over a second old (plus slack for request transit). */
+    async ready() {
+      const tenth = sent[sent.length - 10];
+      const wait = tenth === undefined ? 0 : tenth + 1000 + 100 - Date.now();
+      if (wait > 0) await page.waitForTimeout(wait);
+    },
+    stop: () => page.off('request', onRequest),
+  };
+}
+
 /** In a demo room: start `id`, run `check` on its main phase, then end it as admin and return to a scoreboard. */
 export async function visitEachGame(page: Page, check: (id: (typeof GAME_IDS)[number]) => Promise<void>) {
-  for (const id of GAME_IDS) {
-    await page.getByTestId(`demo-${id}`).click();
-    await expect(page.getByTestId('playing')).toHaveAttribute('data-game', id);
-    await check(id);
-    await page.getByTestId('admin-open').click();
-    await page.getByTestId('admin-end-game').click();
-    await expect(page.getByTestId('break')).toBeVisible();
+  // Two admin actions per game: on a fast machine six games can outrun the per-seat rate limit.
+  const pacer = actionPacer(page);
+  try {
+    for (const id of GAME_IDS) {
+      await pacer.ready();
+      await page.getByTestId(`demo-${id}`).click();
+      await expect(page.getByTestId('playing')).toHaveAttribute('data-game', id);
+      await check(id);
+      await page.getByTestId('admin-open').click();
+      await pacer.ready();
+      await page.getByTestId('admin-end-game').click();
+      await expect(page.getByTestId('break')).toBeVisible();
+    }
+  } finally {
+    pacer.stop();
   }
 }
 

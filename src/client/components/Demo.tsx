@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { getJson, postJson, type Me } from '@/client/api';
 import { GAME_META } from '@/games/meta';
 import { DEMO_GAMES } from '@/games/demo';
+import type { GameId } from '@/engine/types';
 import type { RoomProps } from './ui';
 
 /** /demo: one tap to a room with four bots, no sign-in (R43). */
@@ -60,13 +61,23 @@ export function DemoStart() {
 export function DemoPicker({ sync, state }: RoomProps) {
   const pub = state.snapshot!.public;
   const me = state.snapshot!.me;
+  const [starting, setStarting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   if (!pub.isDemo || !me.isAdmin) return null;
+  // A start the server rejects must say so: a silent no-op looks like a broken button.
+  const start = async (id: GameId) => {
+    setStarting(true);
+    setError(null);
+    const r = await sync.act('demoStart', { gameId: id });
+    setStarting(false);
+    if (!r.ok) setError(r.code === 'RATE_LIMITED' ? 'Too many taps at once. Wait a second and try again.' : 'That game could not start. Try again.');
+  };
   return (
     <section className="card flex flex-col gap-3 p-4" aria-label="Demo game picker" data-testid="demo-picker">
       <h2 className="text-lg font-black">Pick a game to play with the bots</h2>
       <div className="grid grid-cols-2 gap-2">
         {DEMO_GAMES.map((id) => (
-          <button key={id} className="btn btn-ghost !min-h-14 justify-start" data-game={id} onClick={() => void sync.act('demoStart', { gameId: id })} data-testid={`demo-${id}`}>
+          <button key={id} className="btn btn-ghost !min-h-14 justify-start" data-game={id} onClick={() => void start(id)} disabled={starting} data-testid={`demo-${id}`}>
             <span className="text-2xl" aria-hidden>
               {GAME_META[id].emoji}
             </span>
@@ -74,6 +85,11 @@ export function DemoPicker({ sync, state }: RoomProps) {
           </button>
         ))}
       </div>
+      {error && (
+        <p role="alert" className="font-bold text-danger" data-testid="demo-error">
+          {error}
+        </p>
+      )}
     </section>
   );
 }

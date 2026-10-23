@@ -1,5 +1,40 @@
 import { expect, test, type Page } from '@playwright/test';
-import { drawLine, snapshotOf } from './helpers';
+import { act, actionPacer, drawLine, GAME_IDS, openDemo, snapshotOf } from './helpers';
+
+// Regression (first CI run): six demo games started and ended back to back sent 12 admin actions in under a
+// second; the 11th, the Most Likely To start, was rate limited (R46) and silently dropped. Driving the sync client
+// directly is as fast as that runner was on any machine, so without pacing this fails at the 11th action.
+test('AC-47 all six demo games started and ended back to back as fast as the server allows: every start and end is accepted', async ({ page }) => {
+  await openDemo(page);
+  const pacer = actionPacer(page);
+  const results: string[] = [];
+  for (const id of GAME_IDS) {
+    await pacer.ready();
+    results.push(`${id} start ${(await act(page, 'demoStart', { gameId: id })).code ?? 'ok'}`);
+    await expect(page.getByTestId('playing')).toHaveAttribute('data-game', id);
+    await pacer.ready();
+    results.push(`${id} end ${(await act(page, 'endGame')).code ?? 'ok'}`);
+    await expect(page.getByTestId('break')).toBeVisible();
+  }
+  pacer.stop();
+  expect(results).toEqual(GAME_IDS.flatMap((id) => [`${id} start ok`, `${id} end ok`]));
+  const night = (await snapshotOf(page)).public.night as { gameId: string }[];
+  expect(night.map((g) => g.gameId)).toEqual([...GAME_IDS]);
+});
+
+test('AC-49 a demo start rejected by the rate limit is shown to the player, and works once the second has passed', async ({ page }) => {
+  await openDemo(page);
+  const pacer = actionPacer(page);
+  // Ten actions in a burst use up this seat's second; the next tap must be refused visibly, not dropped.
+  await Promise.all(Array.from({ length: 10 }, () => act(page, 'wave')));
+  await page.getByTestId('demo-mlt').click();
+  await expect(page.getByTestId('demo-error')).toContainText('Wait a second');
+  await expect(page.getByTestId('playing')).toHaveCount(0);
+  await pacer.ready();
+  await page.getByTestId('demo-mlt').click();
+  await expect(page.getByTestId('playing')).toHaveAttribute('data-game', 'mlt');
+  pacer.stop();
+});
 
 /** The visitor plays along: whatever their phone asks them to do, they do. */
 async function playAlong(page: Page) {

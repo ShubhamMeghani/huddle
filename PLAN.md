@@ -30,7 +30,7 @@ The full stack is in SPEC §3:
 | `npm run probe:draw` | Drawing-throughput probe (local production build with real Ably, or `DEPLOY_URL`). Appends to `docs/deploy-checks.md`. |
 | `npm run db:migrate` | Applies `db/migrations` to the database in `.env.local` (Neon `dev`) via `node --env-file`. Production migrates during the Vercel build. |
 | `npm run env:check` | Prints each required variable **name** with `set` or `MISSING`. Never prints values. |
-| `npm run ci` | lint → typecheck → test → build → test:e2e, the same as GitHub Actions. This is the **full suite run before every commit**. |
+| `npm run ci` | lint → typecheck → test → build → test:e2e: everything GitHub Actions runs, in one process. This is the **full suite run before every commit**. (Actions splits it into a `checks` job and parallel `e2e` jobs for `android` and `iphone`.) |
 
 ## Rules for the autonomous build
 
@@ -454,9 +454,9 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-44 | E2E | 13 | pass | `tests/e2e/pwa.spec.ts` · pass @ phase-13 |
 | AC-45 | Manual | 16 | Pending (human) | `docs/playtest.md` (H7, H8) |
 | AC-46 | Unit | 9 | pass | `tests/unit/howto.test.ts` · pass @ phase-9 |
-| AC-47 | E2E | 12 | pass | `tests/e2e/demo.spec.ts` · pass @ phase-12 |
+| AC-47 | E2E | 12 | pass | `tests/e2e/demo.spec.ts` · pass @ phase-12 · back-to-back regression added after the first CI run |
 | AC-48 | Unit | 2 | pass | `tests/unit/results.test.ts` · pass @ phase-2 |
-| AC-49 | Unit | 2 | pass | `tests/unit/rate-limit.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) |
+| AC-49 | Unit | 2 | pass | `tests/unit/rate-limit.test.ts` · pass @ phase-2 (tests/unit/engine-admin.test.ts) · E2E: a rejected demo start is shown (`tests/e2e/demo.spec.ts`) |
 | AC-50 | E2E | 10 | pass | `tests/e2e/crews.spec.ts` · pass @ phase-10 |
 | AC-51 | Unit | 10 | pass | `tests/unit/seasons.test.ts` · pass @ phase-10 |
 | AC-52 | Unit | 10 | pass | `tests/unit/stats.test.ts` · pass @ phase-10 |
@@ -548,6 +548,8 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · 15 · Snapshot, tick and heartbeat first run catch-up on an unlocked read (`peekRoom`) and take the row lock only when something is due or the room needs its expiry extended. · The six-browser run against Neon showed every request in a room queueing on the row lock (~0.9 s each from India), so private views arrived 14 s late and answers missed the question timer.
 - 2026-10-23 · 15 · Phones schedule ticks on `safeNow()`, a lower bound on server time (`serverNow − tRecv`), and back off 1–2 s after a no-op tick. A snapshot that an update overtook is fetched again. The countdown still uses the midpoint estimate (AC-22). · `serverNow` is stamped as the response leaves, so slow responses made the midpoint estimate run ahead: phones ticked early and repeatedly, which fed the lock queue.
 - 2026-10-23 · 15 · AC-80's test starts a 5-question quiz (production minimum), plays the 3 questions the AC asks for, and the admin ends it. Latency runs from the moment the tap is sent. · Production settings reject 3 questions; the old timer also counted waiting for the options to unlock.
+- 2026-10-23 · after 15 · The first CI run failed AC-84 (and its retry): `visitEachGame` sends two admin actions per demo game, and on the CI runner the 11th action (the Most Likely To demo start) landed 918 ms after the 1st, so the server rejected it with `RATE_LIMITED` (R46, 10 actions per seat per second) and the room drifted to the night summary. The helper now tracks the page's action requests and waits until the 10th most recent one is over a second old, and the demo picker awaits its start and shows an error instead of dropping a rejected tap. Regression tests: six demo games started and ended back to back through the sync client (fails at the 11th action without pacing), and a rate-limited demo start that must be shown and then succeed. · The limit is correct product behaviour; the test was outrunning it, and the picker hid the rejection. Locally each game took ~250 ms, under the limit, which is why it never failed here.
+- 2026-10-23 · after 15 · GitHub Actions runs a `checks` job (lint, typecheck, unit) and an `e2e` matrix (`android`, `iphone`, `fail-fast: false`, 2 workers each), each installing only its own browser and uploading its own report. · About half the wall-clock time of the single 20-minute job, and a failure names its device. Actions minutes are free for a public repo.
 
 ## Blockers
 
