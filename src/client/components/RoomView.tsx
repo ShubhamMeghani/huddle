@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import type { SyncState } from '@/client/sync';
 import { deviceId } from '@/client/device';
@@ -14,14 +14,20 @@ import { GAME_META } from '@/games/meta';
 
 export { Avatar } from './ui';
 
+/** Status pills float at the top: they never cover the inputs and buttons a player is reaching for, and taps pass
+ *  through them (pointer-events-none on the stack). */
+export function TopStack({ children }: { children: ReactNode }) {
+  return (
+    <div className="pointer-events-none fixed inset-x-0 top-[calc(env(safe-area-inset-top)+12px)] z-50 flex flex-col items-center gap-2 px-4">
+      {children}
+    </div>
+  );
+}
+
 export function ConnectionPill({ connection }: { connection: SyncState['connection'] }) {
   if (connection === 'live') return null;
   return (
-    <div
-      role="status"
-      className="fixed left-1/2 top-[calc(env(safe-area-inset-top)+8px)] z-50 -translate-x-1/2 rounded-full bg-ink px-4 py-2 text-sm font-extrabold text-bg shadow-lg"
-      data-testid="reconnecting"
-    >
+    <div role="status" className="rounded-full bg-ink px-4 py-2 text-sm font-extrabold text-bg shadow-lg" data-testid="reconnecting">
       {connection === 'polling' ? 'Reconnecting… (still playing)' : 'Connecting…'}
     </div>
   );
@@ -46,11 +52,7 @@ function Notices({ state }: { state: SyncState }) {
   }, [last?.id]); // eslint-disable-line react-hooks/exhaustive-deps
   if (!last || shown !== last.id) return null;
   return (
-    <div
-      role="status"
-      className="fixed bottom-[calc(env(safe-area-inset-bottom)+84px)] left-1/2 z-30 w-[calc(100%-32px)] max-w-sm -translate-x-1/2 rounded-2xl bg-ink px-4 py-3 text-center font-extrabold text-bg shadow-lg"
-      data-testid="notice"
-    >
+    <div role="status" className="max-w-sm rounded-full bg-ink px-4 py-2 text-center text-sm font-extrabold text-bg shadow-lg" data-testid="notice">
       {last.text}
     </div>
   );
@@ -122,7 +124,10 @@ export function RoomView({ sync, state }: RoomProps) {
       data-status={pub.status}
       data-game={pub.status === 'playing' ? pub.game?.id : undefined}
     >
-      <ConnectionPill connection={state.connection} />
+      <TopStack>
+        <ConnectionPill connection={state.connection} />
+        <Notices state={state} />
+      </TopStack>
       <header className="flex items-center justify-between gap-2">
         <div className="flex items-baseline gap-2">
           <span className="text-xs font-extrabold uppercase tracking-wide text-muted">Room</span>
@@ -172,7 +177,6 @@ export function RoomView({ sync, state }: RoomProps) {
       {pub.status === 'break' && <BreakView sync={sync} state={state} />}
       {pub.status === 'summary' && <NightView sync={sync} state={state} />}
 
-      <Notices state={state} />
       <Sheet open={adminOpen} onClose={() => setAdminOpen(false)} title="Admin controls" testId="admin-sheet">
         <AdminMenu sync={sync} state={state} close={() => setAdminOpen(false)} />
       </Sheet>

@@ -157,6 +157,7 @@ export function DrawGame({ sync, state }: RoomProps) {
 
       <div className="card flex flex-col gap-2 p-3" aria-label="Guesses">
         <div className="flex max-h-48 flex-col gap-1 overflow-y-auto" data-testid="draw-chat">
+          {messages.length === 0 && <p className="text-sm font-semibold text-muted">Guesses will show up here.</p>}
           {messages.map((m) => (
             <div
               key={`${m.secret ? 's' : 'p'}${m.id}`}

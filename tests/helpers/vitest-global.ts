@@ -4,7 +4,7 @@ import { startTestDb, type TestDb } from './pg';
 let db: TestDb | null = null;
 
 export async function setup(project: TestProject) {
-  db = await startTestDb('unit', 54331);
+  db = await startTestDb('unit');
   project.provide('databaseUrl', db.url);
 }
 

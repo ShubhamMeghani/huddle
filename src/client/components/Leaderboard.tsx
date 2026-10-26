@@ -58,7 +58,7 @@ export function LeaderboardButton({ sync, state }: RoomProps) {
   return (
     <>
       <button
-        className="btn btn-brand fixed bottom-[calc(env(safe-area-inset-bottom)+16px)] right-[calc(env(safe-area-inset-right)+16px)] z-30 !h-14 !w-14 !rounded-full !p-0 text-2xl shadow-lg"
+        className="btn btn-brand fixed bottom-[calc(env(safe-area-inset-bottom)+16px)] right-[max(calc(env(safe-area-inset-right)+16px),calc(50vw-14rem+16px))] z-30 !h-14 !w-14 !rounded-full !p-0 text-2xl shadow-lg"
         onClick={() => setOpen(true)}
         aria-label="Leaderboard"
         data-testid="leaderboard-open"

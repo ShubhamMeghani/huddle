@@ -8,7 +8,7 @@ import { GAME_COMPONENTS } from '@/client/games';
 import { LiveLeaderboard } from './Leaderboard';
 import { Countdown, type RoomProps } from './ui';
 import { Standings, nightTotals } from './Scoreboard';
-import { ConnectionPill } from './RoomView';
+import { ConnectionPill, TopStack } from './RoomView';
 
 export function ScreenJoin() {
   const router = useRouter();
@@ -61,7 +61,9 @@ function ScreenBody({ sync, state }: RoomProps) {
   const meta = pub.game ? GAME_META[pub.game.id] : null;
   return (
     <main className="flex min-h-[100dvh] w-full flex-col gap-6 p-8" data-testid="screen" data-version={state.snapshot!.v} data-game={pub.game?.id}>
-      <ConnectionPill connection={state.connection} />
+      <TopStack>
+        <ConnectionPill connection={state.connection} />
+      </TopStack>
       <header className="flex items-center justify-between gap-6">
         <div className="text-5xl font-black">
           Huddle<span className="text-brand">.</span> {meta && <span className="text-accent-ink">{meta.emoji} {meta.title}</span>}

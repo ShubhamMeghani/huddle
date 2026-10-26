@@ -45,7 +45,7 @@ export function AtlasGame({ sync, state }: RoomProps) {
             {v.letter.toUpperCase()}
           </div>
         </div>
-        <div className="text-right text-sm font-bold text-muted">{v.count} places so far</div>
+        <div className="shrink-0 whitespace-nowrap text-right text-sm font-bold text-muted">{v.count} places so far</div>
       </div>
 
       {myTurn && (
@@ -62,6 +62,7 @@ export function AtlasGame({ sync, state }: RoomProps) {
               autoComplete="off"
               autoCapitalize="words"
               enterKeyHint="send"
+              placeholder={`Starts with ${v.letter.toUpperCase()}…`}
               onChange={(e) => setText(e.target.value)}
               data-testid="atlas-input"
             />
@@ -114,6 +115,7 @@ export function AtlasGame({ sync, state }: RoomProps) {
       </section>
 
       <section className="card p-4" aria-label="Places named">
+        {v.chain.length === 0 && <p className="text-sm font-semibold text-muted">No places yet. The first one sets the next letter.</p>}
         <ol className="flex flex-wrap gap-2" data-testid="atlas-chain">
           {v.chain.map((c, i) => (
             <li key={i} className="rounded-full bg-accent-soft px-3 py-1 text-sm font-bold" data-testid="atlas-place">

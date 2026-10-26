@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 3100;
+// E2E_PORT lets the suite run beside another app on 3100; scripts/e2e-server.ts reads the same variable.
+const PORT = Number(process.env.E2E_PORT ?? 3100);
 
 /** E2E against the local production build in test mode, on Android (Chromium) and iPhone (WebKit). */
 export default defineConfig({

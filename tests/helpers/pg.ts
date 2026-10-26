@@ -1,5 +1,6 @@
 /* Throwaway Postgres for tests: embedded-postgres locally, or TEST_DATABASE_URL (CI service). */
 import { rmSync } from 'node:fs';
+import { createServer } from 'node:net';
 import { join } from 'node:path';
 import pg from 'pg';
 import { migrate } from '../../scripts/migrate';
@@ -19,7 +20,20 @@ async function createDatabase(adminUrl: string, name: string): Promise<string> {
   return u.toString();
 }
 
-export async function startTestDb(label: string, port: number): Promise<TestDb> {
+/** A port the OS will actually let us bind. Windows reserves shifting port ranges (Hyper-V/WSL), so a fixed port
+ *  can become unbindable; port 0 asks the OS for a free one. */
+function freePort(): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const srv = createServer();
+    srv.once('error', reject);
+    srv.listen(0, '127.0.0.1', () => {
+      const { port } = srv.address() as { port: number };
+      srv.close(() => resolve(port));
+    });
+  });
+}
+
+export async function startTestDb(label: string): Promise<TestDb> {
   const dbName = `huddle_${label}_${Date.now()}`;
   const external = process.env.TEST_DATABASE_URL;
   if (external) {
@@ -28,6 +42,7 @@ export async function startTestDb(label: string, port: number): Promise<TestDb> 
     return { url, stop: async () => {} };
   }
   const { default: EmbeddedPostgres } = await import('embedded-postgres');
+  const port = await freePort();
   const dir = join(process.cwd(), '.cache', `pg-${label}`);
   rmSync(dir, { recursive: true, force: true });
   const server = new EmbeddedPostgres({

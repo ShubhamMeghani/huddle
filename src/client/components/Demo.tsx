@@ -77,11 +77,18 @@ export function DemoPicker({ sync, state }: RoomProps) {
       <h2 className="text-lg font-black">Pick a game to play with the bots</h2>
       <div className="grid grid-cols-2 gap-2">
         {DEMO_GAMES.map((id) => (
-          <button key={id} className="btn btn-ghost !min-h-14 justify-start" data-game={id} onClick={() => void start(id)} disabled={starting} data-testid={`demo-${id}`}>
-            <span className="text-2xl" aria-hidden>
+          <button
+            key={id}
+            className="btn btn-ghost !min-h-20 flex-col !gap-1 !rounded-2xl !px-2 !py-2 text-center"
+            data-game={id}
+            onClick={() => void start(id)}
+            disabled={starting}
+            data-testid={`demo-${id}`}
+          >
+            <span className="text-2xl leading-none" aria-hidden>
               {GAME_META[id].emoji}
             </span>
-            <span className="text-left text-sm font-black">{GAME_META[id].title}</span>
+            <span className="text-sm font-black leading-tight">{GAME_META[id].title}</span>
           </button>
         ))}
       </div>

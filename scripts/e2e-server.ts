@@ -7,7 +7,7 @@ import { SENTINELS } from '../tests/helpers/sentinels';
 const PORT = Number(process.env.E2E_PORT ?? 3100);
 
 async function main() {
-  const db = await startTestDb('e2e', 54330);
+  const db = await startTestDb('e2e');
   mkdirSync('.cache', { recursive: true });
   writeFileSync('.cache/e2e-db.json', JSON.stringify({ url: db.url }));
   const env: NodeJS.ProcessEnv = {

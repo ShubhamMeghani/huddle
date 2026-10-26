@@ -65,6 +65,9 @@ export function ImposterGame({ sync, state }: RoomProps) {
                       {c.text}
                     </span>
                   ))}
+                  {clues.length === 0 && kind === 'clue' && (
+                    <span className="text-sm font-semibold text-muted">{pub.phase.turnSeatId === id ? 'thinking…' : 'waiting'}</span>
+                  )}
                 </span>
               </li>
             );

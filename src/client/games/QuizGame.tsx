@@ -75,6 +75,9 @@ export function QuizGame({ sync, state }: RoomProps) {
                 border: faded ? '2px solid var(--line)' : undefined,
                 outline: isMine ? '4px solid var(--ink)' : undefined,
                 outlineOffset: 2,
+                // Once answered or revealed, the muted surface already says "done": skip .btn:disabled's fade,
+                // which washed out the correct answer.
+                opacity: v.reveal || chosen !== null ? 1 : undefined,
               }}
               disabled={!canAnswer}
               onClick={() => answer(i)}
@@ -84,6 +87,11 @@ export function QuizGame({ sync, state }: RoomProps) {
             >
               <span className="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/25 font-black">{LETTERS[i]}</span>
               <span className="flex-1">{opt}</span>
+              {v.reveal && isCorrect && (
+                <span className="mr-1 text-2xl font-black" aria-label="Correct answer">
+                  ✓
+                </span>
+              )}
               {v.reveal && (
                 <span className="rounded-full bg-black/25 px-2 text-sm font-black" data-testid={`quiz-dist-${i}`}>
                   {v.reveal.dist[i]}

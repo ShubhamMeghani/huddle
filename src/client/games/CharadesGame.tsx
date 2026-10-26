@@ -40,7 +40,7 @@ export function CharadesGame({ sync, state }: RoomProps) {
           </div>
           {kind === 'act' && (
             <div className="grid grid-cols-2 gap-2">
-              <button className="btn btn-primary h-16 text-xl" onClick={() => void sync.act('guessed')} data-testid="charades-guessed">
+              <button className="btn btn-primary h-16 whitespace-nowrap !px-3 text-lg" onClick={() => void sync.act('guessed')} data-testid="charades-guessed">
                 ✓ Guessed
               </button>
               <button className="btn btn-ghost h-16" disabled={v.passesLeft <= 0} onClick={() => void sync.act('pass')} data-testid="charades-pass">
