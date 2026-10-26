@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { closeAll, drawLine, drawQueue, findDrawer, opDigest, roomOf, startGame } from './helpers';
+import { chooseWord, closeAll, drawLine, drawQueue, findDrawer, opDigest, roomOf, startGame } from './helpers';
 
 test('AC-17 mid-turn reload and closed-tab reopen restore seat, score, timer and the full drawing', async ({ browser }) => {
   test.setTimeout(120_000);
@@ -7,7 +7,7 @@ test('AC-17 mid-turn reload and closed-tab reopen restore seat, score, timer and
   await startGame(players[0].page, drawQueue(1, 90));
   const drawer = await findDrawer(players);
   const [b, c] = players.filter((p) => p !== drawer);
-  await drawer.page.getByTestId('draw-choice-0').click();
+  await chooseWord(drawer.page);
   await drawLine(drawer.page, [100, 100], [900, 650]);
   await drawLine(drawer.page, [900, 100], [100, 650]);
   await drawer.page.waitForTimeout(400);

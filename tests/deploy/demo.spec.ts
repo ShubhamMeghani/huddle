@@ -12,7 +12,8 @@ test('AC-87 a fresh browser follows the home-page link to /demo and finishes a Q
   await page.getByTestId('demo-quiz').click({ timeout: 30_000 });
   while (!(await page.getByTestId('break').isVisible().catch(() => false))) {
     const opt = page.getByTestId('quiz-option-0');
-    if ((await opt.isVisible().catch(() => false)) && (await opt.isEnabled().catch(() => false))) await opt.click().catch(() => {});
+    // Short click: the option can vanish between the check and the tap when the question ends.
+    if ((await opt.isVisible().catch(() => false)) && (await opt.isEnabled().catch(() => false))) await opt.click({ timeout: 2_000 }).catch(() => {});
     await page.waitForTimeout(500);
     if (Date.now() - t0 > 120_000) break;
   }

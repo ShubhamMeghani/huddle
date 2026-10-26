@@ -53,6 +53,7 @@ export class RoomSync {
   private heartbeatMs = 25_000;
   private listeners = new Set<() => void>();
   private strokeListeners = new Set<StrokeListener>();
+  private catchUpListeners = new Set<() => void>();
   private stopped = false;
   private driver: 'ably' | 'local' | null = null;
   private es: EventSource | null = null;
@@ -78,6 +79,12 @@ export class RoomSync {
   onStrokes(fn: StrokeListener) {
     this.strokeListeners.add(fn);
     return () => this.strokeListeners.delete(fn);
+  }
+
+  /** Called after every snapshot is applied: the moment to catch up anything not in the snapshot (Draw strokes). */
+  onCatchUp(fn: () => void) {
+    this.catchUpListeners.add(fn);
+    return () => this.catchUpListeners.delete(fn);
   }
 
   private set(patch: Partial<SyncState>) {
@@ -171,6 +178,7 @@ export class RoomSync {
         const current = this.state.snapshot;
         if (!current || body.v >= current.v) {
           this.set({ snapshot: { v: body.v, public: body.public, me: body.me }, error: null, testMode: Boolean(body.testMode) });
+          for (const l of this.catchUpListeners) l();
         } else {
           this.refetchQueued = true; // a newer update overtook this response: fetch again so `me` is current too
         }
@@ -282,6 +290,11 @@ export class RoomSync {
       }
     });
     const channel = client.channels.get(`huddle:room:${snap.public.roomId}`);
+    // Messages published before the channel attached, or while it was detached, are never delivered: catch up once
+    // it is attached (connecting alone is not enough, attaching comes after).
+    channel.on('attached', (change) => {
+      if (!change.resumed) void this.fetchSnapshot();
+    });
     await channel.subscribe((msg) => {
       if (msg.name === 'state') this.onStateMessage(msg.data);
       else if (msg.name === 'strokes') this.onStrokesMessage(msg.data);

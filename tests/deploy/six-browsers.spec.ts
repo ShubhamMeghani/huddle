@@ -56,6 +56,8 @@ test('AC-80 six real browsers play 3 Quiz questions and a Draw turn; one reloads
       }
     }
   }
+  // Record the quiz half now, so a failure in the Draw half doesn't lose it.
+  record([`### AC-80 quiz half · ${new Date().toISOString()} · ${IS_LOCAL ? 'local production build + real Ably + Neon dev' : TARGET}`, '', `- 3 Quiz questions on 6 browsers: every answer seen by another phone; action → other phone p95 ${p95(lat)} ms (budget ${LATENCY_BUDGET_MS} ms)`]);
   // Production quizzes have at least 5 questions: after the 3 the AC asks for, the admin ends the game.
   await act(pages[0], 'endGame');
   for (const p of pages) await expect(p.getByTestId('break')).toBeVisible({ timeout: 60_000 });

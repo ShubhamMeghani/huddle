@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { act, closeAll, drawQueue, findDrawer, roomOf, snapshotOf, startGame, type Player } from './helpers';
+import { act, chooseWord, closeAll, drawQueue, findDrawer, roomOf, snapshotOf, startGame, type Player } from './helpers';
 
 /** Every HTTP response body and realtime frame a phone received, with the time it arrived. */
 interface Capture {
@@ -58,7 +58,7 @@ test('AC-39 network sniffing: no phone receives a secret it may not see before i
   await act(a.page, 'start', { queue: drawQueue(1, 5, 2) });
   const drawer = await findDrawer(players);
   const choices = await drawer.page.getByTestId('draw-choices').locator('button').allTextContents();
-  await drawer.page.getByTestId('draw-choice-0').click();
+  await chooseWord(drawer.page);
   const drawReveal = await waitFor(a.page, 'draw-reveal', 30_000);
   for (const [i, p] of players.entries()) {
     if (p === drawer) continue;

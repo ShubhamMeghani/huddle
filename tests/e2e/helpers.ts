@@ -126,6 +126,16 @@ export async function drawLine(page: Page, from: [number, number], to: [number, 
   await page.mouse.up();
 }
 
+/**
+ * The drawer picks a word through its sync client: the server answers at once, so no WebKit click stability check
+ * races the 4 s test-mode choose window under load. draw.spec (AC-66) covers the choice buttons themselves.
+ */
+export async function chooseWord(page: Page, index = 0) {
+  const r = await act(page, 'choose', { index });
+  expect(r.ok, JSON.stringify(r)).toBe(true);
+  await expect(page.getByTestId('draw-word')).toBeVisible();
+}
+
 /** The player whose phone shows the word choices. */
 export async function findDrawer(players: Player[]): Promise<Player> {
   for (let i = 0; i < 100; i++) {

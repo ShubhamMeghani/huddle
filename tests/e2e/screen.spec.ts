@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { closeAll, drawLine, drawQueue, findDrawer, opDigest, roomOf, startGame } from './helpers';
+import { chooseWord, closeAll, drawLine, drawQueue, findDrawer, opDigest, roomOf, startGame } from './helpers';
 
 test('AC-55 a big screen joins by code, is not a player, shows the lobby QR, the live drawing, timer and leaderboard, resyncs, and never sees the word', async ({ browser }) => {
   const { code, players } = await roomOf(browser, ['Asha', 'Bilal', 'Charu']);
@@ -25,7 +25,7 @@ test('AC-55 a big screen joins by code, is not a player, shows the lobby QR, the
 
   await startGame(players[0].page, drawQueue(1, 60, 0));
   const drawer = await findDrawer(players);
-  await drawer.page.getByTestId('draw-choice-0').click();
+  await chooseWord(drawer.page);
   const word = (await drawer.page.getByTestId('draw-word').textContent())!.trim();
   await expect(screen.getByTestId('screen-sidebar')).toBeVisible();
   await expect(screen.getByTestId('countdown')).toBeVisible();

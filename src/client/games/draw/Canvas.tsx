@@ -148,8 +148,12 @@ export function DrawCanvas({
       render();
       if (msg.seq > maxSeq + 1) void fetchAfter(maxSeq); // gap: catch up (SPEC §4.5)
     });
+    // A snapshot taken mid-turn catches up the strokes too (SPEC §4.2): batches published while realtime was
+    // attaching or down never arrive, and with no later batch there would be no gap to notice.
+    const offCatchUp = sync.onCatchUp(() => void fetchAfter(Math.max(-1, ...batches.current.keys())));
     return () => {
       off();
+      offCatchUp();
     };
   }, [turnId, sync, fetchAfter, render]);
 

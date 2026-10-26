@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { act, closeAll, drawQueue, roomOf, startGame } from './helpers';
+import { act, chooseWord, closeAll, drawQueue, roomOf, startGame } from './helpers';
 
 test('AC-42 the leaderboard button is on every game; it shows scores, teams and the timer without pausing anyone; answering still works afterwards', async ({ browser }) => {
   test.setTimeout(180_000);
@@ -48,7 +48,7 @@ test('AC-42 in Draw, typed text survives the overlay, and the overlay closes by 
   const { players } = await roomOf(browser, ['Asha', 'Bilal']);
   const [a, b] = players;
   await startGame(a.page, drawQueue(1, 5, 0));
-  await a.page.getByTestId('draw-choice-0').click(); // Asha draws first
+  await chooseWord(a.page); // Asha draws first
   await b.page.getByTestId('guess-input').fill('half a thought');
   await b.page.getByTestId('leaderboard-open').click();
   await expect(b.page.getByTestId('leaderboard')).toBeVisible();

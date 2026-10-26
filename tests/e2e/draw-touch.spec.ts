@@ -1,12 +1,12 @@
 import { expect, test } from '@playwright/test';
-import { closeAll, drawQueue, findDrawer, opDigest, roomOf, startGame } from './helpers';
+import { chooseWord, closeAll, drawQueue, findDrawer, opDigest, roomOf, startGame } from './helpers';
 
 test('AC-88 a touch drag on the canvas draws for everyone without scrolling or zooming the page', async ({ browser }) => {
   const { players } = await roomOf(browser, ['Asha', 'Bilal']);
   await startGame(players[0].page, drawQueue(1, 60));
   const drawer = await findDrawer(players);
   const viewer = players.find((p) => p !== drawer)!;
-  await drawer.page.getByTestId('draw-choice-0').click();
+  await chooseWord(drawer.page);
   const canvas = drawer.page.getByTestId('draw-canvas');
   await expect(canvas).toBeVisible();
   expect(await canvas.evaluate((el) => getComputedStyle(el).touchAction)).toBe('none');
