@@ -1,6 +1,6 @@
 # Huddle: Build Plan (PLAN.md)
 
-> **Spec:** [SPEC.md](SPEC.md) **v0.5**, which has 96 requirements and 93 acceptance criteria; §11 lists the binding decisions.
+> **Spec:** [SPEC.md](SPEC.md) **v0.5**, which has 97 requirements and 95 acceptance criteria; §11 lists the binding decisions.
 > **Plan version:** 2 · 2026-10-22. Changelog at the end.
 
 ## Stack
@@ -409,7 +409,7 @@ Requested before the friends playtest, with a same-day deadline: one commit per 
 |---|---|---|---|---|
 | 17.1 | How-to-play card before a game's first round in a room: three lines and an example, skippable, once per game per room; admin toggle | R95 | AC-90, AC-91 | done |
 | 17.2 | "Pick for us": a game that fits the current player count | R96 | AC-92, AC-93 | done |
-| 17.3 | Quick / Normal / Long presets with estimated duration; advanced settings still reachable | – | – | todo |
+| 17.3 | Quick / Normal / Long presets with estimated duration; advanced settings still reachable | R97 | AC-94, AC-95 | done |
 | 17.4 | Lobby: Share on WhatsApp, large QR, remembered name for one-tap joining | – | – | todo |
 | 17.5 | New game: Name Place Animal Thing | – | – | todo |
 | 17.6 | New game: Emoji Decode (≥ 200 puzzles, ≥ 50 places) | – | – | todo |
@@ -518,6 +518,8 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-91 | E2E | 17 | pass | `tests/e2e/intro.spec.ts` · pass @ 17.1 |
 | AC-92 | Unit | 17 | pass | `tests/unit/pick.test.ts` · pass @ 17.2 |
 | AC-93 | E2E | 17 | pass | `tests/e2e/pick.spec.ts` · pass @ 17.2 |
+| AC-94 | Unit | 17 | pass | `tests/unit/presets.test.ts` · pass @ 17.3 |
+| AC-95 | E2E | 17 | pass | `tests/e2e/presets.spec.ts` · pass @ 17.3 |
 
 ---
 
@@ -587,6 +589,7 @@ Format: date · phase · decision · reason.
 - 2026-10-27 · 17.1 · The How-to-play card is an engine phase (`intro`) before the module's `start`: the game state stays null, every module call is skipped, and game actions return `WRONG_PHASE`. Every active human's "Got it", the 20 s deadline or an admin skip starts round 1; seen games are kept in `room.memory.introSeen`. · The first round never starts under the card (a client-only overlay would hide a running question timer), and late joiners, pause, kick and end-game keep working unchanged.
 - 2026-10-27 · 17.1 · Cards are on for every real room (including demo rooms and rooms created before this change) and off by default in test mode; the lobby has an admin toggle. The production AC-80 check turns them off before measuring, and AC-87 taps "Got it". · Existing specs keep testing play rather than the card; AC-91 turns the cards on through the toggle.
 - 2026-10-27 · 17.2 · "Pick for us" runs on the admin's phone and adds its pick through the normal `setQueue` action; it avoids games already queued or played tonight until none are left. · Nothing about the pick is secret, so no new server action or state is needed.
+- 2026-10-27 · 17.3 · Presets live in `src/games/presets.ts` and touch only round counts and timers: Normal is defined as the defaults of those fields, so every existing queue, test and stored setting keeps meaning "Normal". Estimates are rough per-game formulas (timers rarely run to the end) rounded to whole minutes. · One source of truth for the lobby and the unit test; categories picked under Advanced survive a preset change.
 
 ## Blockers
 

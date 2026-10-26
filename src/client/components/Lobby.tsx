@@ -5,7 +5,8 @@ import { defaultsOf } from '@/games/settings';
 import type { GameConfig } from '@/engine/types';
 import { Avatar, Sheet, type RoomProps } from './ui';
 import { AVATAR_EMOJIS } from '@/lib/avatars';
-import { SettingsForm } from './SettingsForm';
+import { QueueItem } from './QueueItem';
+import { estimateMinutes } from '@/games/presets';
 import { TeamsPanel } from './TeamsPanel';
 import { CrewLink } from './CrewLink';
 import { DemoPicker } from './Demo';
@@ -63,6 +64,7 @@ export function Lobby({ sync, state }: RoomProps) {
   const link = typeof window !== 'undefined' ? `${window.location.origin}/r/${pub.code}` : `/r/${pub.code}`;
   const games = Object.values(GAME_META).filter((g) => !g.testOnly || state.testMode);
   const queue = pub.queue;
+  const seatedCount = pub.seats.filter((s) => s.status === 'seated').length;
 
   const saveQueue = async (q: GameConfig[]) => {
     setError(null);
@@ -126,45 +128,26 @@ export function Lobby({ sync, state }: RoomProps) {
         <h2 className="text-lg font-black">Tonight&apos;s games</h2>
         {queue.length === 0 && <p className="font-semibold text-muted">{me.isAdmin ? 'Add games to the queue.' : 'Waiting for the admin to pick games…'}</p>}
         <ol className="flex flex-col gap-2" data-testid="queue">
-          {queue.map((q, i) => {
-            const m = GAME_META[q.gameId];
-            return (
-              <li key={i} className="rounded-2xl border-2 border-line p-3" data-game={q.gameId} data-testid="queue-item">
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl" aria-hidden>
-                    {m?.emoji}
-                  </span>
-                  <span className="flex-1 font-extrabold">{m?.title}</span>
-                  {me.isAdmin && (
-                    <>
-                      <button className="btn btn-ghost !px-3 text-sm" onClick={() => setEditing(editing === i ? null : i)} data-testid={`edit-${i}`}>
-                        Rules
-                      </button>
-                      <button
-                        className="btn btn-ghost !px-3 text-sm"
-                        aria-label={`Remove ${m?.title}`}
-                        onClick={() => void saveQueue(queue.filter((_, j) => j !== i))}
-                      >
-                        ✕
-                      </button>
-                    </>
-                  )}
-                </div>
-                {editing === i && m && (
-                  <div className="mt-3">
-                    <SettingsForm
-                      spec={m.settings}
-                      value={q.settings}
-                      testMode={state.testMode}
-                      idPrefix={`set-${i}`}
-                      onChange={(v) => void saveQueue(queue.map((x, j) => (j === i ? { ...x, settings: v } : x)))}
-                    />
-                  </div>
-                )}
-              </li>
-            );
-          })}
+          {queue.map((q, i) => (
+            <QueueItem
+              key={i}
+              index={i}
+              cfg={q}
+              players={seatedCount}
+              isAdmin={me.isAdmin}
+              testMode={state.testMode}
+              advanced={editing === i}
+              onToggleAdvanced={() => setEditing(editing === i ? null : i)}
+              onChange={(v) => void saveQueue(queue.map((x, j) => (j === i ? { ...x, settings: v } : x)))}
+              onRemove={() => void saveQueue(queue.filter((_, j) => j !== i))}
+            />
+          ))}
         </ol>
+        {queue.length > 0 && (
+          <p className="text-right text-sm font-black text-muted" data-testid="queue-total">
+            About {queue.reduce((sum, q) => sum + estimateMinutes(q.gameId, q.settings, seatedCount), 0)} min in all
+          </p>
+        )}
         {me.isAdmin && (
           <PickForUs
             state={state}
