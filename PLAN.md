@@ -1,6 +1,6 @@
 # Huddle: Build Plan (PLAN.md)
 
-> **Spec:** [SPEC.md](SPEC.md) **v0.4**, which has 94 requirements and 89 acceptance criteria; §11 lists the binding decisions.
+> **Spec:** [SPEC.md](SPEC.md) **v0.5**, which has 95 requirements and 91 acceptance criteria; §11 lists the binding decisions.
 > **Plan version:** 2 · 2026-10-22. Changelog at the end.
 
 ## Stack
@@ -71,6 +71,7 @@ The full stack is in SPEC §3:
 | 14 | Privacy page | AUTO | done | bf25834 |
 | 15 | Full multi-player E2E suite and verification | AUTO | done | phase-15 commit |
 | 16 | Human steps and acceptance | HUMAN, then AUTO | todo | – |
+| 17 | Playtest improvements (SPEC v0.5): one commit per task | AUTO | in progress | 17.1 below |
 
 If time runs short, cut Should items in this order: recap card (10.7) → big screen (11.2) → Most Likely To (9.1–9.2). Log each cut and mark its ACs `cut`. The steal rule (R65) is a Must, so cutting it would be a SPEC change (rule 4).
 
@@ -400,6 +401,22 @@ H4 → H5 → H6 → H7 → H8 (above), then task 16.1 [AUTO]: run `npm run test
 
 **Done when:** AC-45, AC-76, AC-77, AC-78, AC-79, AC-80, AC-81, AC-82, AC-87.
 
+## Phase 17: Playtest improvements (SPEC v0.5)
+
+Requested before the friends playtest, with a same-day deadline: one commit per task, in this order, cutting from the bottom if time runs short. Each new game uses the pure rules-module pattern, server timers, secret views, rejoin and AFK handling, demo bots, unit tests and E2E on both device projects, and gets its own colour.
+
+| # | Task | Refs | Done when | Status |
+|---|---|---|---|---|
+| 17.1 | How-to-play card before a game's first round in a room: three lines and an example, skippable, once per game per room; admin toggle | R95 | AC-90, AC-91 | done |
+| 17.2 | "Pick for us": a game that fits the current player count | – | – | todo |
+| 17.3 | Quick / Normal / Long presets with estimated duration; advanced settings still reachable | – | – | todo |
+| 17.4 | Lobby: Share on WhatsApp, large QR, remembered name for one-tap joining | – | – | todo |
+| 17.5 | New game: Name Place Animal Thing | – | – | todo |
+| 17.6 | New game: Emoji Decode (≥ 200 puzzles, ≥ 50 places) | – | – | todo |
+| 17.7 | New game (Should): Two Truths & a Lie | – | – | todo |
+
+**Proof (each task):** its unit tests and E2E on both projects, then `npm run ci`.
+
 ---
 
 ## Acceptance criteria status
@@ -497,6 +514,8 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-87 | Deploy | 16 | pass | `tests/deploy/demo.spec.ts` · 2026-10-26 on https://playhuddle.vercel.app: Quiz against 4 bots finished in 64 s |
 | AC-88 | E2E | 5 | pass | `tests/e2e/draw-touch.spec.ts` · pass @ phase-5 |
 | AC-89 | E2E | 16 | pass | `tests/e2e/account.spec.ts` (post-15 commit) |
+| AC-90 | Unit | 17 | pass | `tests/unit/intro.test.ts` · pass @ 17.1 |
+| AC-91 | E2E | 17 | pass | `tests/e2e/intro.spec.ts` · pass @ 17.1 |
 
 ---
 
@@ -563,6 +582,8 @@ Format: date · phase · decision · reason.
 - 2026-10-26 · after 15 · **Correction:** the 15–30 s production stalls were not caused by the Neon WebSocket pool. Probes from the test machine show connections to Vercel's edge silently dying and failing after 19.2 s (the Windows TCP retransmission limit), including a static CDN file and another Vercel-hosted site (`nextjs.org`), never `google.com`. The `pg` + `attachDatabasePool` change stays (it follows Neon's and Vercel's guidance and is harmless), but what helps a phone through such a stall is the client side: request timeouts with retry (d3b505c) and the snapshot stroke catch-up (42c8598). AC-80 passes on production after 42c8598. · Earlier entries attributed the stalls to dead pooled database connections; the probes disprove that.
 - 2026-10-26 · after 15 · UI polish (visual only, no spec change; audit with `scripts/ui-audit.ts` at 360 px and 1440 px, light and dark): notices and the Reconnecting pill share a non-blocking stack at the top (pointer-events none), because the bottom notice covered the clue input, buttons and the demo picker for 4 s; the quiz reveal shows the correct answer at full strength with ✓ (`.btn:disabled`'s fade had washed it out); empty states replace blank cards (Draw guesses, Atlas chain, Imposter clues "thinking…/waiting"); Atlas input placeholder and an unwrapped "places so far"; demo picker tiles stack the emoji over a one-line label; Charades ✓ Guessed matches Pass in height; the 🏆 button sits at the content column's edge on wide screens. · Hierarchy and readability at a glance; nothing moves under a finger (overlays are fixed, tiles have fixed sizes).
 - 2026-10-26 · after 15 · Test infrastructure: the throwaway Postgres asks the OS for a free port, and the E2E port is `E2E_PORT` (default 3100). · Windows reserved 54300–54399 after Hyper-V/WSL started, and another local app now runs on 3100.
+- 2026-10-27 · 17.1 · The How-to-play card is an engine phase (`intro`) before the module's `start`: the game state stays null, every module call is skipped, and game actions return `WRONG_PHASE`. Every active human's "Got it", the 20 s deadline or an admin skip starts round 1; seen games are kept in `room.memory.introSeen`. · The first round never starts under the card (a client-only overlay would hide a running question timer), and late joiners, pause, kick and end-game keep working unchanged.
+- 2026-10-27 · 17.1 · Cards are on for every real room (including demo rooms and rooms created before this change) and off by default in test mode; the lobby has an admin toggle. The production AC-80 check turns them off before measuring, and AC-87 taps "Got it". · Existing specs keep testing play rather than the card; AC-91 turns the cards on through the toggle.
 
 ## Blockers
 

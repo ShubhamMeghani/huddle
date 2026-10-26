@@ -79,7 +79,7 @@ export async function createRoom(opts: {
     const code = opts.code ?? generateRoomCode();
     const roomId = randomUUID();
     const now = Date.now();
-    const room = newRoomState({ roomId, code, isDemo: opts.isDemo, crewId: opts.crewId, now, seed: opts.seed ?? randomUUID() });
+    const room = newRoomState({ roomId, code, isDemo: opts.isDemo, crewId: opts.crewId, now, seed: opts.seed ?? randomUUID(), intros: !isTestMode() });
     const ctx = makeCtx(room, now, { [opts.identity.id]: now });
     joinRoom(room, { identityIds: opts.identity.aliases, identityId: opts.identity.id, name: opts.identity.name }, ctx);
     opts.setup?.(room, ctx);

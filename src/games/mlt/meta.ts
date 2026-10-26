@@ -22,4 +22,8 @@ export const mltMeta: GameMeta = {
     scoring: ['Just for fun: nobody earns season points.', 'Night stats show who collected the most votes.'],
     timers: ['20 seconds to vote by default (10–60 s).', 'The reveal plays for about 6 seconds.'],
   },
+  intro: {
+    lines: ['A prompt appears on every phone.', 'Everyone secretly votes for one player.', 'Totals are revealed from fewest votes to most. Just for fun.'],
+    example: '“Most likely to miss their own flight” → Rahul 3 votes, Meera 1.',
+  },
 };

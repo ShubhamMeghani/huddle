@@ -56,4 +56,8 @@ export const quizMeta: GameMeta = {
     ],
     timers: ['Each question has a timer (20 s by default, 10–30 s).', 'The reveal shows for 5 seconds before the next question.'],
   },
+  intro: {
+    lines: ['Everyone gets the same question with four answers.', 'Tap one answer. Your first tap is final.', 'Right answers score more the faster you tap.'],
+    example: 'Which planet is called the Red Planet? Tap Mars after 4 seconds → about 900 points.',
+  },
 };

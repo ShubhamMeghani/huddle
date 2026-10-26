@@ -35,4 +35,8 @@ export const atlasMeta: GameMeta = {
     scoring: ['+10 for every accepted place.', '+50 for the last player standing.'],
     timers: ['20 seconds per turn by default (10–60 s).', 'An accept vote lasts 10 seconds and pauses the turn timer.'],
   },
+  intro: {
+    lines: ['Name a place that starts with the last letter of the previous one.', 'Countries, states and cities count, each once per game.', 'Run out of time and you lose a life. Last one standing wins.'],
+    example: 'Delhi → India → Agra → Amsterdam → Mumbai…',
+  },
 };

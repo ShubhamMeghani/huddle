@@ -55,4 +55,8 @@ export const charadesMeta: GameMeta = {
     scoring: ['Guessed: 10 points plus 1 for every full 10 seconds left.', 'A successful steal: 5 points to the stealing team.'],
     timers: ['90 seconds per team turn by default (30–180 s).', 'Steal window: 15 seconds.'],
   },
+  intro: {
+    lines: ['Each turn, one actor sees a secret movie title.', 'Act it out without speaking while your team guesses.', 'The actor taps Guessed when the team gets it.'],
+    example: 'The actor sees “Sholay”, mimes a horse ride and a coin toss, and the team shouts it with 50 s left → 15 points.',
+  },
 };

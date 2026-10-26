@@ -42,6 +42,7 @@ test('AC-80 six real browsers play 3 Quiz questions and a Draw turn; one reloads
   test.setTimeout(600_000);
   const { browsers, pages } = await sixBrowsers();
   const all = ['bollywood', 'hollywood', 'cricket', 'india_gk', 'world_gk', 'science', 'sports'];
+  await act(pages[0], 'setIntros', { on: false }); // AC-80 measures play, not the How-to-play cards (R95)
   await act(pages[0], 'start', { queue: [{ gameId: 'quiz', settings: { questions: 5, seconds: 30, categories: all, difficulty: 'any', mode: 'solo' } }, { gameId: 'draw', settings: { rounds: 1, drawSeconds: 60, hints: 0, words: 'mixed' } }] });
   const lat: number[] = [];
   for (let q = 1; q <= 3; q++) {

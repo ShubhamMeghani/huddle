@@ -14,6 +14,12 @@ export interface HowTo {
   timers: string[];
 }
 
+/** The card shown before a game's first round in a room (R95): three short lines and one example. */
+export interface Intro {
+  lines: [string, string, string];
+  example: string;
+}
+
 export interface GameMeta {
   id: GameId;
   title: string;
@@ -24,6 +30,7 @@ export interface GameMeta {
   testOnly?: boolean;
   settings: SettingsSpec;
   howTo: HowTo;
+  intro?: Intro;
 }
 
 const ping: GameMeta = {

@@ -4,6 +4,7 @@ import { GAME_META } from '@/games/meta';
 import { GAME_COMPONENTS } from '@/client/games';
 import { Avatar, Countdown, seatName, type RoomProps } from './ui';
 import { LeaderboardButton } from './Leaderboard';
+import { IntroCard } from './IntroCard';
 
 /** Gentle vibration when it becomes your turn (R40); silently does nothing where unsupported (iOS). */
 function useTurnVibration(mustAct: boolean) {
@@ -25,6 +26,7 @@ export function TurnStatus({ state }: Pick<RoomProps, 'state'>) {
   const mustAct = Boolean(me.game?.mustAct);
   let text: string;
   if (pub.paused) text = 'Paused';
+  else if (pub.game?.intro) text = 'Get ready';
   else if (mustAct) text = 'Your turn';
   else if (pub.phase.turnSeatId && pub.phase.turnSeatId !== me.seatId) text = `Waiting for ${seatName(pub, pub.phase.turnSeatId)}`;
   else if (me.role !== 'player') text = 'Watching';
@@ -77,7 +79,7 @@ export function Playing({ sync, state }: RoomProps) {
         </div>
       )}
 
-      {Game ? <Game sync={sync} state={state} /> : <p className="font-bold">Loading game…</p>}
+      {game.intro ? <IntroCard sync={sync} state={state} /> : Game ? <Game sync={sync} state={state} /> : <p className="font-bold">Loading game…</p>}
       <div className="h-20" aria-hidden />
       <LeaderboardButton sync={sync} state={state} />
     </section>

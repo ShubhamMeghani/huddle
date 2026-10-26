@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { postJson } from '@/client/api';
 import { useRoomSync } from '@/client/useRoom';
 import { GAME_META } from '@/games/meta';
+import { IntroCard } from './IntroCard';
 import { GAME_COMPONENTS } from '@/client/games';
 import { LiveLeaderboard } from './Leaderboard';
 import { Countdown, type RoomProps } from './ui';
@@ -92,7 +93,7 @@ function ScreenBody({ sync, state }: RoomProps) {
       {pub.status === 'playing' && Game && (
         <section className="grid flex-1 grid-cols-[2fr_1fr] gap-8" data-game={pub.game!.id}>
           <div className="text-xl">
-            <Game sync={sync} state={state} />
+            {pub.game!.intro ? <IntroCard sync={sync} state={state} /> : <Game sync={sync} state={state} />}
           </div>
           <aside className="card flex flex-col gap-4 p-6" data-testid="screen-sidebar">
             <div className="flex items-center justify-between">

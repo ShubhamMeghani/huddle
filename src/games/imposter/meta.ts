@@ -34,4 +34,8 @@ export const imposterMeta: GameMeta = {
       'Vote: 30 s; revote: 20 s; imposter’s guess: 30 s.',
     ],
   },
+  intro: {
+    lines: ['Everyone gets the same word, except the imposter, who gets a similar one.', 'Take turns giving a one-word clue.', 'Vote out whoever seems off. Even the imposter may not know it’s them.'],
+    example: 'The crew has “Samosa”, the imposter has “Kachori”. Clues: crispy, chutney, flaky… who doesn’t fit?',
+  },
 };

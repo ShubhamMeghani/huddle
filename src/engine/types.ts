@@ -150,8 +150,13 @@ export interface RoomState {
     gameNo: number;
     settings: Record<string, unknown>;
     startedAt: number;
+    /** null while the How-to-play card shows (phase `intro`): the module has not started yet. */
     state: any;
+    /** Seats that tapped "Got it" on the How-to-play card (R95). */
+    intro?: { ready: SeatId[] } | null;
   } | null;
+  /** Show the How-to-play card before a game's first round in this room (R95). Missing means on. */
+  intros?: boolean;
   gameCounter: number;
   scoreEvents: ScoreEvent[];
   scoreEventCounter: number;

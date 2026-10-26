@@ -57,6 +57,8 @@ export function Lobby({ sync, state }: RoomProps) {
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<number | null>(null);
   const [picking, setPicking] = useState(false);
+  // The toggle answers the tap at once; the server's value takes over when the action returns.
+  const [introsDraft, setIntrosDraft] = useState<boolean | null>(null);
   const link = typeof window !== 'undefined' ? `${window.location.origin}/r/${pub.code}` : `/r/${pub.code}`;
   const games = Object.values(GAME_META).filter((g) => !g.testOnly || state.testMode);
   const queue = pub.queue;
@@ -182,6 +184,23 @@ export function Lobby({ sync, state }: RoomProps) {
       <TeamsPanel sync={sync} state={state} />
       <CrewLink state={state} />
 
+      {me.isAdmin && (
+        <label htmlFor="intro-toggle" className="card flex min-h-12 items-center justify-between gap-3 p-4 font-bold">
+          <span>Show a How-to-play card before each new game</span>
+          <input
+            id="intro-toggle"
+            type="checkbox"
+            className="h-7 w-7 shrink-0 accent-[var(--brand)]"
+            checked={introsDraft ?? pub.intros}
+            onChange={async (e) => {
+              setIntrosDraft(e.target.checked);
+              await sync.act('setIntros', { on: e.target.checked });
+              setIntrosDraft(null);
+            }}
+            data-testid="intro-toggle"
+          />
+        </label>
+      )}
       {me.isAdmin && (
         <button className="btn btn-brand w-full text-lg" disabled={!queue.length} onClick={start} data-testid="start">
           ▶ Start

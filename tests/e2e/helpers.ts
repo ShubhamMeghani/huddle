@@ -225,6 +225,7 @@ export async function playUntil(page: Page, untilTestId: string, timeoutMs = 120
   while (Date.now() < end) {
     if (page.isClosed()) throw new Error('page closed');
     if (await page.getByTestId(untilTestId).isVisible().catch(() => false)) return;
+    await tap('intro-skip');
     await tap('quiz-option-0');
     if (await tap('draw-choice-0')) await drawLine(page, [200, 200], [700, 500]).catch(() => {});
     await tap('charades-guessed');

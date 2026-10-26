@@ -38,4 +38,8 @@ export const drawMeta: GameMeta = {
       'Drawing time is 80 seconds by default (30–120 s). The turn ends early when everyone has guessed.',
     ],
   },
+  intro: {
+    lines: ['One player draws a secret word.', 'Everyone else types guesses. Near misses get a “You’re close!”.', 'Fast guesses score more, and the artist scores for each one.'],
+    example: 'Priya draws “auto rickshaw”. You type “auto” (close!), then “auto rickshaw” → correct.',
+  },
 };

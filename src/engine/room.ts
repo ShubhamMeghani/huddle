@@ -35,6 +35,8 @@ export const MAX_SPECTATORS = 8;
 export const MAX_SCREENS = 2;
 export const ROOM_TTL_MS = 24 * 60 * 60 * 1000;
 export const PRESENCE_MS = 60_000;
+/** How long the How-to-play card shows before a game's first round, unless everyone taps Got it (R95). */
+export const INTRO_MS = 20_000;
 
 export { addNotice };
 
@@ -45,6 +47,8 @@ export function newRoomState(opts: {
   crewId?: string | null;
   now: number;
   seed: string;
+  /** How-to-play cards (R95); the server turns them on except in test mode. */
+  intros?: boolean;
 }): RoomState {
   return {
     v: 0,
@@ -76,6 +80,7 @@ export function newRoomState(opts: {
     noticeCounter: 0,
     pendingClaims: [],
     memory: {},
+    intros: opts.intros ?? false,
     waves: 0,
     rate: {},
     chatRate: {},
@@ -158,8 +163,31 @@ export function requestClaim(room: RoomState, seatId: string, claimant: { identi
 
 /* ───────────────────────── game lifecycle ───────────────────────── */
 
+/** The running game's module; null while the How-to-play card shows, because the module has not started. */
 function gameModule(room: RoomState) {
-  return room.game ? moduleOf(room.game.id) : null;
+  return room.game && room.game.state != null ? moduleOf(room.game.id) : null;
+}
+
+function introDue(room: RoomState, gameId: GameId): boolean {
+  const seen = (room.memory.introSeen as GameId[] | undefined) ?? [];
+  return room.intros !== false && Boolean(metaOf(gameId).intro) && !seen.includes(gameId);
+}
+
+/** Ends the How-to-play card and starts the game's first round. */
+function beginGame(room: RoomState, ctx: Ctx) {
+  const g = room.game!;
+  g.intro = null;
+  try {
+    moduleOf(g.id).start(room, ctx);
+  } catch (e) {
+    if (!(e instanceof GameError)) throw e;
+    // The game cannot start (e.g. no quiz questions left in those categories): skip it after a short break.
+    addNotice(room, e.message, ctx);
+    room.game = null;
+    room.status = 'break';
+    room.botPlan = [];
+    setPhase(room, 'break', ctx.breakMs, ctx);
+  }
 }
 
 function ensureTeams(room: RoomState, gameId: GameId, ctx: Ctx) {
@@ -196,6 +224,13 @@ export function startGame(room: RoomState, ctx: Ctx) {
   room.status = 'playing';
   room.paused = null;
   room.botPlan = [];
+  if (introDue(room, cfg.gameId)) {
+    // Shown once per game per room: a rematch or a later queue entry starts straight away (R95).
+    room.memory.introSeen = [...((room.memory.introSeen as GameId[] | undefined) ?? []), cfg.gameId];
+    room.game.intro = { ready: [] };
+    setPhase(room, 'intro', ctx.testMode ? 8_000 : INTRO_MS, ctx);
+    return;
+  }
   moduleOf(cfg.gameId).start(room, ctx);
 }
 
@@ -225,6 +260,7 @@ function endNight(room: RoomState, ctx: Ctx) {
 
 function processDeadline(room: RoomState, ctx: Ctx) {
   if (room.status === 'break') return afterBreak(room, ctx);
+  if (room.status === 'playing' && room.game?.intro) return beginGame(room, ctx);
   const m = gameModule(room);
   if (room.status === 'playing' && m) m.onDeadline(room, ctx);
   else room.phase.deadline = null;
@@ -362,6 +398,21 @@ export function applyAction(room: RoomState, seat: Seat, action: GameAction, ctx
       room.waves += 1;
       return;
     case 'imBack':
+      return;
+    case 'introReady': {
+      // "Got it" on the How-to-play card; the game starts once every active human has tapped it (R95).
+      const intro = room.game?.intro;
+      if (room.status !== 'playing' || !intro) throw new GameError('WRONG_PHASE');
+      if (room.paused) throw new GameError('PAUSED');
+      if (seat.status !== 'seated') throw new GameError('NOT_SEATED');
+      if (!intro.ready.includes(seat.id)) intro.ready.push(seat.id);
+      if (activeSeats(room).every((s) => s.isBot || intro.ready.includes(s.id))) beginGame(room, ctx);
+      return;
+    }
+    case 'setIntros':
+      requireAdmin(room, seat);
+      if (!lobbyish) throw new GameError('WRONG_PHASE');
+      room.intros = Boolean(action.on);
       return;
     case 'setAvatar': {
       const emoji = typeof action.emoji === 'string' ? action.emoji : '';
@@ -596,7 +647,16 @@ export function publicView(room: RoomState, presence: Record<string, number>, no
     paused: room.paused,
     notices: room.notices,
     waves: room.waves,
-    game: room.game && m ? { id: room.game.id, gameNo: room.game.gameNo, settings: room.game.settings, view: m.publicView(room) as any } : null,
+    game: room.game
+      ? {
+          id: room.game.id,
+          gameNo: room.game.gameNo,
+          settings: room.game.settings,
+          view: (m ? m.publicView(room) : null) as any,
+          intro: room.game.intro ? { ready: room.game.intro.ready } : null,
+        }
+      : null,
+    intros: room.intros !== false,
     lastGame: strip(room.lastGame),
     night: room.finished.map((g) => ({ gameNo: g.gameNo, gameId: g.gameId, rows: g.rows.map(({ identityId: _i, ...r }) => r) })),
     pendingClaims: room.pendingClaims.map((c) => ({ seatId: c.seatId, claimantName: c.claimantName })),
@@ -617,7 +677,12 @@ export function nextWakeAt(room: RoomState): number | null {
 export function privateView(room: RoomState, viewer: Viewer) {
   const seat = viewer.kind === 'player' || viewer.kind === 'spectator' ? room.seats.find((s) => s.id === viewer.seatId) : undefined;
   const m = gameModule(room);
-  const game = m ? m.privateView(room, seat && seat.status === 'seated' ? seat : null) : null;
+  const intro = room.game?.intro;
+  const game = m
+    ? m.privateView(room, seat && seat.status === 'seated' ? seat : null)
+    : intro
+      ? { mustAct: false, introReady: Boolean(seat && intro.ready.includes(seat.id)) }
+      : null;
   return {
     seatId: seat?.id ?? null,
     role: (seat ? (seat.status === 'seated' ? 'player' : seat.status) : viewer.kind === 'screen' ? 'screen' : 'none') as
