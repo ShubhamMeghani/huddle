@@ -36,14 +36,16 @@ jobs:
   e2e:
     runs-on: ubuntu-24.04
     timeout-minutes: 40
+    name: e2e (${{ matrix.label }})
     strategy:
       fail-fast: false
       matrix:
         include:
-          - project: android
-            browser: chromium
-          - project: iphone
-            browser: webkit
+          - { label: android, project: android, browser: chromium, shard: 1/1, workers: 2 }
+          # WebKit stalled a whole runner with 2 workers: three shards, one worker each.
+          - { label: iphone-1, project: iphone, browser: webkit, shard: 1/3, workers: 1 }
+          - { label: iphone-2, project: iphone, browser: webkit, shard: 2/3, workers: 1 }
+          - { label: iphone-3, project: iphone, browser: webkit, shard: 3/3, workers: 1 }
     services:
       postgres:
         image: postgres:16
@@ -60,14 +62,30 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps ${{ matrix.browser }}
-      - run: npm run test:e2e -- --project=${{ matrix.project }} --workers=2
-        # Playwright's globalTimeout (25 min) ends the run with a report before this does.
-        timeout-minutes: 30
+      - name: E2E (hard-killed after 20 min; memory and load logged every 60 s)
+        run: |
+          # Evidence if the runner stalls: printed live to the job log and kept for the artifact.
+          (while true; do { echo "== $(date -u +%H:%M:%S) $(uptime)"; free -m; } | tee -a resources.log; sleep 60; done) &
+          MONITOR=$!
+          set +e
+          timeout --signal=KILL 20m npm run test:e2e -- --project=${{ matrix.project }} --shard=${{ matrix.shard }} --workers=${{ matrix.workers }}
+          code=$?
+          if [ "$code" = 137 ]; then
+            echo "::error::E2E was still running after 20 min and was killed"
+            # timeout kills only npm: also kill what it started, so nothing holds the log open.
+            pkill -KILL -f 'playwright|next start|MiniBrowser|WebKitWebProcess|WebKitNetworkProcess|e2e-server|postgres -D' || true
+          fi
+          kill "$MONITOR" 2>/dev/null
+          exit "$code"
+        # Backstop above the 20-minute kill; Playwright's own globalTimeout (25 min) is a further layer.
+        timeout-minutes: 25
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report-${{ matrix.project }}
+          name: playwright-report-${{ matrix.label }}
           path: |
             playwright-report
             test-results
+            resources.log
+          if-no-files-found: warn
           retention-days: 7
