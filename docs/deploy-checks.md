@@ -230,3 +230,59 @@ Rejected along the way, each by a failing run here: a 10 s action timeout and a 
 | AC-80 Draw half | **fail** in all 5 runs that reached it: the phone that reloads mid-turn misses the last stroke batches (published while its realtime channel was attaching; no later batch reveals the gap). Fixed after d3b505c: every applied snapshot now catches up strokes (SPEC §4.2); needs the next push | – |
 
 Two other runs failed earlier while a phone joined (`room` not shown within 30 s); the next 5 runs joined normally and the cause could not be reproduced.
+
+### AC-87 demo · 2026-10-26T08:28:19.719Z · https://playhuddle.vercel.app
+
+- /demo → Quiz against 4 bots finished in 89 s ✔
+
+### AC-79 Google redirect · 2026-10-26T08:28:22.677Z · https://playhuddle.vercel.app
+
+- Redirect to Google with callback https://playhuddle.vercel.app/api/auth/callback/google and no error page ✔
+
+### AC-78 Postgres persistence · 2026-10-26T08:28:29.078Z · https://playhuddle.vercel.app
+
+- Room QFSN state and seat restored after restart ✔ (first load 2025 ms)
+
+### Six-browser check (@skeleton) · 2026-10-26T08:29:33.425Z · https://playhuddle.vercel.app
+
+- 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-run: all show 30 waves and version 37 ✔ (converged in 2457 ms)
+
+### AC-80 quiz half · 2026-10-26T08:30:20.244Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions on 6 browsers: every answer seen by another phone; action → other phone p95 862 ms (budget 1000 ms)
+
+### AC-80 six real browsers · 2026-10-26T08:30:28.678Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions + 1 Draw turn on 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-turn: identical scoreboards ✔
+- Action → other phone p95: 862 ms · stroke end → all viewers p95: 867 ms (budget 1000 ms) · reloaded phone caught up 1279 ms after the next stroke
+
+### Drawing-throughput probe (real Draw turn) · 2026-10-26T08:32:10.938Z · production · driver ably
+
+| Metric | Value | Budget |
+|---|---|---|
+| Batches posted / accepted | 332 / 332 | – |
+| Publishes per second (avg / max) | 4.15 / 5 | ≤ 5 avg; server cap 8 |
+| Largest batch | 120 B | ≤ 8 KB (Ably max 64 KiB) |
+| Rate-limited (429) / other errors | 0 / 0 | 0 / 0 |
+| Deliveries received / expected | 2324 / 2324 | equal |
+| Delivery latency p50 / p95 | 320 ms / 364 ms | p95 ≤ 1000 ms on production |
+| Projected Ably messages per 3 h, 8-player night | ≈ 79,680 (1.33 % of 6 M) | ≤ 5 % |
+| Ably app stats | 2860 messages in the last 3 minutes (app stats; stats lag ~1 min) | – |
+
+### AC-77 realtime · 2026-10-26T08:49:53.623Z · https://playhuddle.vercel.app
+
+- Token: subscribe-only capability ✔; connection live via Ably ✔; test-mode routes off ✔
+- Action → other phone update over 50 actions: p50 854 ms, p95 868 ms (budget 1000 ms)
+
+## Production after 42c8598 · 2026-10-26 · https://playhuddle.vercel.app
+
+| Check | Result | Budget |
+|---|---|---|
+| AC-77 action → other phone | p50 854 ms, p95 868 ms over 50 actions (rerun; the first run failed, see below) | ≤ 1 s ✔ |
+| AC-80 six browsers | **pass**: 3 Quiz questions + 1 Draw turn, one reload mid-turn, identical scoreboards; action p95 862 ms, stroke end → all viewers p95 867 ms; the reloaded phone caught up 1.3 s after the next stroke | ≤ 1 s ✔ |
+| AC-81 stroke delivery (probe) | p50 320 ms, p95 364 ms; 2324/2324; 0 errors | ≤ 1 s ✔ |
+| AC-78 | state and seat restored, first load 2.0 s; across a redeploy: room BHRP (above) | ✔ |
+| AC-79, AC-87, skeleton | pass (demo Quiz 89 s; 30 concurrent actions converged in 2.5 s) | ✔ |
+| CI (AC-76) | run #5 on 42c8598 green: checks 1.1 min, e2e android 9.9 min, e2e iphone 11.5 min | ✔ |
+
+**The intermittent 15–30 s stalls are on the network path from the test machine to Vercel's edge, not in the app.** The first AC-77 run failed when one tap's request hung; a probe from the same machine then showed every request on one connection to Vercel failing together after 19.2 s (the Windows TCP retransmission limit), three times in 4 minutes, including `/manifest.webmanifest`, a static CDN file that runs no function and touches no database. In a second probe `nextjs.org`, another Vercel-hosted site, stalled the same way, while `www.google.com` never did. This also explains the stalls seen before d3b505c. The client timeouts (d3b505c) and the snapshot stroke catch-up (42c8598) are what let a phone recover from such a connection.
