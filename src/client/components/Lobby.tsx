@@ -9,6 +9,7 @@ import { SettingsForm } from './SettingsForm';
 import { TeamsPanel } from './TeamsPanel';
 import { CrewLink } from './CrewLink';
 import { DemoPicker } from './Demo';
+import { PickForUs } from './PickForUs';
 
 export function PlayerList({ state, onPickAvatar }: Pick<RoomProps, 'state'> & { onPickAvatar?: () => void }) {
   const pub = state.snapshot!.public;
@@ -164,6 +165,17 @@ export function Lobby({ sync, state }: RoomProps) {
             );
           })}
         </ol>
+        {me.isAdmin && (
+          <PickForUs
+            state={state}
+            onAdd={async (cfg) => {
+              setError(null);
+              const r = await sync.act('setQueue', { queue: [...queue, cfg] });
+              if (!r.ok) setError(r.message ?? 'Could not save');
+              return r.ok;
+            }}
+          />
+        )}
         {me.isAdmin && (
           <div className="flex flex-wrap gap-2" data-testid="game-picker">
             {games.map((g) => (
