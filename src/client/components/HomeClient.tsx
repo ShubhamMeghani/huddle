@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getJson, postJson, type Me } from '@/client/api';
 import { ThemeToggle } from './ThemeToggle';
 import { ClaimBanner, CrewsHome } from './CrewsHome';
+import { AccountBar, SignInButton } from './Account';
 
 export function HomeClient() {
   const router = useRouter();
@@ -64,8 +65,12 @@ export function HomeClient() {
         <h1 className="text-4xl font-black tracking-tight">
           Huddle<span className="text-brand">.</span>
         </h1>
-        <ThemeToggle />
+        <div className="flex items-center gap-2">
+          <SignInButton me={me} />
+          <ThemeToggle />
+        </div>
       </header>
+      <AccountBar me={me} />
       <p className="text-lg font-semibold text-muted">Game night for your crew. Everyone plays on their own phone.</p>
 
       <section className="card flex flex-col gap-3 p-5">

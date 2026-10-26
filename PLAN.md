@@ -1,6 +1,6 @@
 # Huddle: Build Plan (PLAN.md)
 
-> **Spec:** [SPEC.md](SPEC.md) **v0.3**, which has 93 requirements and 88 acceptance criteria; §11 lists the binding decisions.
+> **Spec:** [SPEC.md](SPEC.md) **v0.4**, which has 94 requirements and 89 acceptance criteria; §11 lists the binding decisions.
 > **Plan version:** 2 · 2026-10-22. Changelog at the end.
 
 ## Stack
@@ -8,7 +8,7 @@
 The full stack is in SPEC §3:
 
 - Next.js App Router with TypeScript (strict), Tailwind CSS, Node.js 24.
-- Neon Postgres: `@neondatabase/serverless` on Vercel, `pg` everywhere else.
+- Neon Postgres through `pg` everywhere; on Vercel over TCP to the pooled endpoint with `attachDatabasePool` (SPEC v0.4).
 - Ably for realtime. Browsers get subscribe-only tokens; a local SSE driver replaces Ably in test mode.
 - Auth.js v5 with optional Google sign-in.
 - Vitest and Playwright.
@@ -83,9 +83,9 @@ If time runs short, cut Should items in this order: recap card (10.7) → big sc
 | H1 | before Phase 1 | Neon project `huddle` in AWS US East 1 with `main` and `dev` branches and pooled strings | **done** |
 | H2 | before Phase 1 | Ably app `huddle` with key `huddle-server` (Publish, Subscribe, Statistics only) | **done** |
 | H3 | before Phase 1 | `.env.local` with `DATABASE_URL` (Neon dev, pooled), `ABLY_API_KEY` and `AUTH_SECRET`; Google values empty | **done** |
-| H4 | after Phase 1 | Import the project into Vercel from GitHub and set its env vars (details below) | Pending (human) |
-| H5 | after H4 | Create the Google OAuth client (details below) | Pending (human) |
-| H6 | after H5, and whenever you like | `git push` (this deploys production) and run the production checks | Pending (human) |
+| H4 | after Phase 1 | Import the project into Vercel from GitHub and set its env vars (details below) | **done** |
+| H5 | after H4 | Create the Google OAuth client (details below) | **done** |
+| H6 | after H5, and whenever you like | `git push` (this deploys production) and run the production checks | **done** (production checks run 2026-10-26; AC-80 re-check after the next push) |
 | H7 | after Phase 15 | Install on an Android phone (required) | Pending (human) |
 | H8 | after Phase 15 | Playtest with friends, including an iPhone if a friend has one | Pending (human) |
 
@@ -483,19 +483,20 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-73 | E2E | 6 | pass | `tests/e2e/imposter.spec.ts` · pass @ phase-6 |
 | AC-74 | Unit | 9 | pass | `tests/unit/games/mlt.test.ts` · pass @ phase-9 (159 prompts) |
 | AC-75 | E2E | 9 | pass | `tests/e2e/mlt.spec.ts` · pass @ phase-9 |
-| AC-76 | Deploy | 16 | Pending (human) | GitHub Actions run (after H6) |
-| AC-77 | Deploy | 16 | Pending (human) | `tests/deploy/realtime.spec.ts` (local proof in Phase 1) · local real-services proof passed in phase 1 · local re-run passed in phase 15 (p95 2.9 s locally) |
-| AC-78 | Deploy | 16 | Pending (human) | `tests/deploy/neon.spec.ts` (local proof in Phase 1) · local proof (restart) passed in phase 1 · local restart re-run passed in phase 15 |
-| AC-79 | Deploy | 16 | Pending (human) | `tests/deploy/google.spec.ts` (needs H5) |
-| AC-80 | Deploy | 16 | Pending (human) | `tests/deploy/six-browsers.spec.ts` (local proof in Phases 1 and 15) · 6-browser skeleton passed locally in phase 1 · Quiz + Draw version passed locally in phase 15 (6 real browsers, reload mid-turn, identical scoreboards; p95 4.4 s / strokes 5.3 s locally) |
-| AC-81 | Deploy | 16 | Pending (human) | `scripts/probe-draw.ts` → `docs/deploy-checks.md` (local probe in Phase 1) · local probe passed in phase 1 (4.15/s, 0 errors, 1.33 % of quota) · real Draw-turn probe passed locally in phase 15 (4.15/s, 0 errors, 1.33 % of quota) |
+| AC-76 | Deploy | 16 | pass | GitHub Actions run #3 on 37dc613 green: checks, e2e android, e2e iphone (10 m 39 s) |
+| AC-77 | Deploy | 16 | pass | `tests/deploy/realtime.spec.ts` · 2026-10-26 on https://playhuddle.vercel.app: action → other phone p50 847 ms, p95 860 ms over 50 actions (budget 1 s) |
+| AC-78 | Deploy | 16 | pass | `tests/deploy/neon.spec.ts` · 2026-10-26 on https://playhuddle.vercel.app: room and seat restored in a new browser (first load 1991 ms); restart proven against Neon dev in phases 1 and 15; repeat across a redeploy after the next push |
+| AC-79 | Deploy | 16 | pass | `tests/deploy/google.spec.ts` · 2026-10-26 on https://playhuddle.vercel.app: redirect to Google with callback /api/auth/callback/google, no error page |
+| AC-80 | Deploy | 16 | fail | `tests/deploy/six-browsers.spec.ts` · 2026-10-26 on https://playhuddle.vercel.app: requests intermittently stalled 15–30 s (a phone could not answer, an answer or stroke batch never landed) in 6 of 9 runs; action p95 918–920 ms when not stalled. Fix in the post-15 commit (pg + `attachDatabasePool`, 10 s client timeouts); re-run after the next push |
+| AC-81 | Deploy | 16 | pass | `scripts/probe-draw.ts` → `docs/deploy-checks.md` · 2026-10-26 on https://playhuddle.vercel.app: stroke delivery p50 325 ms, p95 413 ms, 2324/2324 delivered, 0 errors, 4.15 publishes/s, 1.33 % of the Ably quota per night |
 | AC-82 | Manual | 16 | Pending (human) | `docs/playtest.md` (H8) |
 | AC-83 | Unit | 13 | pass | `tests/unit/design-tokens.test.ts` · pass @ phase-13 |
 | AC-84 | E2E | 13 | pass | `tests/e2e/design.spec.ts` · pass @ phase-13 |
 | AC-85 | E2E | 13 | pass | `tests/e2e/celebrations.spec.ts` · pass @ phase-13 |
 | AC-86 | E2E | 14 | pass | `tests/e2e/privacy.spec.ts` · pass @ phase-14 |
-| AC-87 | Deploy | 16 | Pending (human) | `tests/deploy/demo.spec.ts` · tests/deploy/demo.spec.ts written; runs after H6 · passed locally in phase 15 (79 s) |
+| AC-87 | Deploy | 16 | pass | `tests/deploy/demo.spec.ts` · 2026-10-26 on https://playhuddle.vercel.app: Quiz against 4 bots finished in 89 s |
 | AC-88 | E2E | 5 | pass | `tests/e2e/draw-touch.spec.ts` · pass @ phase-5 |
+| AC-89 | E2E | 16 | pass | `tests/e2e/account.spec.ts` (post-15 commit) |
 
 ---
 
@@ -552,6 +553,10 @@ Format: date · phase · decision · reason.
 - 2026-10-23 · after 15 · GitHub Actions runs a `checks` job (lint, typecheck, unit) and an `e2e` matrix (`android`, `iphone`, `fail-fast: false`, 2 workers each), each installing only its own browser and uploading its own report. · About half the wall-clock time of the single 20-minute job, and a failure names its device. Actions minutes are free for a public repo.
 - 2026-10-24 · after 15 · The split iPhone job (e4865c7) was cancelled at the 40-minute limit with the solo demo test (600 s budget, an iteration-bounded `playAlong` with 15 s clicks) and the 8-phone full night (900 s, 800 s loops, hand-launched WebKit browsers) never reporting. Not reproduced on Linux WebKit here (12 cores, 4 cores, software GL: 9.3–9.5 min, 47/47). Fixes: phones beyond 4 use another loopback name (`127.0.0.1`, `[::1]`) instead of extra browsers, so every phone belongs to the test's own browser and is cleaned up even on failure; full night closes its phones in `finally`; the demo test uses the deadline-based `playUntil`; budgets match real durations (300 s and 420 s). CI: `globalTimeout` 25 min, a 30-minute step limit, trace and screenshot on every failure, video on the CI retry (`on-first-retry`: recording every page on every run made two WebKit tests flaky under full-suite load), the `github` reporter, and the report uploaded `if: always()`. · Budgets 3–4× the real duration plus a retry outlasted the job, so a stuck run was cancelled with no result and no report.
 - 2026-10-24 · after 15 · Three latent E2E races surfaced while verifying: AC-55 scanned static JS bundles for the Draw word (a random "queue" matched bundle code), so it now scans documents and API responses only; AC-42's loop ended each game from the admin menu although an unplayed Draw ends itself, so it ends games through the sync client and accepts "already over"; AC-40 tapped ✕ on a leaderboard overlay that closes itself on the player's turn, so it now asserts the overlay is closed either way. · Each lost to a game timer only under full-suite load; the fixes wait for the state the test needs instead of racing the timer.
+- 2026-10-26 · after 15 · Production checks (SPEC v0.4): requests on https://playhuddle.vercel.app intermittently stalled 15–30 s before the server did their work (a phone's private refresh, an answer and a stroke batch). The Vercel path reused a module-scope Neon WebSocket pool across invocations with no timeouts; Neon says that pool must not outlive a request, and Vercel says idle timeouts don't run while an instance is suspended. Production now uses `pg` over TCP with `attachDatabasePool`, a 5 s idle timeout, 10 connections and a 30 s limit on getting a connection (shorter connection limits and a 10 s statement timeout failed actions queued on the row lock in the slow `VERCEL=1 test:real` runs; a statement timeout cannot catch a query hung on a dead connection anyway); the client times out catch-up requests after 10 s and actions after 30 s (a 10 s action timeout dropped taps in the slow India → Neon `test:real` runs). Verified locally on the same code path (`VERCEL=1 test:real`); production proof needs the next push. · A stalled request blocked catch-ups and actions on one phone for a whole question.
+- 2026-10-26 · after 15 · AC-80's stroke latency is measured from the end of each stroke to the last viewer matching, polling all viewers at once every 25 ms; the reloaded phone's catch-up is reported separately. · Sequential `expect.poll` with growing gaps measured the poller (1.6 s) while the probe measured delivery at p95 413 ms.
+- 2026-10-26 · after 15 · R94 / AC-89: Sign in next to the theme toggle and in the Your crews card; while signed in, an account row under the header with an initial avatar, the name and Sign out (a server action calling Auth.js `signOut`). · The signed-in row does not fit beside the title and toggle at 360 px (AC-40).
+- 2026-10-26 · after 15 · WebKit "button never stable": no infinite or repeating animation exists; `bump` and `pop-in` are one-shot transform/opacity animations that never move other elements, and reduced motion already cuts them to 1 ms. The failures' "not stable → detached" means the button was removed by a state change, so no animation change was made. · Checked as asked (POLISH task 3).
 
 ## Blockers
 

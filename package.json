@@ -26,7 +26,7 @@
     "build:icons": "tsx scripts/make-icons.ts"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.2.0",
+    "@vercel/functions": "^3.10.3",
     "ably": "^2.30.0",
     "next": "^16.4.2",
     "next-auth": "^5.0.0-beta.32",

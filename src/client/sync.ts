@@ -2,6 +2,11 @@
 import { ServerClock } from './clock';
 import type { PublicView, PrivateView } from '@/engine/room';
 
+/** Longest a catch-up request (snapshot, heartbeat, tick) may take before it counts as failed and is retried. */
+const REQUEST_TIMEOUT_MS = 10_000;
+/** Actions get longer: a slow tap should wait, not be dropped (production p95 is under 1 s). */
+const ACTION_TIMEOUT_MS = 30_000;
+
 export type Connection = 'connecting' | 'live' | 'polling';
 
 export interface RoomSnapshot {
@@ -80,10 +85,17 @@ export class RoomSync {
     for (const l of this.listeners) l();
   }
 
-  private async request(path: string, init?: RequestInit): Promise<any> {
+  private async request(path: string, init?: RequestInit, timeoutMs = REQUEST_TIMEOUT_MS): Promise<any> {
     const t0 = Date.now();
     const extra: Record<string, string> = this.opts.screen ? { 'x-huddle-screen': '1' } : {};
-    const res = await fetch(path, { ...init, cache: 'no-store', headers: { 'Content-Type': 'application/json', ...extra, ...(init?.headers ?? {}) } });
+    // A stalled request must not hang the phone: snapshot fetches coalesce, so one that never ends would block every
+    // later catch-up. Timing out throws like a network error; an action is retried once with the same actionId.
+    const res = await fetch(path, {
+      ...init,
+      cache: 'no-store',
+      signal: AbortSignal.timeout(timeoutMs),
+      headers: { 'Content-Type': 'application/json', ...extra, ...(init?.headers ?? {}) },
+    });
     const t1 = Date.now();
     const body = await res.json().catch(() => ({}));
     if (typeof body.serverNow === 'number') this.clock.addSample(t0, t1, body.serverNow);
@@ -298,7 +310,7 @@ export class RoomSync {
   async act(type: string, payload: Record<string, unknown> = {}): Promise<ActResult> {
     const actionId = uuid();
     const send = () =>
-      this.request(`/api/rooms/${this.code}/actions`, { method: 'POST', body: JSON.stringify({ actionId, type, payload }) });
+      this.request(`/api/rooms/${this.code}/actions`, { method: 'POST', body: JSON.stringify({ actionId, type, payload }) }, ACTION_TIMEOUT_MS);
     let body: ActResult;
     try {
       body = await send();

@@ -1,6 +1,6 @@
 import 'server-only';
 import pg from 'pg';
-import { Pool as NeonPool } from '@neondatabase/serverless';
+import { attachDatabasePool } from '@vercel/functions';
 
 type Queryable = {
   query: (text: string, params?: unknown[]) => Promise<{ rows: any[]; rowCount: number | null }>;
@@ -14,9 +14,17 @@ declare global {
 function createPool(): AnyPool {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) throw new Error('Missing environment variable DATABASE_URL');
-  // Neon's serverless driver on Vercel; plain pg locally, in CI and in tests.
-  if (process.env.VERCEL) return new NeonPool({ connectionString, max: 5 }) as unknown as AnyPool;
-  return new pg.Pool({ connectionString, max: 10 }) as unknown as AnyPool;
+  // Getting a connection may not hang forever. The limit also bounds waiting for a free pool slot, so it matches the
+  // client's 30 s action timeout: a burst queued on one room's row lock waits instead of failing.
+  const opts = { max: 10, connectionTimeoutMillis: 30_000, keepAlive: true };
+  if (process.env.VERCEL) {
+    // TCP pg to Neon's pooled endpoint. Idle timeouts don't run while Vercel suspends an instance, so a reused
+    // connection can be dead on wake and hang the next query; attachDatabasePool closes idle ones before suspension.
+    const p = new pg.Pool({ connectionString, idleTimeoutMillis: 5_000, ...opts });
+    attachDatabasePool(p);
+    return p as unknown as AnyPool;
+  }
+  return new pg.Pool({ connectionString, ...opts }) as unknown as AnyPool;
 }
 
 export function pool(): AnyPool {

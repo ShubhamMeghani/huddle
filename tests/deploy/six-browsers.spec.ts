@@ -72,17 +72,26 @@ test('AC-80 six real browsers play 3 Quiz questions and a Draw turn; one reloads
   const viewers = pages.filter((p) => p !== drawer);
   const strokeLat: number[] = [];
   const box = (await drawer!.getByTestId('draw-canvas').boundingBox())!;
+  let catchUpMs = 0;
   for (let k = 0; k < 5; k++) {
     const y = box.y + box.height * (0.2 + k * 0.15);
-    const t0 = Date.now();
     await drawer!.mouse.move(box.x + box.width * 0.1, y);
     await drawer!.mouse.down();
     await drawer!.mouse.move(box.x + box.width * 0.9, y, { steps: 10 });
     await drawer!.mouse.up();
-    await drawer!.waitForTimeout(300);
+    const tUp = Date.now();
+    await drawer!.waitForTimeout(300); // the drawer's last batch goes out; then its digest is final
     const want = await drawer!.getByTestId('draw-canvas').getAttribute('data-op-digest');
-    for (const v of viewers) await expect.poll(() => v.getByTestId('draw-canvas').getAttribute('data-op-digest'), { timeout: 15_000 }).toBe(want);
-    strokeLat.push(Date.now() - t0 - 300);
+    // Poll every viewer at once and often: sequential polls with growing gaps measured the poller, not delivery.
+    const doneAt = await Promise.all(
+      viewers.map(async (v) => {
+        await expect.poll(() => v.getByTestId('draw-canvas').getAttribute('data-op-digest'), { timeout: 15_000, intervals: [25] }).toBe(want);
+        return Date.now();
+      }),
+    );
+    // Right after the reload, viewer 0's time is page load plus catch-up, reported separately below.
+    if (k === 3) catchUpMs = doneAt[0] - tUp;
+    strokeLat.push(Math.max(...doneAt.filter((_, i) => !(k === 3 && i === 0))) - tUp);
     if (k === 2) await viewers[0].reload(); // one phone reloads mid-turn and must catch up
   }
   // End the drawing turn and compare final scoreboards.
@@ -94,7 +103,7 @@ test('AC-80 six real browsers play 3 Quiz questions and a Draw turn; one reloads
     `### AC-80 six real browsers · ${new Date().toISOString()} · ${IS_LOCAL ? 'local production build + real Ably + Neon dev' : TARGET}`,
     '',
     `- 3 Quiz questions + 1 Draw turn on 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-turn: identical scoreboards ✔`,
-    `- Action → other phone p95: ${p95(lat)} ms · stroke → all viewers p95: ${p95(strokeLat)} ms (budget ${LATENCY_BUDGET_MS} ms)`,
+    `- Action → other phone p95: ${p95(lat)} ms · stroke end → all viewers p95: ${p95(strokeLat)} ms (budget ${LATENCY_BUDGET_MS} ms) · reloaded phone caught up ${catchUpMs} ms after the next stroke`,
   ]);
   expect(p95(lat)).toBeLessThanOrEqual(LATENCY_BUDGET_MS);
   expect(p95(strokeLat)).toBeLessThanOrEqual(LATENCY_BUDGET_MS);

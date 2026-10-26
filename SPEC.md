@@ -1,6 +1,6 @@
 # Huddle: Specification (SPEC.md)
 
-> Version 0.3 · 2026-10-22 · Status: approved for build (decisions recorded in §11)
+> Version 0.4 · 2026-10-26 · Status: approved for build (decisions recorded in §11)
 > Huddle is a party-games web app for Indian friend groups. Everyone plays on their own phone. A laptop or TV can join as an optional display-only big screen.
 
 **How to read this document**
@@ -71,7 +71,7 @@ The project succeeds when:
 |---|---|
 | Stack (fixed) | Next.js App Router with TypeScript (strict), Tailwind CSS, Vitest, Playwright, Node.js 24 LTS. |
 | Hosting | Vercel Hobby, non-commercial. Serverless functions only: no long-running process and no background loop. Vercel Cron runs at most daily (used only for cleanup). Vercel is connected to the public GitHub repo `github.com/ShubhamMeghani/huddle` and deploys production **only when the owner pushes `main`**. The builder never deploys and never pushes. |
-| Database | Neon Postgres via `DATABASE_URL`, server-only. Uses `@neondatabase/serverless` (Pool over WebSocket) in production and `pg` in local and CI runs. Both are reached through one `db` module with the same Pool API. |
+| Database | Neon Postgres via `DATABASE_URL`, server-only. Uses `pg` everywhere: over TCP to Neon's pooled endpoint in production, with `attachDatabasePool` from `@vercel/functions` closing idle connections before Vercel suspends an instance, and a 30 s limit on getting a connection, including waiting for a pool slot. One `db` module. *(v0.4: replaces `@neondatabase/serverless`, whose WebSocket pool must not outlive a request.)* |
 | Realtime | Ably. `ABLY_API_KEY` is server-only. Clients get short-lived tokens (Ably TokenRequests) from `/api/realtime/token`; the root key never reaches the browser. Clients only **subscribe**, and the server does all publishing. |
 | Auth | Auth.js (next-auth v5) with Google as **optional** sign-in, JWT sessions, and `AUTH_SECRET`, `AUTH_GOOGLE_ID` and `AUTH_GOOGLE_SECRET`. Guests never need an account. |
 | AI | No AI APIs at runtime. All content (questions, movies, words, pairs, prompts) is written ahead of time and bundled. |
@@ -201,6 +201,7 @@ Secrets never travel over Ably. A client whose seat appears in `privateFor` fetc
 - While visible, send a heartbeat every 25 s. If the reply has `v > local.v`, fetch a snapshot.
 - If Ably has not been connected for 10 s, poll the snapshot every 3 s and show a "Reconnecting…" pill until Ably is back.
 - Draw catch-up: a gap in stroke `seq`, or a snapshot taken mid-turn, triggers `GET strokes?after=lastSeq`.
+- *(v0.4)* Requests time out and then count as a network failure: snapshot, heartbeat and tick after 10 s (a snapshot fetch is retried, so one stalled request never blocks later catch-ups), actions after 30 s (retried once with the same `actionId`, so a slow tap waits rather than being dropped).
 
 ### 4.3 Timer handling
 
@@ -358,6 +359,7 @@ Outputs to users are defined throughout: per-viewer views, scoreboards, crew pag
   - how long it is kept: rooms for 24 h after last activity, results until deletion is requested;
   - that there are no ads or trackers;
   - how to ask questions or request data deletion: a link to the GitHub Issues page, `https://github.com/ShubhamMeghani/huddle/issues`.
+- **R94 (Should)** *(v0.4)* Where Google sign-in is configured, the home page shall offer Sign in at the top, next to the theme toggle, and in the Your crews card ("Sign in to keep your stats on every device"). While signed in, the top of the home page shall show the user's name and avatar and a Sign out control instead.
 - **R43 (Must)** When a visitor opens `/demo` on the public production URL, the system shall create a fresh demo room with the visitor as admin and 4 bot players, with no sign-in and a link from the home page.
 - **R44 (Must)** While in a demo room, the system shall let the visitor pick any of the six games with short default timers. Bots shall take plausible actions in each one (answer, act, draw from bundled drawings, guess, name places, give clues, vote), scheduled as server deadlines, so one person can finish every game.
 - **R45 (Must)** When a game ends, the system shall permanently record its results (players, teams, ranks, scores, game-specific stats) independently of room expiry, exactly once.
@@ -498,6 +500,7 @@ Format: **AC-n [Tag] (R#)**, followed by a pass/fail statement. Unless stated ot
 
 - **AC-40 [E2E] (R37)** At a 360 × 740 viewport, and on iPhone emulation, the home page, lobby, each game's main phase, the leaderboard overlay and the crew page all have `scrollWidth ≤ viewport width`, and every primary button is at least 48 × 48 px. The viewport meta has `viewport-fit=cover`, the app shell pads by `env(safe-area-inset-*)`, and no stylesheet uses a bare `100vh`.
 - **AC-88 [E2E] (R69, R37)** *(v0.3)* On WebKit with iPhone emulation, a touch drag on the Draw canvas produces a stroke that the other players receive. During the drag `window.scrollY` and `visualViewport.scale` do not change, and the canvas computes `touch-action: none`.
+- **AC-89 [E2E] (R94)** *(v0.4)* Signed out, the home page shows Sign in next to the theme toggle and in the Your crews card, both leading to `/signin`. After signing in, the top shows the user's name and avatar and Sign out; Sign out returns the phone to a guest, and both prompts come back.
 - **AC-41 [E2E] (R36)** With no stored preference, the first visit renders the light theme (`data-theme="light"`, page background relative luminance > 0.8), even when the OS prefers dark (emulated). The dark toggle switches themes and survives a reload. axe-core reports zero `color-contrast` violations on the home page, lobby, each game's main phase and the scoreboard, in both themes.
 - **AC-83 [Unit] (R36, R91)** *(v0.2)* In the design-token file, every text/background pair in both themes and every game accent with its paired text colour reaches ≥ 4.5:1 contrast (≥ 3:1 for tokens marked large-text or UI). The 12 avatar colours are pairwise distinct (CIEDE2000 ΔE ≥ 15).
 - **AC-84 [E2E] (R91)** *(v0.2)* Each game's main phase sets `data-game=<id>`, and its accent resolves to that game's token, with six distinct hues. In a 12-player lobby every avatar has a unique colour and an emoji, and a player can change their emoji. Avatars appear in the lobby, the scoreboard and the turn indicator.
@@ -558,7 +561,7 @@ Format: **AC-n [Tag] (R#)**, followed by a pass/fail statement. Unless stated ot
 - **AC-87 [Deploy] (R43)** *(v0.2)* On production, a fresh browser with no cookies follows the home-page link to `/demo` and completes a 1-round Quiz against bots in under 2 min.
 - **AC-82 [Manual] (R2, R15, R21, R28, R37, R38)** One real playtest with ≥ 4 friends on their own phones covers ≥ 3 games, a deliberate phone lock, a refresh and a Wi-Fi-off rejoin. At least one player signs in with Google on production and sees their profile name. No score is lost and every phone shows the same countdown. Findings are logged in `docs/playtest.md`.
 
-**Coverage:** 88 ACs: 40 Unit, 39 E2E, 7 Deploy and 2 Manual. Every R1–R93 maps to at least one AC.
+**Coverage:** 89 ACs: 40 Unit, 40 E2E, 7 Deploy and 2 Manual. Every R1–R94 maps to at least one AC.
 
 ---
 
@@ -685,3 +688,4 @@ All v0.1 open questions were resolved on 2026-10-22 by accepting the proposed de
 | v0.1 | 2026-10-22 | First draft from the project brief: 90 requirements (84 Must, 6 Should) and 82 acceptance criteria (39 Unit, 35 E2E, 6 Deploy, 2 Manual). |
 | v0.2 | 2026-10-22 | Decisions: Q1–Q13 accepted as defaults, except Q12, replaced by a design change.<br>Design: the default theme is now bright and light, with dark as a toggle. R36 rewritten. Added R91 (game colour identities and avatars) and R92 (celebrations that respect reduced motion), AC-41 rewritten, and added AC-83–AC-85.<br>Privacy: added R93 (privacy page, needed to publish Google sign-in) and AC-86.<br>Demo: added AC-87 (production `/demo` check).<br>Sign-in testing: AC-79 is now automatable, and the real Google sign-in moved into the AC-82 playtest. P1-3 now hides sign-in when `AUTH_GOOGLE_ID` is unset.<br>Totals: 93 requirements (87 Must, 6 Should) and 87 ACs (40 Unit, 38 E2E, 7 Deploy, 2 Manual). |
 | v0.3 | 2026-10-22 | Delivery: Vercel is Git-connected to the public repo and deploys only on the owner's push; the builder never deploys. Phases are verified on a local production build, and production checks run after a push (§3, §7).<br>iPhone first: every E2E spec also runs on WebKit with iPhone emulation. R37 adds iOS-safe viewport units and safe-area insets, R40 adds silent degradation, R41 adds Safari Add to Home Screen, and R69 rules out page scrolling while drawing. AC-40 and AC-44 extended; added AC-88 (iOS touch drawing). AC-45: Android install required, iPhone check at the playtest if available.<br>Privacy contact is GitHub Issues, not an email (R93, AC-86).<br>Totals: 93 requirements and 88 ACs (40 Unit, 39 E2E, 7 Deploy, 2 Manual). |
+| v0.4 | 2026-10-26 | Production: the database layer uses `pg` over TCP with `attachDatabasePool` and short timeouts instead of the Neon WebSocket pool, after production checks showed requests stalling 15–30 s (§3). Client rule: requests time out (catch-ups 10 s, actions 30 s) (§4.2). Added R94 (Sign in at the top of the home page and in the Your crews card; name, avatar and Sign out when signed in) and AC-89. Now 94 requirements (87 Must, 7 Should) and 89 ACs (40 Unit, 40 E2E, 7 Deploy, 2 Manual). |

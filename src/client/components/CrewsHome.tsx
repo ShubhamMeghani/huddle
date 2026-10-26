@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getJson, postJson, type Me } from '@/client/api';
+import { CrewsSignInPrompt } from './Account';
 
 export function ClaimBanner() {
   const [done, setDone] = useState<string | null>(null);
@@ -52,6 +53,7 @@ export function CrewsHome({ me, ensureName }: { me: Me | null; ensureName: () =>
         </button>
       </div>
       {crews.length === 0 && <p className="text-sm font-semibold text-muted">A crew keeps a season leaderboard, stats and history for your friend group.</p>}
+      <CrewsSignInPrompt me={me} />
       <ul className="flex flex-col gap-2">
         {crews.map((c) => (
           <li key={c.id}>
