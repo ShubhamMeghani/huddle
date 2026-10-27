@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { apiPlayer, closeAll, newPlayer, createRoom, openDemo, visitEachGame, joinRoom, startGame } from './helpers';
 
-const ACCENTS: Record<string, string> = { quiz: '#1d4ed8', draw: '#ffc400', imposter: '#7c3aed', atlas: '#0b7a45', charades: '#ff2e88', mlt: '#ff7a00' };
+const ACCENTS: Record<string, string> = { quiz: '#1d4ed8', draw: '#ffc400', imposter: '#7c3aed', atlas: '#0b7a45', charades: '#ff2e88', mlt: '#ff7a00', npat: '#0891b2' };
 
 test('AC-84 each game has its own accent colour on its main phase', async ({ page }) => {
   test.setTimeout(180_000);
@@ -12,7 +12,7 @@ test('AC-84 each game has its own accent colour on its main phase', async ({ pag
     expect(accent, id).toBe(ACCENTS[id]);
     seen.add(accent);
   });
-  expect(seen.size).toBe(6);
+  expect(seen.size).toBe(Object.keys(ACCENTS).length);
 });
 
 test('AC-84 a 12-player lobby has unique avatar colours and emoji; a player can change their emoji; avatars appear on the scoreboard and turn indicator', async ({ browser }) => {

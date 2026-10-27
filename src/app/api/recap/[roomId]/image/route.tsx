@@ -10,6 +10,7 @@ const TITLES: Record<string, string> = {
   atlas: 'Atlas',
   charades: 'Dumb Charades',
   mlt: 'Most Likely To',
+  npat: 'Name Place Animal Thing',
   ping: 'Ping',
 };
 

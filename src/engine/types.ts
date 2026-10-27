@@ -1,6 +1,6 @@
 /* Shared, pure data model for a room (SPEC §4.1). No I/O here. */
 
-export type GameId = 'ping' | 'quiz' | 'draw' | 'imposter' | 'atlas' | 'charades' | 'mlt';
+export type GameId = 'ping' | 'quiz' | 'draw' | 'imposter' | 'atlas' | 'charades' | 'mlt' | 'npat';
 export type SeatId = string;
 
 export type ErrorCode =

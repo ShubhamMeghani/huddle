@@ -3,7 +3,7 @@ import type { GameId } from '@/engine/types';
 
 const ALL_QUIZ = ['bollywood', 'hollywood', 'cricket', 'india_gk', 'world_gk', 'science', 'sports'];
 
-export const DEMO_GAMES: GameId[] = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt'];
+export const DEMO_GAMES: GameId[] = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat'];
 export const DEMO_BOTS = ['Bot Priya', 'Bot Rahul', 'Bot Meera', 'Bot Kabir'];
 
 export function demoSettings(id: GameId, testMode: boolean): Record<string, unknown> {
@@ -21,6 +21,8 @@ export function demoSettings(id: GameId, testMode: boolean): Record<string, unkn
       return { rounds: 1, seconds: t(45, 6), passes: 1, industries: ['bollywood', 'hollywood'], eras: ['golden', 'modern'], difficulty: 'easy', steal: false };
     case 'mlt':
       return { rounds: t(3, 2), voteSeconds: t(15, 4), selfVote: false };
+    case 'npat':
+      return { rounds: 1, seconds: t(45, 8), movie: false };
     default:
       return {};
   }

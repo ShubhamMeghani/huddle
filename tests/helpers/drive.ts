@@ -5,7 +5,7 @@ import { defaultsOf } from '@/games/settings';
 import type { GameId, RoomState } from '@/engine/types';
 import { harness, startQueue, touchAll, type Harness } from './engine';
 
-export const GAMES: GameId[] = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt'];
+export const GAMES: GameId[] = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat'];
 
 /** Fast settings per game so a full game runs in a few hundred steps. */
 export function fastSettings(id: GameId): Record<string, unknown> {
@@ -23,6 +23,8 @@ export function fastSettings(id: GameId): Record<string, unknown> {
       return { ...d, rounds: 1, seconds: 30 };
     case 'mlt':
       return { ...d, rounds: 3, voteSeconds: 10 };
+    case 'npat':
+      return { ...d, rounds: 1, seconds: 30 };
     default:
       return d;
   }

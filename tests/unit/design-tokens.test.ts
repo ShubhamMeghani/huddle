@@ -37,7 +37,7 @@ test('AC-83 every game accent has a paired text colour meeting 4.5:1, plus reada
     }
   }
   expect(failures).toEqual([]);
-  expect(new Set(Object.values(GAME_ACCENTS).map((g) => g.light.accent)).size).toBe(6);
+  expect(new Set(Object.values(GAME_ACCENTS).map((g) => g.light.accent)).size).toBe(Object.keys(GAME_ACCENTS).length);
 });
 
 test('AC-83 the 12 avatar colours are pairwise distinct (CIEDE2000 ΔE ≥ 15)', () => {

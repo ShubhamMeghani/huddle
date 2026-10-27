@@ -48,6 +48,11 @@ const PRESETS: Partial<Record<GameId, GamePresets>> = {
     long: { rounds: 15 },
     seconds: (s) => s.rounds * (0.6 * s.voteSeconds + 10), // about 6 s of reveal plus the next prompt
   },
+  npat: {
+    quick: { rounds: 2, seconds: 45 },
+    long: { rounds: 5, seconds: 90 },
+    seconds: (s) => s.rounds * (0.9 * s.seconds + 15 + 7),
+  },
 };
 
 export function hasPresets(id: GameId): boolean {

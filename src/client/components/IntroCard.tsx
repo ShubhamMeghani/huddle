@@ -2,7 +2,8 @@
 import { GAME_META } from '@/games/meta';
 import type { RoomProps } from './ui';
 
-/** How-to-play card before a game's first round in this room (R95): three lines, one example, skippable. */
+/** How-to-play card before a game's first round in this room (R95): three lines, one example, skippable.
+ *  No entrance animation: its button must be tappable the moment it appears (WebKit stability). */
 export function IntroCard({ sync, state }: RoomProps) {
   const pub = state.snapshot!.public;
   const me = state.snapshot!.me;
@@ -13,7 +14,7 @@ export function IntroCard({ sync, state }: RoomProps) {
   const iAmReady = Boolean(me.game?.introReady);
   if (!meta?.intro) return null;
   return (
-    <section className="reveal-card card flex flex-col gap-4 p-5" data-game={game.id} data-testid="intro-card" aria-label={`How to play ${meta.title}`}>
+    <section className="card flex flex-col gap-4 p-5" data-game={game.id} data-testid="intro-card" aria-label={`How to play ${meta.title}`}>
       <h2 className="flex items-center gap-3 text-2xl font-black">
         <span className="text-4xl" aria-hidden>
           {meta.emoji}

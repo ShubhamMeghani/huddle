@@ -69,6 +69,22 @@ describe('AC-38 secrets never reach viewers who may not see them (every phase of
             if (kind === 'reveal') expect(Object.keys(g.votes)).toHaveLength(0);
             break;
           }
+          case 'npat': {
+            // While writing, nobody but the author sees an answer.
+            if (kind !== 'write') break;
+            for (const [author, answers] of Object.entries(g.answers as Record<string, Record<string, string>>)) {
+              for (const text of Object.values(answers).filter((t) => t.trim().length > 2)) {
+                expect(has(pub, text), `public view leaks ${text}`).toBe(false);
+                expect(has(screen, text)).toBe(false);
+                for (const s of room.seats) {
+                  // A seat that wrote the same answer itself is entitled to see it.
+                  const own = Object.values((g.answers as Record<string, Record<string, string>>)[s.id] ?? {}).some((t) => t.trim().toLowerCase() === text.trim().toLowerCase());
+                  if (s.id !== author && !own) expect(has(priv(room, s.id), text), `${s.name} sees ${text}`).toBe(false);
+                }
+              }
+            }
+            break;
+          }
           default:
             break;
         }

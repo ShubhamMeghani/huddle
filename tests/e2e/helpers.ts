@@ -161,7 +161,7 @@ export async function openDemo(page: Page) {
   await expect(page.getByTestId('demo-picker')).toBeVisible();
 }
 
-export const GAME_IDS = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt'] as const;
+export const GAME_IDS = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat'] as const;
 
 /**
  * The server accepts at most 10 actions per seat in any second (R46) and rejects the rest with RATE_LIMITED.
@@ -236,6 +236,26 @@ export async function playUntil(page: Page, untilTestId: string, timeoutMs = 120
     await fill('guess-word-input', 'pizza', 'guess-word-send');
     await tap('mlt-vote-for');
     await tap('atlas-accept');
+    // Name Place Animal Thing: an answer starting with the letter in every field, then Done; accept everything.
+    const npatDone = page.getByTestId('npat-done');
+    if ((await npatDone.isVisible().catch(() => false)) && (await npatDone.isEnabled().catch(() => false))) {
+      const letter = ((await page.getByTestId('npat-letter').textContent().catch(() => '')) ?? '').trim();
+      for (const cat of ['name', 'place', 'animal', 'thing', 'movie']) {
+        const input = page.getByTestId(`npat-input-${cat}`);
+        if (await input.isVisible().catch(() => false)) await input.fill(`${letter}ola`, { timeout: 2000 }).catch(() => {});
+      }
+      await tap('npat-done');
+    }
+    await tap('npat-vote-done');
+    await fill('emoji-input', 'no idea', 'emoji-send');
+    // Two Truths & a Lie: three statements, the first marked as the lie; then vote on the others.
+    const truthsSubmit = page.getByTestId('truths-submit');
+    if ((await truthsSubmit.isVisible().catch(() => false)) && (await truthsSubmit.isEnabled().catch(() => false))) {
+      for (const i of [0, 1, 2]) await page.getByTestId(`truths-input-${i}`).fill(`Fact number ${i + 1}`, { timeout: 2000 }).catch(() => {});
+      await tap('truths-lie-0');
+      await tap('truths-submit');
+    }
+    await tap('truths-choice-0');
     await page.waitForTimeout(400);
   }
   throw new Error(`did not reach ${untilTestId}`);

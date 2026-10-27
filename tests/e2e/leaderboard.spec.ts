@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { act, chooseWord, closeAll, drawQueue, roomOf, startGame } from './helpers';
+import { act, actionPacer, chooseWord, closeAll, drawQueue, roomOf, startGame } from './helpers';
 
 test('AC-42 the leaderboard button is on every game; it shows scores, teams and the timer without pausing anyone; answering still works afterwards', async ({ browser }) => {
   test.setTimeout(180_000);
@@ -14,6 +14,8 @@ test('AC-42 the leaderboard button is on every game; it shows scores, teams and 
     { gameId: 'atlas', settings: { seconds: 30, lives: 1, variant: 'any' } },
     { gameId: 'charades', settings: { rounds: 1, seconds: 60, passes: 1, industries: ['bollywood'], eras: ['modern'], difficulty: 'any', steal: false } },
     { gameId: 'mlt', settings: { rounds: 1, voteSeconds: 30, selfVote: false } },
+    { gameId: 'npat', settings: { rounds: 1, seconds: 30, movie: false } },
+    // NEW_GAMES_QUEUE
   ]);
 
   // Quiz: open during a question.
@@ -30,17 +32,21 @@ test('AC-42 the leaderboard button is on every game; it shows scores, teams and 
   await b.page.getByTestId('quiz-option-0').click();
   await expect(b.page.getByTestId('quiz-answered')).toContainText('Locked in');
 
-  // Every other game shows the button too.
-  for (const id of ['draw', 'imposter', 'atlas', 'charades', 'mlt']) {
+  // Every other game shows the button too. Two admin actions per game: pace them under the per-seat rate limit (R46).
+  const pacer = actionPacer(a.page);
+  for (const id of ['draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat' /* NEW_GAMES_LOOP */]) {
     // A game nobody plays can end by itself (Draw skips each unchosen turn), so end it through the sync client and
     // accept "already over"; the admin menu's End game is covered by AC-29.
+    await pacer.ready();
     const end = await act(a.page, 'endGame');
     expect(end.ok || end.code === 'WRONG_PHASE', JSON.stringify(end)).toBe(true);
     await expect(a.page.getByTestId('break')).toBeVisible();
+    await pacer.ready();
     await a.page.getByTestId('continue').click();
     await expect(a.page.getByTestId('playing')).toHaveAttribute('data-game', id);
     for (const p of players) await expect(p.page.getByTestId('leaderboard-open')).toBeVisible();
   }
+  pacer.stop();
   await closeAll(players);
 });
 

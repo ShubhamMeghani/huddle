@@ -4,7 +4,7 @@ import { act, actionPacer, GAME_IDS, openDemo, playUntil, snapshotOf } from './h
 // Regression (first CI run): six demo games started and ended back to back sent 12 admin actions in under a
 // second; the 11th, the Most Likely To start, was rate limited (R46) and silently dropped. Driving the sync client
 // directly is as fast as that runner was on any machine, so without pacing this fails at the 11th action.
-test('AC-47 all six demo games started and ended back to back as fast as the server allows: every start and end is accepted', async ({ page }) => {
+test('AC-47 every demo game started and ended back to back as fast as the server allows: every start and end is accepted', async ({ page }) => {
   await openDemo(page);
   const pacer = actionPacer(page);
   const results: string[] = [];
@@ -37,7 +37,7 @@ test('AC-49 a demo start rejected by the rate limit is shown to the player, and 
 });
 
 test('AC-47 one browser, no sign-in: /demo gives a room with 4 bots, and every game can be finished alone with real bot play', async ({ page }) => {
-  test.setTimeout(300_000); // ~3 min on a 4-core Linux runner
+  test.setTimeout(480_000); // ~3 min for the first six games on a 4-core Linux runner, plus ~2 min for the v0.5 games
   await page.goto('/');
   await page.getByTestId('demo-link').click();
   await expect(page.getByTestId('demo-start')).toHaveAttribute('data-ready', 'true');
@@ -46,7 +46,7 @@ test('AC-47 one browser, no sign-in: /demo gives a room with 4 bots, and every g
   await expect(page.getByTestId('seat')).toHaveCount(5);
   expect((await snapshotOf(page)).public.seats.filter((s: { isBot: boolean }) => s.isBot)).toHaveLength(4);
 
-  for (const id of ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt']) {
+  for (const id of GAME_IDS) {
     await page.getByTestId(`demo-${id}`).click();
     await expect(page.getByTestId('playing')).toHaveAttribute('data-game', id);
     await playUntil(page, 'break', 120_000); // the visitor does whatever their phone asks

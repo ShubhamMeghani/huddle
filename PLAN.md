@@ -1,6 +1,6 @@
 # Huddle: Build Plan (PLAN.md)
 
-> **Spec:** [SPEC.md](SPEC.md) **v0.5**, which has 98 requirements and 96 acceptance criteria; §11 lists the binding decisions.
+> **Spec:** [SPEC.md](SPEC.md) **v0.5**, which has 100 requirements and 98 acceptance criteria; §11 lists the binding decisions.
 > **Plan version:** 2 · 2026-10-22. Changelog at the end.
 
 ## Stack
@@ -411,7 +411,7 @@ Requested before the friends playtest, with a same-day deadline: one commit per 
 | 17.2 | "Pick for us": a game that fits the current player count | R96 | AC-92, AC-93 | done |
 | 17.3 | Quick / Normal / Long presets with estimated duration; advanced settings still reachable | R97 | AC-94, AC-95 | done |
 | 17.4 | Lobby: Share on WhatsApp, large QR, remembered name for one-tap joining | R98 | AC-96 | done |
-| 17.5 | New game: Name Place Animal Thing | – | – | todo |
+| 17.5 | New game: Name Place Animal Thing | R99, R100 | AC-97, AC-98 (+ AC-13, AC-15, AC-18, AC-32, AC-38, AC-46, AC-47, AC-84 extended) | done |
 | 17.6 | New game: Emoji Decode (≥ 200 puzzles, ≥ 50 places) | – | – | todo |
 | 17.7 | New game (Should): Two Truths & a Lie | – | – | todo |
 
@@ -521,6 +521,8 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-94 | Unit | 17 | pass | `tests/unit/presets.test.ts` · pass @ 17.3 |
 | AC-95 | E2E | 17 | pass | `tests/e2e/presets.spec.ts` · pass @ 17.3 |
 | AC-96 | E2E | 17 | pass | `tests/e2e/invite.spec.ts` · pass @ 17.4 |
+| AC-97 | Unit | 17 | pass | `tests/unit/games/npat.test.ts` · pass @ 17.5 |
+| AC-98 | E2E | 17 | pass | `tests/e2e/npat.spec.ts` · pass @ 17.5 |
 
 ---
 
@@ -592,6 +594,8 @@ Format: date · phase · decision · reason.
 - 2026-10-27 · 17.2 · "Pick for us" runs on the admin's phone and adds its pick through the normal `setQueue` action; it avoids games already queued or played tonight until none are left. · Nothing about the pick is secret, so no new server action or state is needed.
 - 2026-10-27 · 17.3 · Presets live in `src/games/presets.ts` and touch only round counts and timers: Normal is defined as the defaults of those fields, so every existing queue, test and stored setting keeps meaning "Normal". Estimates are rough per-game formulas (timers rarely run to the end) rounded to whole minutes. · One source of truth for the lobby and the unit test; categories picked under Advanced survive a preset change.
 - 2026-10-27 · 17.4 · The WhatsApp button is a plain `https://wa.me/?text=` link (works with the app and WhatsApp Web, no SDK). The name is remembered in `localStorage` as well as by the guest identity, read inside try/catch, so it survives a cleared cookie or sign-out and private mode simply forgets it. · A real "one tap" for a returning phone, with nothing new on the server.
+- 2026-10-27 · 17.5 · Name Place Animal Thing: answers autosave a second after typing stops (`fill`) and lock with Done, so a timer ending mid-word still counts. The vote is "reject what doesn't count": everything stands unless more than half of the other active players reject it, which keeps the vote quick with 4–5 categories × several players. Places in the Atlas database skip the vote, but unknown places can still be accepted by it (as in Atlas, R79). Bots answer from `content/npat-bot.json`, the place database and the movie list, and reject at most one answer per round. · The requirement asks for a quick majority vote; per-answer accept/reject taps would take minutes per round.
+- 2026-10-27 · 17.5 · Fix to 17.1 found by the full suite: on a loaded iPhone emulator AC-91's "Got it" was still in the card's pop-in animation ("not stable") and the 8 s test-mode card ended before the tap landed. The card no longer animates in, and it lasts 20 s in test mode too. The same run's other iPhone failures (AC-33, AC-73, full night) were load from a unit-test batch I ran beside it; all four passed alone, and the suite was rerun clean before this commit. · An interactive card must be tappable at once, and nothing in E2E depends on the card timing out.
 
 ## Blockers
 

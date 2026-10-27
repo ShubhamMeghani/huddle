@@ -46,6 +46,7 @@ export const GAME_ACCENTS = {
   atlas: { light: { accent: '#0b7a45', on: '#ffffff', soft: '#dcf7e8', ink: '#0b7a45' }, dark: { accent: '#3fd68a', on: '#04180d', soft: '#10331f', ink: '#3fd68a' } },
   imposter: { light: { accent: '#7c3aed', on: '#ffffff', soft: '#efe5ff', ink: '#6d28d9' }, dark: { accent: '#b28bff', on: '#160a30', soft: '#2a1d4d', ink: '#b28bff' } },
   mlt: { light: { accent: '#ff7a00', on: '#1f0d00', soft: '#ffe8d2', ink: '#9a4400' }, dark: { accent: '#ff9a3d', on: '#1f0d00', soft: '#3a220c', ink: '#ff9a3d' } },
+  npat: { light: { accent: '#0891b2', on: '#01161c', soft: '#cffafe', ink: '#0e7490' }, dark: { accent: '#22d3ee', on: '#04222b', soft: '#0c3640', ink: '#22d3ee' } },
 } as const;
 
 /** Text-on-background pairs used by the UI. `large` marks pairs only used for large/bold text or UI glyphs (≥ 3:1). */

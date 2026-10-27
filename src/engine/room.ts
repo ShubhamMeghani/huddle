@@ -228,7 +228,7 @@ export function startGame(room: RoomState, ctx: Ctx) {
     // Shown once per game per room: a rematch or a later queue entry starts straight away (R95).
     room.memory.introSeen = [...((room.memory.introSeen as GameId[] | undefined) ?? []), cfg.gameId];
     room.game.intro = { ready: [] };
-    setPhase(room, 'intro', ctx.testMode ? 8_000 : INTRO_MS, ctx);
+    setPhase(room, 'intro', INTRO_MS, ctx);
     return;
   }
   moduleOf(cfg.gameId).start(room, ctx);
