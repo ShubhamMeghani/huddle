@@ -338,3 +338,58 @@ Two other runs failed earlier while a phone joined (`room` not shown within 30 s
 | Delivery latency p50 / p95 | 315 ms / 356 ms | p95 ≤ 1000 ms on production |
 | Projected Ably messages per 3 h, 8-player night | ≈ 79,680 (1.33 % of 6 M) | ≤ 5 % |
 | Ably app stats | 2648 messages in the last 3 minutes (app stats; stats lag ~1 min) | – |
+
+### AC-87 demo · 2026-10-27T03:50:10.900Z · https://playhuddle.vercel.app
+
+- /demo → Quiz against 4 bots finished in 78 s ✔
+
+### AC-79 Google redirect · 2026-10-27T03:50:13.514Z · https://playhuddle.vercel.app
+
+- Redirect to Google with callback https://playhuddle.vercel.app/api/auth/callback/google and no error page ✔
+
+### AC-78 Postgres persistence · 2026-10-27T03:50:19.626Z · https://playhuddle.vercel.app
+
+- Room XKPY state and seat restored after restart ✔ (first load 1942 ms)
+
+### Six-browser check (@skeleton) · 2026-10-27T03:51:31.027Z · https://playhuddle.vercel.app
+
+- 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-run: all show 30 waves and version 37 ✔ (converged in 2628 ms)
+
+### AC-80 quiz half · 2026-10-27T03:52:13.963Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions on 6 browsers: every answer seen by another phone; action → other phone p95 828 ms (budget 1000 ms)
+
+### AC-80 six real browsers · 2026-10-27T03:52:22.192Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions + 1 Draw turn on 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-turn: identical scoreboards ✔
+- Action → other phone p95: 828 ms · stroke end → all viewers p95: 1215 ms (budget 1000 ms) · reloaded phone caught up 1232 ms after the next stroke
+
+### AC-87 demo · 2026-10-27T03:53:49.362Z · https://playhuddle.vercel.app
+
+- /demo → Quiz against 4 bots finished in 62 s ✔
+
+### AC-79 Google redirect · 2026-10-27T03:53:52.200Z · https://playhuddle.vercel.app
+
+- Redirect to Google with callback https://playhuddle.vercel.app/api/auth/callback/google and no error page ✔
+
+### AC-78 Postgres persistence · 2026-10-27T03:53:58.595Z · https://playhuddle.vercel.app
+
+- Room NWUU state and seat restored after restart ✔ (first load 2068 ms)
+
+### AC-77 realtime · 2026-10-27T03:54:39.781Z · https://playhuddle.vercel.app
+
+- Token: subscribe-only capability ✔; connection live via Ably ✔; test-mode routes off ✔
+- Action → other phone update over 50 actions: p50 837 ms, p95 870 ms (budget 1000 ms)
+
+### Six-browser check (@skeleton) · 2026-10-27T03:55:03.823Z · https://playhuddle.vercel.app
+
+- 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-run: all show 30 waves and version 37 ✔ (converged in 2598 ms)
+
+### AC-80 quiz half · 2026-10-27T03:59:02.313Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions on 6 browsers: every answer seen by another phone; action → other phone p95 847 ms (budget 1000 ms)
+
+### AC-80 six real browsers · 2026-10-27T03:59:10.222Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions + 1 Draw turn on 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-turn: identical scoreboards ✔
+- Action → other phone p95: 847 ms · stroke end → all viewers p95: 866 ms (budget 1000 ms) · reloaded phone caught up 1211 ms after the next stroke

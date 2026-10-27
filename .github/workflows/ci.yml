@@ -35,8 +35,8 @@ jobs:
   # Sentinel production build → E2E, one device project per job (2 workers each, see playwright.config.ts)
   e2e:
     runs-on: ubuntu-24.04
-    # Setup (~1 min) + install (≤ 26 min, normally under 6) + E2E (killed at 20 min, step limit 25).
-    timeout-minutes: 55
+    # Setup (~1 min) + install (≤ 28 min, normally under 6) + E2E (killed at 20 min, step limit 25).
+    timeout-minutes: 57
     name: e2e (${{ matrix.label }})
     strategy:
       fail-fast: false
@@ -68,14 +68,19 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('package-lock.json') }}
+      # The system packages come from the runner's apt mirror, which sometimes fails fast or hangs: apt retries each
+      # download, attempts are a minute apart, and a failed attempt's last lines become a (public) annotation.
       - name: Install ${{ matrix.browser }} (8 min per attempt, up to 3 attempts)
         run: |
+          echo 'Acquire::Retries "5";' | sudo tee /etc/apt/apt.conf.d/80-retries > /dev/null
           for attempt in 1 2 3; do
-            if timeout 8m npx playwright install --with-deps ${{ matrix.browser }}; then exit 0; fi
-            echo "::warning::playwright install attempt $attempt failed or stalled"
+            if timeout 8m npx playwright install --with-deps ${{ matrix.browser }} > install.log 2>&1; then cat install.log; exit 0; fi
+            cat install.log
+            echo "::warning title=playwright install attempt $attempt failed or stalled::$(tail -n 8 install.log | tr '\n' ' ' | sed 's/%/%25/g' | cut -c1-900)"
+            [ "$attempt" = 3 ] || sleep 60
           done
           exit 1
-        timeout-minutes: 26
+        timeout-minutes: 28
       - name: E2E (hard-killed after 20 min; memory and load logged every 60 s)
         run: |
           # Evidence if the runner stalls: printed live to the job log and kept for the artifact.
