@@ -35,8 +35,9 @@ jobs:
   # Sentinel production build → E2E, one device project per job (2 workers each, see playwright.config.ts)
   e2e:
     runs-on: ubuntu-24.04
-    # Setup (~1 min) + install (≤ 28 min, normally under 6) + E2E (killed at 20 min, step limit 25).
-    timeout-minutes: 57
+    # Setup (~1 min) + system packages (≤ 25 min, normally under 5) + browser (≤ 17, normally under 1) + E2E (killed
+    # at 20 min, step limit 25).
+    timeout-minutes: 70
     name: e2e (${{ matrix.label }})
     strategy:
       fail-fast: false
@@ -62,25 +63,32 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      # The browser download is cached per browser and lockfile. The install (browser plus system packages) has twice
-      # stalled one shard for 16–18 min against a usual 0.5–5 min, so a stuck attempt is cut off at 8 min and retried.
+      # System packages come from the runner's apt mirror, which is sometimes very slow (16-23 min against a usual
+      # 0.5-5). apt retries each download and waits for the package lock instead of failing on it, and it is never cut
+      # off: `timeout` cannot kill the root-owned apt-get, which then held the lock against every retry. A failure's
+      # last lines become a public annotation (job logs need sign-in).
+      - name: System packages for ${{ matrix.browser }}
+        run: |
+          printf 'Acquire::Retries "5";\nDPkg::Lock::Timeout "900";\n' | sudo tee /etc/apt/apt.conf.d/80-ci > /dev/null
+          if npx playwright install-deps ${{ matrix.browser }} > deps.log 2>&1; then cat deps.log; exit 0; fi
+          cat deps.log
+          echo "::error title=playwright install-deps failed::$(tail -n 8 deps.log | tr '\n' ' ' | sed 's/%/%25/g' | cut -c1-900)"
+          exit 1
+        timeout-minutes: 25
+      # The browser itself comes from Playwright's CDN, cached per browser and lockfile; a stuck download is retried.
       - uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('package-lock.json') }}
-      # The system packages come from the runner's apt mirror, which sometimes fails fast or hangs: apt retries each
-      # download, attempts are a minute apart, and a failed attempt's last lines become a (public) annotation.
-      - name: Install ${{ matrix.browser }} (8 min per attempt, up to 3 attempts)
+      - name: ${{ matrix.browser }} browser (5 min per attempt, up to 3 attempts)
         run: |
-          echo 'Acquire::Retries "5";' | sudo tee /etc/apt/apt.conf.d/80-retries > /dev/null
           for attempt in 1 2 3; do
-            if timeout 8m npx playwright install --with-deps ${{ matrix.browser }} > install.log 2>&1; then cat install.log; exit 0; fi
-            cat install.log
-            echo "::warning title=playwright install attempt $attempt failed or stalled::$(tail -n 8 install.log | tr '\n' ' ' | sed 's/%/%25/g' | cut -c1-900)"
-            [ "$attempt" = 3 ] || sleep 60
+            if timeout 5m npx playwright install ${{ matrix.browser }}; then exit 0; fi
+            echo "::warning::browser download attempt $attempt failed or stalled"
+            [ "$attempt" = 3 ] || sleep 20
           done
           exit 1
-        timeout-minutes: 28
+        timeout-minutes: 17
       - name: E2E (hard-killed after 20 min; memory and load logged every 60 s)
         run: |
           # Evidence if the runner stalls: printed live to the job log and kept for the artifact.
