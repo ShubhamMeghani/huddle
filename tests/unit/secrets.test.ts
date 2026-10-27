@@ -96,6 +96,24 @@ describe('AC-38 secrets never reach viewers who may not see them (every phase of
             }
             break;
           }
+          case 'truths': {
+            const entries = g.entries as Record<string, { texts: string[]; lie: number | null }>;
+            if (kind === 'write') {
+              for (const [author, e] of Object.entries(entries)) {
+                for (const t of e.texts.filter((x) => x.trim())) {
+                  expect(has(pub, t), `public view leaks ${t}`).toBe(false);
+                  for (const s of room.seats) if (s.id !== author) expect(has(priv(room, s.id), t)).toBe(false);
+                }
+              }
+            }
+            if (kind === 'vote') {
+              // The lie's position and the votes appear only at the reveal; only the author's view marks the lie.
+              expect(pub).not.toMatch(/"lie":/);
+              expect(JSON.parse(pub).game.view.reveal).toBeNull();
+              for (const s of room.seats) if (s.id !== room.phase.turnSeatId) expect(priv(room, s.id)).toMatch(/"mylie":null/);
+            }
+            break;
+          }
           default:
             break;
         }

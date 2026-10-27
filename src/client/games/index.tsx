@@ -8,6 +8,7 @@ import { ImposterGame } from './ImposterGame';
 import { AtlasGame } from './AtlasGame';
 import { CharadesGame } from './CharadesGame';
 import { MltGame } from './MltGame';
+import { TruthsGame } from './TruthsGame';
 import { EmojiGame } from './EmojiGame';
 import { NpatGame } from './NpatGame';
 
@@ -19,6 +20,7 @@ export const GAME_COMPONENTS: Record<string, ComponentType<RoomProps>> = {
   atlas: AtlasGame,
   charades: CharadesGame,
   mlt: MltGame,
+  truths: TruthsGame,
   emoji: EmojiGame,
   npat: NpatGame,
 };

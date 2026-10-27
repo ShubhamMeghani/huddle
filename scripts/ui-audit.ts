@@ -7,7 +7,7 @@ import { join } from 'node:path';
 
 const OUT = process.argv[2] ?? 'ui-audit';
 const BASE = process.argv[3] ?? 'http://localhost:3197';
-const GAMES = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt'] as const;
+const GAMES = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat', 'emoji', 'truths'] as const;
 const VIEWPORTS = {
   phone: { viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 },
   desktop: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 },

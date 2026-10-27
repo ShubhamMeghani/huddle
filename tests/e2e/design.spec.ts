@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { apiPlayer, closeAll, newPlayer, createRoom, openDemo, visitEachGame, joinRoom, startGame } from './helpers';
 
-const ACCENTS: Record<string, string> = { quiz: '#1d4ed8', draw: '#ffc400', imposter: '#7c3aed', atlas: '#0b7a45', charades: '#ff2e88', mlt: '#ff7a00', npat: '#0891b2', emoji: '#65a30d' };
+const ACCENTS: Record<string, string> = { quiz: '#1d4ed8', draw: '#ffc400', imposter: '#7c3aed', atlas: '#0b7a45', charades: '#ff2e88', mlt: '#ff7a00', npat: '#0891b2', emoji: '#65a30d', truths: '#dc2626' };
 
 test('AC-84 each game has its own accent colour on its main phase', async ({ page }) => {
   test.setTimeout(180_000);

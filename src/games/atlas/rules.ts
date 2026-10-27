@@ -251,8 +251,9 @@ export const atlas: GameModule = {
     const s = st(room);
     if (room.phase.kind === 'turn' && room.phase.turnSeatId === seat.id) {
       if (s.botBlank === room.phase.id) return null;
-      if (ctx.rng() > 0.85) {
-        s.botBlank = room.phase.id; // sometimes the bot blanks and runs out of time
+      // Bots sometimes blank and run out of time, more often as the chain grows, so an all-bot ending stays short.
+      if (ctx.rng() < Math.min(0.6, 0.15 + 0.02 * s.chain.length)) {
+        s.botBlank = room.phase.id;
         return null;
       }
       const used = new Set(s.used);

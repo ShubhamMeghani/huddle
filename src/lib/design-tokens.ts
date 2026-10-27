@@ -48,6 +48,7 @@ export const GAME_ACCENTS = {
   mlt: { light: { accent: '#ff7a00', on: '#1f0d00', soft: '#ffe8d2', ink: '#9a4400' }, dark: { accent: '#ff9a3d', on: '#1f0d00', soft: '#3a220c', ink: '#ff9a3d' } },
   npat: { light: { accent: '#0891b2', on: '#01161c', soft: '#cffafe', ink: '#0e7490' }, dark: { accent: '#22d3ee', on: '#04222b', soft: '#0c3640', ink: '#22d3ee' } },
   emoji: { light: { accent: '#65a30d', on: '#0f1a00', soft: '#ecfccb', ink: '#3f6212' }, dark: { accent: '#a3e635', on: '#142000', soft: '#24320c', ink: '#a3e635' } },
+  truths: { light: { accent: '#dc2626', on: '#ffffff', soft: '#fee2e2', ink: '#b91c1c' }, dark: { accent: '#f87171', on: '#2a0505', soft: '#3b1414', ink: '#f87171' } },
 } as const;
 
 /** Text-on-background pairs used by the UI. `large` marks pairs only used for large/bold text or UI glyphs (≥ 3:1). */

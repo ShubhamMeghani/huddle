@@ -16,6 +16,7 @@ test('AC-42 the leaderboard button is on every game; it shows scores, teams and 
     { gameId: 'mlt', settings: { rounds: 1, voteSeconds: 30, selfVote: false } },
     { gameId: 'npat', settings: { rounds: 1, seconds: 30, movie: false } },
     { gameId: 'emoji', settings: { rounds: 1, seconds: 30, categories: ['bollywood'] } },
+    { gameId: 'truths', settings: { writeSeconds: 60, voteSeconds: 30 } },
     // NEW_GAMES_QUEUE
   ]);
 
@@ -35,7 +36,7 @@ test('AC-42 the leaderboard button is on every game; it shows scores, teams and 
 
   // Every other game shows the button too. Two admin actions per game: pace them under the per-seat rate limit (R46).
   const pacer = actionPacer(a.page);
-  for (const id of ['draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat', 'emoji' /* NEW_GAMES_LOOP */]) {
+  for (const id of ['draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat', 'emoji', 'truths' /* NEW_GAMES_LOOP */]) {
     // A game nobody plays can end by itself (Draw skips each unchosen turn), so end it through the sync client and
     // accept "already over"; the admin menu's End game is covered by AC-29.
     await pacer.ready();

@@ -16,7 +16,8 @@ test('AC-98 three phones: one letter, secret answers, Atlas-checked places, a ma
   const letter = (await a.page.getByTestId('npat-letter').textContent())!.trim();
   for (const p of players) await expect(p.page.getByTestId('npat-letter')).toHaveText(letter);
   const L = letter.toLowerCase();
-  const place = (places as { name: string; kind: string }[]).find((p) => p.kind === 'country' && fold(p.name)[0] === L) ?? (places as { name: string }[]).find((p) => fold(p.name)[0] === L)!;
+  const fits = (p: { name: string }) => fold(p.name)[0] === L && p.name.length <= 30; // answers are at most 30 characters
+  const place = places.find((p) => p.kind === 'country' && fits(p)) ?? places.find(fits)!;
 
   await write(a.page, { name: `${letter}eena`, place: place.name, animal: `${letter}anther`, thing: `${letter}ottle` });
   await write(b.page, { name: `${letter}ohan`, place: place.name, animal: `${letter}anther`, thing: `${letter}ucket` });

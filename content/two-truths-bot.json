@@ -1,0 +1,14 @@
+[
+  { "texts": ["I have watched the sunrise at the Taj Mahal", "I can cook biryani without a recipe", "I once shook hands with Sachin Tendulkar"], "lie": 2 },
+  { "texts": ["I have never broken a bone", "I can solve a Rubik's cube in two minutes", "I have been on a cruise ship"], "lie": 1 },
+  { "texts": ["I can whistle with my fingers", "I was born during a thunderstorm", "I have read every Harry Potter book twice"], "lie": 1 },
+  { "texts": ["I have a pet tortoise named Bolt", "I learnt to swim at 25", "I have never tasted coffee"], "lie": 0 },
+  { "texts": ["I once missed a flight by two minutes", "I can speak four languages", "I have climbed a 5,000 m peak"], "lie": 2 },
+  { "texts": ["I sleep with socks on", "I won a dance competition in school", "I have eaten 40 golgappas in one go"], "lie": 2 },
+  { "texts": ["I have been to every state in South India", "I am scared of butterflies", "I can play the tabla"], "lie": 0 },
+  { "texts": ["I have never seen snow", "I once got locked inside a mall", "I can type without looking at the keys"], "lie": 1 },
+  { "texts": ["I was on local TV as a kid", "I have a scar from a cricket ball", "I have never ridden a bicycle"], "lie": 2 },
+  { "texts": ["I can juggle three oranges", "I have met a tiger in the wild", "I hate chocolate"], "lie": 1 },
+  { "texts": ["I wrote a poem that got published", "I have run a half marathon", "I have never used a dating app"], "lie": 0 },
+  { "texts": ["I collect old coins", "I once ate a whole pizza alone", "I have skydived in Dubai"], "lie": 2 }
+]

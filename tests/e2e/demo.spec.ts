@@ -37,7 +37,7 @@ test('AC-49 a demo start rejected by the rate limit is shown to the player, and 
 });
 
 test('AC-47 one browser, no sign-in: /demo gives a room with 4 bots, and every game can be finished alone with real bot play', async ({ page }) => {
-  test.setTimeout(480_000); // ~3 min for the first six games on a 4-core Linux runner, plus ~2 min for the v0.5 games
+  test.setTimeout(600_000); // ~3 min for the first six games on a 4-core Linux runner; all nine take ~6 min here
   await page.goto('/');
   await page.getByTestId('demo-link').click();
   await expect(page.getByTestId('demo-start')).toHaveAttribute('data-ready', 'true');

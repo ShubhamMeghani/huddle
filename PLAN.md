@@ -1,6 +1,6 @@
 # Huddle: Build Plan (PLAN.md)
 
-> **Spec:** [SPEC.md](SPEC.md) **v0.5**, which has 102 requirements and 101 acceptance criteria; §11 lists the binding decisions.
+> **Spec:** [SPEC.md](SPEC.md) **v0.5**, which has 103 requirements and 103 acceptance criteria; §11 lists the binding decisions.
 > **Plan version:** 2 · 2026-10-22. Changelog at the end.
 
 ## Stack
@@ -71,7 +71,7 @@ The full stack is in SPEC §3:
 | 14 | Privacy page | AUTO | done | bf25834 |
 | 15 | Full multi-player E2E suite and verification | AUTO | done | phase-15 commit |
 | 16 | Human steps and acceptance | HUMAN, then AUTO | todo | – |
-| 17 | Playtest improvements (SPEC v0.5): one commit per task | AUTO | in progress | 17.1 below |
+| 17 | Playtest improvements (SPEC v0.5): one commit per task | AUTO | done | 17.1–17.7 below |
 
 If time runs short, cut Should items in this order: recap card (10.7) → big screen (11.2) → Most Likely To (9.1–9.2). Log each cut and mark its ACs `cut`. The steal rule (R65) is a Must, so cutting it would be a SPEC change (rule 4).
 
@@ -413,7 +413,7 @@ Requested before the friends playtest, with a same-day deadline: one commit per 
 | 17.4 | Lobby: Share on WhatsApp, large QR, remembered name for one-tap joining | R98 | AC-96 | done |
 | 17.5 | New game: Name Place Animal Thing | R99, R100 | AC-97, AC-98 (+ AC-13, AC-15, AC-18, AC-32, AC-38, AC-46, AC-47, AC-84 extended) | done |
 | 17.6 | New game: Emoji Decode (≥ 200 puzzles, ≥ 50 places) | R101, R102 | AC-99, AC-100, AC-101 (+ cross-game ACs) | done |
-| 17.7 | New game (Should): Two Truths & a Lie | – | – | todo |
+| 17.7 | New game (Should): Two Truths & a Lie | R103 | AC-102, AC-103 (+ cross-game ACs) | done |
 
 **Proof (each task):** its unit tests and E2E on both projects, then `npm run ci`.
 
@@ -526,6 +526,8 @@ Status is one of `todo`, `pass`, `fail`, `Pending (human)` or `cut`. Evidence is
 | AC-99 | Unit | 17 | pass | `tests/unit/games/emoji.test.ts` · pass @ 17.6 (246 puzzles, 71 places) |
 | AC-100 | Unit | 17 | pass | `tests/unit/games/emoji.test.ts` · pass @ 17.6 |
 | AC-101 | E2E | 17 | pass | `tests/e2e/emoji.spec.ts` · pass @ 17.6 |
+| AC-102 | Unit | 17 | pass | `tests/unit/games/truths.test.ts` · pass @ 17.7 |
+| AC-103 | E2E | 17 | pass | `tests/e2e/truths.spec.ts` · pass @ 17.7 |
 
 ---
 
@@ -600,6 +602,7 @@ Format: date · phase · decision · reason.
 - 2026-10-27 · 17.5 · Name Place Animal Thing: answers autosave a second after typing stops (`fill`) and lock with Done, so a timer ending mid-word still counts. The vote is "reject what doesn't count": everything stands unless more than half of the other active players reject it, which keeps the vote quick with 4–5 categories × several players. Places in the Atlas database skip the vote, but unknown places can still be accepted by it (as in Atlas, R79). Bots answer from `content/npat-bot.json`, the place database and the movie list, and reject at most one answer per round. · The requirement asks for a quick majority vote; per-answer accept/reject taps would take minutes per round.
 - 2026-10-27 · 17.5 · Fix to 17.1 found by the full suite: on a loaded iPhone emulator AC-91's "Got it" was still in the card's pop-in animation ("not stable") and the 8 s test-mode card ended before the tap landed. The card no longer animates in, and it lasts 20 s in test mode too. The same run's other iPhone failures (AC-33, AC-73, full night) were load from a unit-test batch I ran beside it; all four passed alone, and the suite was rerun clean before this commit. · An interactive card must be tappable at once, and nothing in E2E depends on the card timing out.
 - 2026-10-27 · 17.6 · Emoji Decode: 246 puzzles (82 Bollywood, 93 Hollywood, 37 countries, 17 Indian and 17 world cities). World cities carry their country code, so a same-named place elsewhere never lends its names ("Venice" was dropped: GeoNames has the city only as Mestre, and its alias pointed at Dayton, USA). Place answers are names from `data/places.json`, and a guess is right when the database maps it to the same place, so every GeoNames alternate counts. Guesses may repeat until right (rate-limited like chat), are never broadcast, and the answer exists in views only at the reveal. Small typos count from 5 letters (1 edit) and 10 letters (2 edits). · Typing beats multiple choice for a decoding game, and the place database gives Bombay/Mumbai and Bangalore/Bengaluru for free.
+- 2026-10-27 · 17.7 · Two Truths & a Lie: everyone writes at once, then authors take turns in seat order. The shuffle per turn is stored server-side so a reload shows the same order; the lie index and the votes appear only in that turn's reveal, while the author's own phone marks their lie. Late joiners can vote from the next turn. Its unit tests caught a missing lie being read as statement 1 (`Number(null)` is 0); the lie must now be a number. AC-47's solo demo covers all nine games and gets 600 s (about 6 min here). One run stalled in Atlas with the bots 39 places deep (they blanked only 15 % of the time), so demo bots now blank more as the chain grows (15 % + 2 % per place, at most 60 %); a person trying the demo also waits less. · Writing in parallel keeps the game to about 2 minutes plus 30 s per player.
 
 ## Blockers
 

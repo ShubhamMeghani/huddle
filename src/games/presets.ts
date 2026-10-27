@@ -58,6 +58,11 @@ const PRESETS: Partial<Record<GameId, GamePresets>> = {
     long: { rounds: 20, seconds: 30 },
     seconds: (s) => s.rounds * (0.6 * s.seconds + 5),
   },
+  truths: {
+    quick: { writeSeconds: 60, voteSeconds: 15 },
+    long: { writeSeconds: 180, voteSeconds: 40 },
+    seconds: (s, n) => 0.8 * s.writeSeconds + n * (0.7 * s.voteSeconds + 6),
+  },
 };
 
 export function hasPresets(id: GameId): boolean {

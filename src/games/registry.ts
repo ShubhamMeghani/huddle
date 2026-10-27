@@ -8,10 +8,11 @@ import { imposter } from './imposter/rules';
 import { atlas } from './atlas/rules';
 import { charades } from './charades/rules';
 import { mlt } from './mlt/rules';
+import { truths } from './truths/rules';
 import { emoji } from './emoji/rules';
 import { npat } from './npat/rules';
 
-const MODULES: Partial<Record<GameId, GameModule>> = { ping, quiz, draw, imposter, atlas, charades, mlt, npat, emoji };
+const MODULES: Partial<Record<GameId, GameModule>> = { ping, quiz, draw, imposter, atlas, charades, mlt, npat, emoji, truths };
 
 export function moduleOf(id: GameId): GameModule {
   const m = MODULES[id];
