@@ -126,6 +126,8 @@ body {
 .btn:disabled { opacity: 0.55; cursor: not-allowed; }
 .btn-primary { background: var(--accent); color: var(--on-accent); box-shadow: var(--shadow); }
 .btn-brand { background: var(--brand); color: var(--on-brand); box-shadow: var(--shadow); }
+/* WhatsApp's own green with dark text (7.9:1), the same in both themes. */
+.btn-whatsapp { background: #25d366; color: #052e16; box-shadow: var(--shadow); }
 .btn-ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
 .btn-danger { background: var(--danger); color: var(--on-danger); }
 

@@ -11,6 +11,7 @@ import { TeamsPanel } from './TeamsPanel';
 import { CrewLink } from './CrewLink';
 import { DemoPicker } from './Demo';
 import { PickForUs } from './PickForUs';
+import { InviteCard } from './Invite';
 
 export function PlayerList({ state, onPickAvatar }: Pick<RoomProps, 'state'> & { onPickAvatar?: () => void }) {
   const pub = state.snapshot!.public;
@@ -55,13 +56,11 @@ export function PlayerList({ state, onPickAvatar }: Pick<RoomProps, 'state'> & {
 export function Lobby({ sync, state }: RoomProps) {
   const pub = state.snapshot!.public;
   const me = state.snapshot!.me;
-  const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<number | null>(null);
   const [picking, setPicking] = useState(false);
   // The toggle answers the tap at once; the server's value takes over when the action returns.
   const [introsDraft, setIntrosDraft] = useState<boolean | null>(null);
-  const link = typeof window !== 'undefined' ? `${window.location.origin}/r/${pub.code}` : `/r/${pub.code}`;
   const games = Object.values(GAME_META).filter((g) => !g.testOnly || state.testMode);
   const queue = pub.queue;
   const seatedCount = pub.seats.filter((s) => s.status === 'seated').length;
@@ -76,29 +75,10 @@ export function Lobby({ sync, state }: RoomProps) {
     const r = await sync.act('start');
     if (!r.ok) setError(r.message ?? 'Could not start');
   };
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(link);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {}
-  };
 
   return (
     <>
-      <section className="card flex items-center justify-between gap-3 p-4">
-        <div className="min-w-0">
-          <div className="text-xs font-extrabold uppercase tracking-wide text-muted">Invite friends</div>
-          <div className="text-4xl font-black tracking-[0.25em]" data-testid="lobby-code">
-            {pub.code}
-          </div>
-          <button className="btn btn-ghost mt-2 text-sm" onClick={copy} data-testid="copy-link">
-            {copied ? 'Copied!' : '🔗 Copy link'}
-          </button>
-        </div>
-        <img src={`/api/rooms/${pub.code}/qr`} alt={`QR code to join room ${pub.code}`} width={112} height={112} className="rounded-xl" data-testid="room-qr" />
-      </section>
-      <input className="sr-only" readOnly value={link} aria-label="Join link" data-testid="room-link" />
+      <InviteCard code={pub.code} />
       <p className="text-center text-sm font-semibold text-muted">
         Got a laptop or TV? Open <b>/screen</b> on it and enter <b>{pub.code}</b> to use it as a big screen.
       </p>

@@ -6,6 +6,7 @@ import { GAME_META } from '@/games/meta';
 import { DEMO_GAMES } from '@/games/demo';
 import type { GameId } from '@/engine/types';
 import type { RoomProps } from './ui';
+import { rememberName, rememberedName } from '@/client/name';
 
 /** /demo: one tap to a room with four bots, no sign-in (R43). */
 export function DemoStart() {
@@ -17,13 +18,14 @@ export function DemoStart() {
   useEffect(() => {
     getJson<Me>('/api/identity/me').then((m) => {
       setMe(m);
-      setName(m.identity?.name ?? 'Guest');
+      setName(m.identity?.name ?? (rememberedName() || 'Guest'));
     });
   }, []);
   const start = async () => {
     setBusy(true);
     setError(null);
     try {
+      rememberName(name.trim());
       if (!me?.identity || me.identity.name !== name.trim()) {
         const g = await postJson('/api/identity/guest', { name: name.trim() || 'Guest' });
         if (!g.ok) return setError('Pick a name (1–24 characters)');

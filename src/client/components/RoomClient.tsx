@@ -6,6 +6,7 @@ import { useRoomSync } from '@/client/useRoom';
 import { RoomView } from './RoomView';
 import { deviceId } from '@/client/device';
 import type { PublicSeat } from '@/engine/room';
+import { rememberName, rememberedName } from '@/client/name';
 
 /** Entry to a room: shows the join screen until this device has a seat, then the live room. */
 export function RoomClient({ code }: { code: string }) {
@@ -89,7 +90,7 @@ function JoinScreen({
   onJoined: () => void;
   onNotFound: () => void;
 }) {
-  const [name, setName] = useState(me.identity?.name ?? '');
+  const [name, setName] = useState(() => me.identity?.name ?? rememberedName());
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [claiming, setClaiming] = useState<string | null>(null);
@@ -131,6 +132,7 @@ function JoinScreen({
     setError(null);
     try {
       const trimmed = name.trim();
+      rememberName(trimmed);
       if (!me.identity || me.identity.name !== trimmed) {
         const g = await postJson('/api/identity/guest', { name: trimmed });
         if (!g.ok) return setError(g.message ?? 'Pick a name (1–24 characters)');
@@ -173,7 +175,7 @@ function JoinScreen({
           </p>
         ) : (
           <button className="btn btn-brand w-full text-lg" disabled={busy} onClick={() => join(false)} data-testid="join-button">
-            Join game
+            {name.trim() ? `Join as ${name.trim()}` : 'Join game'}
           </button>
         )}
         <button className="btn btn-ghost w-full" disabled={busy} onClick={() => join(true)} data-testid="watch-button">

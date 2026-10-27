@@ -6,6 +6,7 @@ import { getJson, postJson, type Me } from '@/client/api';
 import { ThemeToggle } from './ThemeToggle';
 import { ClaimBanner, CrewsHome } from './CrewsHome';
 import { AccountBar, SignInButton } from './Account';
+import { rememberName, rememberedName } from '@/client/name';
 
 export function HomeClient() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export function HomeClient() {
   useEffect(() => {
     getJson<Me>('/api/identity/me').then((m) => {
       setMe(m);
-      if (m.identity) setName(m.identity.name);
+      setName(m.identity?.name ?? rememberedName());
     });
   }, []);
 
@@ -28,6 +29,7 @@ export function HomeClient() {
       setError('Pick a name first');
       return false;
     }
+    rememberName(trimmed);
     if (me?.identity && me.identity.name === trimmed) return true;
     const r = await postJson('/api/identity/guest', { name: trimmed });
     if (!r.ok) {
