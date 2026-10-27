@@ -53,6 +53,7 @@
 [data-game='imposter'] { --accent: #7c3aed; --on-accent: #ffffff; --accent-soft: #efe5ff; --accent-ink: #6d28d9; }
 [data-game='mlt'] { --accent: #ff7a00; --on-accent: #1f0d00; --accent-soft: #ffe8d2; --accent-ink: #9a4400; }
 [data-game='npat'] { --accent: #0891b2; --on-accent: #01161c; --accent-soft: #cffafe; --accent-ink: #0e7490; }
+[data-game='emoji'] { --accent: #65a30d; --on-accent: #0f1a00; --accent-soft: #ecfccb; --accent-ink: #3f6212; }
 [data-game='ping'] { --accent: #0e7490; --on-accent: #ffffff; --accent-soft: #d8f3f8; --accent-ink: #0e7490; }
 [data-theme='dark'] [data-game='quiz'], [data-theme='dark'][data-game='quiz'] { --accent: #7aa2ff; --on-accent: #0b1330; --accent-soft: #1b2650; --accent-ink: #7aa2ff; }
 [data-theme='dark'] [data-game='charades'], [data-theme='dark'][data-game='charades'] { --accent: #ff6aa8; --on-accent: #22000f; --accent-soft: #3a1328; --accent-ink: #ff6aa8; }
@@ -60,6 +61,7 @@
 [data-theme='dark'] [data-game='atlas'], [data-theme='dark'][data-game='atlas'] { --accent: #3fd68a; --on-accent: #04180d; --accent-soft: #10331f; --accent-ink: #3fd68a; }
 [data-theme='dark'] [data-game='imposter'], [data-theme='dark'][data-game='imposter'] { --accent: #b28bff; --on-accent: #160a30; --accent-soft: #2a1d4d; --accent-ink: #b28bff; }
 [data-theme='dark'] [data-game='mlt'], [data-theme='dark'][data-game='mlt'] { --accent: #ff9a3d; --on-accent: #1f0d00; --accent-soft: #3a220c; --accent-ink: #ff9a3d; }
+[data-theme='dark'] [data-game='emoji'], [data-theme='dark'][data-game='emoji'] { --accent: #a3e635; --on-accent: #142000; --accent-soft: #24320c; --accent-ink: #a3e635; }
 [data-theme='dark'] [data-game='npat'], [data-theme='dark'][data-game='npat'] { --accent: #22d3ee; --on-accent: #04222b; --accent-soft: #0c3640; --accent-ink: #22d3ee; }
 
 @theme inline {

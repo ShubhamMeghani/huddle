@@ -57,6 +57,11 @@ const CASES: Record<GameId, Case[]> = {
     { name: 'malformed', who: 'any', action: { type: 'fill', answers: 'Bunty' }, code: 'INVALID' },
     { name: 'paused', who: 'any', action: { type: 'done' }, code: 'PAUSED', pausedFirst: true },
   ],
+  emoji: [
+    { name: 'wrong phase', who: 'any', action: { type: 'continue' }, code: 'NOT_ADMIN|WRONG_PHASE' },
+    { name: 'malformed', who: 'any', action: { type: 'guess', text: '   ' }, code: 'INVALID' },
+    { name: 'paused', who: 'any', action: { type: 'guess', text: 'Sholay' }, code: 'PAUSED', pausedFirst: true },
+  ],
   ping: [],
 };
 
@@ -83,7 +88,7 @@ function actor(state: RoomState, ids: Identity[], who: Who): Identity {
 }
 
 describe('AC-13 invalid actions return a code and change nothing (every game)', () => {
-  for (const id of ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat'] as GameId[]) {
+  for (const id of ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat', 'emoji'] as GameId[]) {
     for (const c of CASES[id]) {
       test(`AC-13 ${id}: ${c.name} → ${c.code}`, async () => {
         const { code, ids } = await setup(id);

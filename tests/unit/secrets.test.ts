@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { privateView, publicView } from '@/engine/room';
 import { BANK } from '@/games/quiz/rules';
 import { MOVIES } from '@/games/charades/rules';
+import { PUZZLES } from '@/games/emoji/rules';
 import type { RoomState } from '@/engine/types';
 import { botRoom, drive, GAMES } from '../helpers/drive';
 
@@ -82,6 +83,16 @@ describe('AC-38 secrets never reach viewers who may not see them (every phase of
                   if (s.id !== author && !own) expect(has(priv(room, s.id), text), `${s.name} sees ${text}`).toBe(false);
                 }
               }
+            }
+            break;
+          }
+          case 'emoji': {
+            if (kind !== 'puzzle') break;
+            const p = PUZZLES.find((x) => x.id === g.ids[g.idx])!;
+            for (const a of [p.answer, ...p.alt]) {
+              expect(has(pub, a), `public view leaks ${a}`).toBe(false);
+              expect(has(screen, a)).toBe(false);
+              for (const s of room.seats) expect(has(priv(room, s.id), a), `${s.name} sees ${a}`).toBe(false);
             }
             break;
           }

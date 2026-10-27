@@ -161,7 +161,7 @@ export async function openDemo(page: Page) {
   await expect(page.getByTestId('demo-picker')).toBeVisible();
 }
 
-export const GAME_IDS = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat'] as const;
+export const GAME_IDS = ['quiz', 'draw', 'imposter', 'atlas', 'charades', 'mlt', 'npat', 'emoji'] as const;
 
 /**
  * The server accepts at most 10 actions per seat in any second (R46) and rejects the rest with RATE_LIMITED.

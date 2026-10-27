@@ -7,6 +7,7 @@ import { imposterMeta } from './imposter/meta';
 import { atlasMeta } from './atlas/meta';
 import { charadesMeta } from './charades/meta';
 import { mltMeta } from './mlt/meta';
+import { emojiMeta } from './emoji/meta';
 import { npatMeta } from './npat/meta';
 
 export interface HowTo {
@@ -62,7 +63,7 @@ const ping: GameMeta = {
   },
 };
 
-export const GAME_META: Record<string, GameMeta> = { quiz: quizMeta, draw: drawMeta, imposter: imposterMeta, atlas: atlasMeta, charades: charadesMeta, mlt: mltMeta, npat: npatMeta, ping };
+export const GAME_META: Record<string, GameMeta> = { quiz: quizMeta, draw: drawMeta, imposter: imposterMeta, atlas: atlasMeta, charades: charadesMeta, mlt: mltMeta, npat: npatMeta, emoji: emojiMeta, ping };
 
 export function metaOf(id: GameId): GameMeta {
   const m = GAME_META[id];
