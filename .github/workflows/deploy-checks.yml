@@ -15,6 +15,8 @@ on:
 permissions:
   contents: read
 
+# One run at a time, so two runs never load production together. GitHub keeps only one run waiting: clicking Run
+# workflow again while one runs and one waits replaces the waiting one (it shows as cancelled).
 concurrency:
   group: deploy-checks
   cancel-in-progress: false
