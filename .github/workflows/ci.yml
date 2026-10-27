@@ -35,7 +35,8 @@ jobs:
   # Sentinel production build → E2E, one device project per job (2 workers each, see playwright.config.ts)
   e2e:
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    # Setup (~1 min) + install (≤ 26 min, normally under 6) + E2E (killed at 20 min, step limit 25).
+    timeout-minutes: 55
     name: e2e (${{ matrix.label }})
     strategy:
       fail-fast: false
@@ -61,7 +62,20 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      # The browser download is cached per browser and lockfile. The install (browser plus system packages) has twice
+      # stalled one shard for 16–18 min against a usual 0.5–5 min, so a stuck attempt is cut off at 8 min and retried.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ matrix.browser }}-${{ hashFiles('package-lock.json') }}
+      - name: Install ${{ matrix.browser }} (8 min per attempt, up to 3 attempts)
+        run: |
+          for attempt in 1 2 3; do
+            if timeout 8m npx playwright install --with-deps ${{ matrix.browser }}; then exit 0; fi
+            echo "::warning::playwright install attempt $attempt failed or stalled"
+          done
+          exit 1
+        timeout-minutes: 26
       - name: E2E (hard-killed after 20 min; memory and load logged every 60 s)
         run: |
           # Evidence if the runner stalls: printed live to the job log and kept for the artifact.

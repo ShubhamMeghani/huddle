@@ -15,8 +15,24 @@ async function sixBrowsers() {
 const act = (page: Page, type: string, payload: Record<string, unknown> = {}) =>
   page.evaluate(([t, p]) => (window as any).__huddleSync.act(t, p), [type, payload] as const);
 
+/** Action requests a page has sent that have not finished yet (a client retry is a new request). */
+function inFlightActions(page: Page) {
+  let n = 0;
+  const isAction = (u: string) => /\/api\/rooms\/[^/]+\/actions$/.test(new URL(u).pathname);
+  page.on('request', (r) => {
+    if (r.method() === 'POST' && isAction(r.url())) n++;
+  });
+  const done = (r: { method(): string; url(): string }) => {
+    if (r.method() === 'POST' && isAction(r.url())) n--;
+  };
+  page.on('requestfinished', done);
+  page.on('requestfailed', done);
+  return () => n;
+}
+
 test('@skeleton six real browsers (2 Chromium, 2 Firefox, 2 WebKit) in one room converge after 30 actions and a reload', async () => {
-  const { browsers, pages } = await sixBrowsers();
+  const { browsers, pages, code } = await sixBrowsers();
+  const inFlight = pages.map(inFlightActions);
   const t0 = Date.now();
   const clicks: Promise<void>[] = [];
   for (let round = 0; round < 5; round++) {
@@ -24,9 +40,18 @@ test('@skeleton six real browsers (2 Chromium, 2 Firefox, 2 WebKit) in one room 
     if (round === 2) await pages[3].reload(); // one Firefox phone reloads mid-run
   }
   await Promise.all(clicks.map((c) => c.catch(() => {})));
-  await expect.poll(async () => Number(await pages[0].getByTestId('wave-count').textContent()), { timeout: 30_000 }).toBeGreaterThanOrEqual(29);
-  const n = Number(await pages[0].getByTestId('wave-count').textContent());
-  for (let i = n; i < 30; i++) await pages[0].getByTestId('wave').click();
+  // A click resolves when it is dispatched, and a slow request can land much later (actions wait up to 30 s and
+  // retry once). Top up only after every page's action requests have finished, so no late wave makes 31.
+  const settled = () => expect.poll(() => inFlight.reduce((sum, f) => sum + f(), 0), { timeout: 90_000 }).toBe(0);
+  await settled();
+  // The server's count, not a phone's (which may still be catching up); a dropped tap during the reload is topped up.
+  const serverWaves = async () => (await pages[0].evaluate((c) => fetch(`/api/rooms/${c}/snapshot`).then((r) => r.json()), code)).public.waves as number;
+  const n = await serverWaves();
+  expect(n).toBeGreaterThanOrEqual(29);
+  for (let i = n; i < 30; i++) {
+    await pages[0].getByTestId('wave').click();
+    await settled();
+  }
   for (const p of pages) await expect(p.getByTestId('wave-count')).toHaveText('30', { timeout: 30_000 });
   const versions = await Promise.all(pages.map((p) => p.getByTestId('room').getAttribute('data-version')));
   expect(new Set(versions).size).toBe(1);

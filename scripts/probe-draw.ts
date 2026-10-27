@@ -133,6 +133,9 @@ async function main() {
   // A real Draw & Guess turn: the admin is the first drawer and picks a word.
   const act = (type: string, payload: Record<string, unknown> = {}) =>
     admin.req(`/api/rooms/${code}/actions`, { method: 'POST', body: { actionId: crypto.randomUUID(), type, payload } });
+  // The probe measures drawing, not the How-to-play card that real rooms show before a game's first round (R95).
+  const intros = await act('setIntros', { on: false });
+  if (!intros.json?.ok) throw new Error(`could not turn off the How-to-play cards: ${intros.json?.code}`);
   const started = await act('start', { queue: [{ gameId: 'draw', settings: { rounds: 1, drawSeconds: 120, hints: 0, words: 'mixed' } }] });
   if (!started.json?.ok) throw new Error(`could not start draw: ${started.json?.code}`);
   const chose = await act('choose', { index: 0 });

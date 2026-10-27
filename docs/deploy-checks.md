@@ -286,3 +286,55 @@ Two other runs failed earlier while a phone joined (`room` not shown within 30 s
 | CI (AC-76) | run #5 on 42c8598 green: checks 1.1 min, e2e android 9.9 min, e2e iphone 11.5 min | ✔ |
 
 **The intermittent 15–30 s stalls are on the network path from the test machine to Vercel's edge, not in the app.** The first AC-77 run failed when one tap's request hung; a probe from the same machine then showed every request on one connection to Vercel failing together after 19.2 s (the Windows TCP retransmission limit), three times in 4 minutes, including `/manifest.webmanifest`, a static CDN file that runs no function and touches no database. In a second probe `nextjs.org`, another Vercel-hosted site, stalled the same way, while `www.google.com` never did. This also explains the stalls seen before d3b505c. The client timeouts (d3b505c) and the snapshot stroke catch-up (42c8598) are what let a phone recover from such a connection.
+
+### AC-87 demo · 2026-10-27T03:07:30.886Z · https://playhuddle.vercel.app
+
+- /demo → Quiz against 4 bots finished in 68 s ✔
+
+### AC-79 Google redirect · 2026-10-27T03:07:34.144Z · https://playhuddle.vercel.app
+
+- Redirect to Google with callback https://playhuddle.vercel.app/api/auth/callback/google and no error page ✔
+
+### AC-78 Postgres persistence · 2026-10-27T03:07:40.705Z · https://playhuddle.vercel.app
+
+- Room EQEK state and seat restored after restart ✔ (first load 2063 ms)
+
+### AC-77 realtime · 2026-10-27T03:08:28.229Z · https://playhuddle.vercel.app
+
+- Token: subscribe-only capability ✔; connection live via Ably ✔; test-mode routes off ✔
+- Action → other phone update over 50 actions: p50 858 ms, p95 875 ms (budget 1000 ms)
+
+### Six-browser check (@skeleton) · 2026-10-27T03:15:02.111Z · https://playhuddle.vercel.app
+
+- 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-run: all show 30 waves and version 37 ✔ (converged in 2745 ms)
+
+### AC-80 quiz half · 2026-10-27T03:15:47.675Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions on 6 browsers: every answer seen by another phone; action → other phone p95 853 ms (budget 1000 ms)
+
+### AC-80 six real browsers · 2026-10-27T03:15:56.383Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions + 1 Draw turn on 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-turn: identical scoreboards ✔
+- Action → other phone p95: 853 ms · stroke end → all viewers p95: 1036 ms (budget 1000 ms) · reloaded phone caught up 1179 ms after the next stroke
+
+### AC-80 quiz half · 2026-10-27T03:17:02.867Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions on 6 browsers: every answer seen by another phone; action → other phone p95 855 ms (budget 1000 ms)
+
+### AC-80 six real browsers · 2026-10-27T03:17:11.454Z · https://playhuddle.vercel.app
+
+- 3 Quiz questions + 1 Draw turn on 2 Chromium + 2 Firefox + 2 WebKit, one reload mid-turn: identical scoreboards ✔
+- Action → other phone p95: 855 ms · stroke end → all viewers p95: 838 ms (budget 1000 ms) · reloaded phone caught up 1169 ms after the next stroke
+
+### Drawing-throughput probe (real Draw turn) · 2026-10-27T03:19:24.052Z · production · driver ably
+
+| Metric | Value | Budget |
+|---|---|---|
+| Batches posted / accepted | 332 / 332 | – |
+| Publishes per second (avg / max) | 4.15 / 5 | ≤ 5 avg; server cap 8 |
+| Largest batch | 120 B | ≤ 8 KB (Ably max 64 KiB) |
+| Rate-limited (429) / other errors | 0 / 0 | 0 / 0 |
+| Deliveries received / expected | 2324 / 2324 | equal |
+| Delivery latency p50 / p95 | 315 ms / 356 ms | p95 ≤ 1000 ms on production |
+| Projected Ably messages per 3 h, 8-player night | ≈ 79,680 (1.33 % of 6 M) | ≤ 5 % |
+| Ably app stats | 2648 messages in the last 3 minutes (app stats; stats lag ~1 min) | – |
