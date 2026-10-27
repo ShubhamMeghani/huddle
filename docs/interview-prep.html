@@ -1,0 +1,1312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huddle viva prep</title>
+<style>
+:root {
+  --bg: #fff7ed; --surface: #ffffff; --surface2: #f6f0ff; --ink: #1b1530; --muted: #554d6b; --line: #e6dcf2;
+  --brand: #6d28d9; --accent: #1d4ed8; --star: #9a4400; --code: #f3eefb; --ok: #0b7a45; --warn: #8a5300;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #110d1f; --surface: #1e1834; --surface2: #272043; --ink: #f6f3ff; --muted: #c3bbdc; --line: #3a3160;
+    --brand: #b79cff; --accent: #7aa2ff; --star: #ffc566; --code: #272043; --ok: #5ee2a0; --warn: #ffc566; }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 920px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 1.9rem; margin: .4em 0 .1em; letter-spacing: -.01em; }
+h2 { font-size: 1.4rem; margin: 2.2em 0 .5em; padding-top: .4em; border-top: 3px solid var(--line); }
+h3 { font-size: 1.1rem; margin: 1.6em 0 .4em; }
+h4 { font-size: 1rem; margin: 1.2em 0 .3em; }
+p, li { max-width: 72ch; }
+a { color: var(--accent); }
+code, kbd { font: .88em/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; background: var(--code); padding: .1em .35em; border-radius: 6px; overflow-wrap: anywhere; }
+pre { background: var(--code); padding: 12px; border-radius: 10px; overflow-x: auto; font: .85em/1.45 ui-monospace, Consolas, monospace; }
+.lede { color: var(--muted); font-size: 1.05rem; }
+.card { background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 14px 16px; margin: 12px 0; }
+.note { background: var(--surface2); border-left: 4px solid var(--brand); border-radius: 10px; padding: 10px 14px; margin: 12px 0; }
+.warnbox { border-left-color: var(--warn); }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: .93rem; }
+th, td { text-align: left; vertical-align: top; padding: 7px 8px; border-bottom: 1px solid var(--line); }
+th { background: var(--surface2); }
+.tablewrap { overflow-x: auto; }
+nav.toc { background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 10px 16px; }
+nav.toc ol { margin: .3em 0; padding-left: 1.4em; }
+nav.toc li { margin: .15em 0; }
+details { background: var(--surface); border: 2px solid var(--line); border-radius: 14px; margin: 8px 0; }
+details > summary { cursor: pointer; padding: 10px 14px; font-weight: 700; list-style-position: inside; min-height: 44px; }
+details[open] > summary { border-bottom: 1px solid var(--line); }
+details .body { padding: 8px 14px 12px; }
+details .follow { color: var(--muted); border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 8px; }
+.star { color: var(--star); font-weight: 900; }
+.qcat { margin-top: 1.4em; }
+.tools { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 8px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tools input[type=search] { flex: 1 1 220px; min-height: 44px; padding: 8px 12px; border-radius: 12px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; }
+.tools label, .tools button { min-height: 44px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 12px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+.count { color: var(--muted); font-size: .9rem; }
+svg { width: 100%; height: auto; display: block; }
+.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.diagram svg { min-width: 760px; }
+.diagram-hint { display: none; color: var(--muted); font-size: .85rem; }
+@media (max-width: 780px) { .diagram-hint { display: block; } }
+svg text { font-family: system-ui, sans-serif; fill: var(--ink); }
+svg .box { fill: var(--surface); stroke: var(--line); stroke-width: 2; }
+svg .boxa { fill: var(--surface2); stroke: var(--brand); stroke-width: 2; }
+svg .arrow { stroke: var(--accent); stroke-width: 2.2; fill: none; marker-end: url(#ah); }
+svg .arrow2 { stroke: var(--ok); stroke-width: 2.2; fill: none; marker-end: url(#ah2); stroke-dasharray: 6 4; }
+svg .small { font-size: 12px; fill: var(--muted); }
+svg .lbl { font-size: 12px; fill: var(--accent); font-weight: 700; }
+svg .lbl2 { font-size: 12px; fill: var(--ok); font-weight: 700; }
+ol.flow li { margin: .3em 0; }
+.pill { display: inline-block; padding: 0 .5em; border-radius: 99px; background: var(--surface2); font-size: .85em; font-weight: 700; }
+footer { color: var(--muted); font-size: .85rem; margin: 3em 0 1em; }
+</style>
+</head>
+<body>
+<main>
+<h1>Huddle: viva prep</h1>
+<p class="lede">Everything here is taken from the code, <code>SPEC.md</code> (v0.5), <code>PLAN.md</code> and the git history of
+<code>github.com/ShubhamMeghani/huddle</code> as of commit <code>269d2cb</code> (27 Oct 2026). Numbers are measured values from PLAN and
+<code>docs/deploy-checks.md</code>. Where an answer is about <em>your</em> role, adapt the wording to what you actually did.</p>
+
+<nav class="toc" aria-label="Contents">
+<strong>Contents</strong>
+<ol>
+<li><a href="#a">Part A: understand the project</a>
+  <ol>
+  <li><a href="#pitch">2-minute pitch</a></li>
+  <li><a href="#arch">Architecture and request flows</a></li>
+  <li><a href="#features">How each feature and game is implemented</a></li>
+  <li><a href="#data">Data model and key algorithms</a></li>
+  <li><a href="#stack">Tech-stack decisions</a></li>
+  <li><a href="#sdd">The SDD process</a></li>
+  <li><a href="#testing">Testing and CI</a></li>
+  <li><a href="#deploy">Deployment, environments, secrets, security, privacy</a></li>
+  <li><a href="#stories">Debugging stories</a></li>
+  <li><a href="#limits">Limitations, trade-offs, next steps</a></li>
+  <li><a href="#glossary">Glossary</a></li>
+  </ol></li>
+<li><a href="#b">Part B: question bank</a> (★ = most likely)</li>
+</ol>
+</nav>
+
+<h2 id="a">Part A: understand the project</h2>
+
+<!-- ───────────────────────── 1 ───────────────────────── -->
+<h2 id="pitch">1. The 2-minute pitch</h2>
+<div class="card">
+<p><strong>Problem.</strong> Party games played on phones break in the ways that matter at a real game night: a phone locks or the Wi-Fi drops and
+you come back as a new player with zero points (the skribbl.io complaint the SPEC names), one person has to stay the "host", and
+secret information leaks or relies on trust.</p>
+<p><strong>Who it's for.</strong> Indian friend groups (hostel rooms, Friday nights). Everyone plays on their own phone; a laptop or TV can join as a
+display-only big screen. Content is India-aware: Bollywood, cricket, Indian cities, Hinglish prompts.</p>
+<p><strong>What it is.</strong> A phone-first web app (installable PWA) with nine games: Quiz Clash, Dumb Charades, Draw &amp; Guess, Atlas,
+Imposter, Most Likely To, Name Place Animal Thing, Emoji Decode and Two Truths &amp; a Lie. You join with a 4-letter code, a link,
+or a QR code, with no account needed.</p>
+<p><strong>What makes it stand out.</strong></p>
+<ul>
+<li><strong>The server is the referee.</strong> Every action is validated on the server, applied to one versioned state document under a row lock, and only
+then broadcast. Secrets (quiz answers, the draw word, the imposter) are filtered per viewer, so nobody can cheat by inspecting the network.</li>
+<li><strong>Rejoin keeps everything.</strong> A phone that locks, refreshes, loses Wi-Fi or closes the tab comes back to the same seat, score and countdown.</li>
+<li><strong>Hostless.</strong> Server-side deadlines move the game on, AFK players are skipped after two missed turns, and admin passes automatically after 60 s.</li>
+<li><strong>Memory.</strong> Crews get a monthly season leaderboard, head-to-head records and end-of-night awards.</li>
+<li><strong>Evaluable alone.</strong> <code>/demo</code> gives one person a room with 4 bots for every game.</li>
+</ul>
+<p><strong>Proof.</strong> 103 requirements and 103 acceptance criteria. 234 unit tests and 57 multi-phone E2E tests, each run on Android Chromium and
+iPhone WebKit. Production checks from a GitHub-hosted runner show update latency p95 of about 200 ms against a 1 s budget.</p>
+<p><strong>Live:</strong> <a href="https://playhuddle.vercel.app">https://playhuddle.vercel.app</a> (try <code>/demo</code>).</p>
+</div>
+
+<!-- ───────────────────────── 2 ───────────────────────── -->
+<h2 id="arch">2. Architecture</h2>
+<p>One Next.js app on Vercel serves the UI and the API. All game logic lives in pure TypeScript modules with no I/O. Postgres (Neon)
+holds the authoritative state, and Ably fans updates out to the phones. Clients only <em>subscribe</em>; the server does all publishing.</p>
+
+<p class="diagram-hint">Scroll the diagram sideways →</p>
+<div class="diagram">
+<svg viewBox="0 0 900 510" role="img" aria-labelledby="archTitle archDesc">
+<title id="archTitle">Huddle architecture</title>
+<desc id="archDesc">Phones send HTTPS requests to Next.js route handlers on Vercel, which run the pure engine inside a Postgres transaction and publish updates through Ably back to every phone.</desc>
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker>
+<marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0b7a45"/></marker>
+</defs>
+<!-- phones -->
+<rect class="boxa" x="20" y="30" width="230" height="230" rx="16"/>
+<text x="135" y="58" text-anchor="middle" font-weight="800" font-size="16">Phones (and big screen)</text>
+<text x="40" y="88" font-size="13">React UI: Lobby, Playing,</text>
+<text x="40" y="106" font-size="13">game components</text>
+<text x="40" y="134" font-size="13" font-weight="700">RoomSync (sync.ts)</text>
+<text x="40" y="152" class="small">snapshot, act(actionId),</text>
+<text x="40" y="168" class="small">heartbeat, tick, polling</text>
+<text x="40" y="196" font-size="13" font-weight="700">ServerClock (clock.ts)</text>
+<text x="40" y="214" class="small">offset from lowest-RTT sample</text>
+<text x="40" y="242" class="small">Ably Realtime (subscribe only)</text>
+<!-- vercel -->
+<rect class="box" x="335" y="30" width="250" height="300" rx="16"/>
+<text x="460" y="58" text-anchor="middle" font-weight="800" font-size="16">Vercel (iad1): Next.js</text>
+<text x="352" y="86" font-size="13" font-weight="700">Route handlers src/app/api/…</text>
+<text x="352" y="104" class="small">rooms/[code]/actions · join</text>
+<text x="352" y="120" class="small">snapshot · tick · heartbeat</text>
+<text x="352" y="136" class="small">strokes · realtime/token · identity</text>
+<text x="352" y="164" font-size="13" font-weight="700">src/server/rooms.ts</text>
+<text x="352" y="182" class="small">roomOp (lock, idempotency, publish)</text>
+<text x="352" y="198" class="small">peekRoom (unlocked fast path)</text>
+<rect class="boxa" x="350" y="214" width="220" height="104" rx="12"/>
+<text x="460" y="236" text-anchor="middle" font-size="13" font-weight="800">Pure engine (no I/O)</text>
+<text x="362" y="256" class="small">engine/room.ts: catchUp, applyAction,</text>
+<text x="362" y="272" class="small">publicView / privateView</text>
+<text x="362" y="288" class="small">games/&lt;id&gt;/rules.ts: start, act,</text>
+<text x="362" y="304" class="small">onDeadline, views, bot</text>
+<!-- neon -->
+<rect class="box" x="660" y="30" width="220" height="190" rx="16"/>
+<text x="770" y="58" text-anchor="middle" font-weight="800" font-size="16">Neon Postgres</text>
+<text x="676" y="86" font-size="13">rooms: state jsonb + version</text>
+<text x="676" y="106" class="small">SELECT … FOR UPDATE</text>
+<text x="676" y="128" font-size="13">room_actions (idempotency)</text>
+<text x="676" y="148" font-size="13">presence · strokes</text>
+<text x="676" y="168" font-size="13">games · game_results · nights</text>
+<text x="676" y="188" font-size="13">ratings · crews · identities</text>
+<!-- ably -->
+<rect class="box" x="660" y="290" width="220" height="110" rx="16"/>
+<text x="770" y="318" text-anchor="middle" font-weight="800" font-size="16">Ably</text>
+<text x="676" y="344" font-size="13">channel huddle:room:&lt;roomId&gt;</text>
+<text x="676" y="364" class="small">messages: state, strokes</text>
+<text x="676" y="382" class="small">server publishes via REST</text>
+<!-- google -->
+<rect class="box" x="335" y="430" width="250" height="66" rx="16"/>
+<text x="460" y="457" text-anchor="middle" font-weight="800" font-size="15">Google OAuth (optional)</text>
+<text x="460" y="478" text-anchor="middle" class="small">via Auth.js, JWT session</text>
+<!-- arrows -->
+<path class="arrow" d="M250,100 L333,100"/>
+<text x="258" y="92" class="lbl">HTTPS</text>
+<path class="arrow" d="M585,130 L658,130"/>
+<text x="590" y="122" class="lbl">1 txn</text>
+<path class="arrow" d="M585,300 C620,300 630,330 658,335"/>
+<text x="596" y="290" class="lbl">publish after commit</text>
+<path class="arrow2" d="M660,350 C560,380 260,400 137,266"/>
+<text x="150" y="408" class="lbl2">state / strokes to every phone</text>
+<text x="150" y="424" class="lbl2">(subscribe-only token)</text>
+<path class="arrow" d="M250,210 L333,210"/>
+<text x="256" y="202" class="lbl">token</text>
+<path class="arrow" d="M460,330 L460,428"/>
+</svg>
+</div>
+
+<h3>End-to-end flows</h3>
+<h4>(a) Joining a room</h4>
+<ol class="flow">
+<li><strong>Phone:</strong> <code>JoinScreen</code> in <code>src/client/components/RoomClient.tsx</code>. If the typed name differs from the current identity, it calls
+<code>POST /api/identity/guest</code>, which runs <code>ensureGuest()</code> in <code>src/server/identity.ts</code>: it creates an <code>identities</code> row and
+sets the <code>huddle_dt</code> cookie (httpOnly, SameSite=Lax, 1 year, holding a random 32-byte token stored only as a SHA-256 hash).</li>
+<li><strong>Route:</strong> <code>POST /api/rooms/[code]/join</code> with an <code>x-huddle-device</code> header goes to
+<code>src/app/api/rooms/[code]/join/route.ts</code>, which calls <code>getIdentity()</code>.</li>
+<li><strong>Handler:</strong> <code>roomOp(code, identity, op)</code> in <code>src/server/rooms.ts</code> opens a transaction and runs <code>SELECT … FOR UPDATE</code> on
+the room row, then <code>prepare()</code> loads presence, ratings and reported questions, then <code>catchUp()</code> processes anything overdue.</li>
+<li><strong>Module:</strong> <code>joinRoom()</code> in <code>src/engine/room.ts</code>. An existing seat for any of the identity's aliases is a <em>rejoin</em>: the same
+seat and score come back. Otherwise a new seat is created, or the newcomer becomes a spectator if a game is running (seated at the next round, R9) or 12 players are seated.</li>
+<li><strong>Database:</strong> the state changed, so the version goes up by 1 and <code>rooms.state</code> and <code>version</code> are written. Then <code>presence</code> is upserted and the transaction commits.</li>
+<li><strong>Ably:</strong> after the commit, <code>publish(roomId, 'state', {v, serverNow, public, privateFor})</code> sends the <em>public</em> view only.</li>
+<li><strong>Every phone:</strong> <code>RoomSync.onStateMessage</code> applies it if <code>v = local + 1</code>. A gap fetches a snapshot, and a seat listed in <code>privateFor</code> fetches its private view
+over HTTPS. The joining phone itself starts <code>RoomSync.start()</code>: it fetches a snapshot through <code>touch()</code> / <code>peekRoom()</code>, then
+connects to Ably with <code>authUrl=/api/realtime/token?code=…</code>.</li>
+</ol>
+<h4>(b) Submitting a quiz answer</h4>
+<ol class="flow">
+<li><strong>Phone:</strong> <code>QuizGame.tsx</code> calls <code>answer(i)</code>, which calls <code>sync.act('answer', {choice})</code>. That generates a UUID <code>actionId</code> and sends <code>POST /api/rooms/[code]/actions</code> with a 30 s timeout, retrying once with the <em>same</em> actionId.</li>
+<li><strong>Route:</strong> <code>actions/route.ts</code> validates the UUID and type, then calls <code>roomOp(..., {actionId, type})</code>.</li>
+<li><strong>Handler:</strong> it locks the row. If <code>room_actions</code> already has this <code>(room_id, action_id)</code>, it returns the stored result (idempotent replay). Otherwise it runs <code>catchUp()</code>.</li>
+<li><strong>Module:</strong> <code>applyAction()</code> calls <code>rateLimit()</code> (10 actions/s per seat), clears AFK, then <code>dispatchGame()</code> calls <code>quiz.act()</code> in
+<code>src/games/quiz/rules.ts</code>. That checks the phase is <code>question</code> and <code>choice</code> is 0–3, makes the first tap final, records <code>ms = now − phase.startedAt</code>, and calls
+<code>reveal()</code> early once every active player has answered. Points are <code>500 + round(500 × remaining / duration)</code>.</li>
+<li><strong>Database:</strong> it writes the state with version + 1, inserts into <code>room_actions</code> with the result, and commits.</li>
+<li><strong>Ably:</strong> it publishes the public view. During the question that view contains <code>answeredSeatIds</code> but no correct option; <code>reveal</code> is non-null only in the reveal phase (R34).
+<code>privateFor</code> lists the answering seat, because its <code>myChoice</code> changed.</li>
+<li><strong>Every phone:</strong> the "n / m answered" count updates. The answering phone refetches its private view, though its tap is already shown as pending in the UI.</li>
+</ol>
+<h4>(c) A drawing stroke</h4>
+<ol class="flow">
+<li><strong>Phone (drawer):</strong> <code>src/client/games/draw/Canvas.tsx</code> uses pointer events with <code>touch-action: none</code>. It flushes every 200 ms or at 64 points,
+simplifying each segment with Ramer–Douglas–Peucker (<code>rdp()</code> in <code>src/lib/strokes.ts</code>, ε = 0.75 units on a 1000 × 750 canvas), and sends
+<code>POST /api/rooms/[code]/strokes {turnId, seq, ops}</code>.</li>
+<li><strong>Handler:</strong> <code>appendStrokes()</code> in <code>src/server/strokes.ts</code> does <em>not</em> lock or version the room row. It reads the state, checks the seat,
+<code>validOps</code> and <code>canDraw()</code> (draw phase, current drawer, current turnId), that the batch is at most 8 KB, and that the room has sent at most 8 batches in the last second.</li>
+<li><strong>Database:</strong> <code>INSERT INTO strokes … ON CONFLICT DO NOTHING</code> makes a duplicate <code>seq</code> harmless.</li>
+<li><strong>Ably:</strong> if the row was inserted, it publishes a <code>strokes</code> message.</li>
+<li><strong>Every phone:</strong> <code>onStrokes</code> passes it to the Canvas, which renders the batch. A gap in <code>seq</code>, or any applied snapshot (<code>onCatchUp</code>), triggers
+<code>GET strokes?turnId&amp;after=lastSeq</code>, so a reloaded phone gets the full drawing.</li>
+</ol>
+<div class="note"><strong>Snapshot, tick and heartbeat</strong> all go through <code>touch()</code> in <code>src/server/touch.ts</code>. It first tries <code>peekRoom()</code>: an
+<em>unlocked</em> read that runs catch-up on a copy and returns at once if nothing is due. Only if something changed does it fall back to the locked
+<code>roomOp</code>. This came from a production finding: every phone's no-op requests were queueing on the row lock.</div>
+
+<!-- ───────────────────────── 3 ───────────────────────── -->
+<h2 id="features">3. How each feature and game is implemented</h2>
+<h3>Platform features</h3>
+<div class="tablewrap"><table>
+<tr><th>Feature</th><th>Where</th><th>How</th></tr>
+<tr><td>Rooms and codes</td><td><code>src/lib/codes.ts</code>, <code>server/rooms.ts createRoom</code></td><td>4 letters from <code>ABCDEFGHJKMNPQRSTUVWXYZ</code> (no I, L, O): 23⁴ = 279,841 codes. A partial unique index <code>rooms_code_live</code> covers live rooms only; a collision retries up to 12 times.</td></tr>
+<tr><td>Server referee pipeline</td><td><code>server/rooms.ts roomOp</code></td><td>Lock, check idempotency, catch up, apply, plan bots, bump the version if changed, record effects, update presence, commit, then publish.</td></tr>
+<tr><td>Game-module interface</td><td><code>src/games/types.ts</code></td><td><code>start, act, onDeadline, publicView, privateView, bot?, shiftTimes?, seatRemoved?, stats?, chatActions?</code>. Modules mutate a cloned room and throw <code>GameError</code>.</td></tr>
+<tr><td>Timers and catch-up</td><td><code>engine/room.ts catchUp</code></td><td>Processes overdue deadlines and due bot actions in time order, at most 50 steps, each at its own due time (a "virtual clock").</td></tr>
+<tr><td>Auto-pause</td><td><code>autoPause()</code></td><td>If no human has contacted the server for over 120 s, it pauses instead of fast-forwarding. The remaining time is taken from the last contact, minimum 10 s.</td></tr>
+<tr><td>Admin hand-off</td><td><code>adminHandOff()</code></td><td>If the admin hasn't been seen for 60 s or is AFK, admin goes to the connected, non-AFK human with the earliest <code>joinedAt</code>.</td></tr>
+<tr><td>AFK</td><td><code>engine/core.ts turnMissed, skipIfAfk</code></td><td>Two consecutive misses mark the seat AFK; any action or "I'm back" clears it.</td></tr>
+<tr><td>Rate limit</td><td><code>rateLimit()</code></td><td>10 actions per second per seat, plus 3 chat-type actions per 2 s (the module's <code>chatActions</code>).</td></tr>
+<tr><td>Undo</td><td><code>award()</code>, <code>undoLastScore()</code></td><td>Every score is a <code>ScoreEvent</code>; undo marks the last one undone and subtracts it.</td></tr>
+<tr><td>Teams</td><td><code>engine/teams.ts</code></td><td>Snake draft by rating, then the best single cross-team swap, repeated (§4).</td></tr>
+<tr><td>Ratings</td><td><code>engine/elo.ts</code>, <code>server/ratings.ts</code></td><td>Multiplayer Elo, K = 32, every pair treated as a mini-match.</td></tr>
+<tr><td>Results and awards</td><td><code>server/effects.ts</code>, <code>engine/awards.ts</code></td><td>The <code>gameEnded</code> effect writes <code>games</code> (unique per <code>room_id, game_no</code>) and <code>game_results</code>. Awards are MVP, Best Artist, Fastest Finger, Best Imposter and Most AFK.</td></tr>
+<tr><td>Crews and seasons</td><td><code>server/crews.ts</code>, <code>lib/stats.ts</code></td><td>Invite link; the season is a calendar month in IST, ranked by placement points.</td></tr>
+<tr><td>Identity</td><td><code>server/identity.ts</code>, <code>server/auth.ts</code></td><td>A guest device cookie, or Google via Auth.js (JWT). <code>aliases</code> lets a signed-in user's merged guest seats be found. Claiming guest games is in <code>server/claim.ts</code>.</td></tr>
+<tr><td>Seat reclaim</td><td><code>requestClaim</code>, <code>approveClaim</code></td><td>"That's me" on a disconnected seat, approved by the admin.</td></tr>
+<tr><td>Big screen</td><td><code>ScreenView.tsx</code>, <code>touch.ts isScreenFor</code></td><td>The cookie <code>huddle_screen = roomId.token</code> is display-only, and the screen always gets the public view (at most 2 per room).</td></tr>
+<tr><td>Demo with bots</td><td><code>games/demo.ts</code>, each module's <code>bot()</code></td><td>Bots are seats with <code>isBot</code> and no database row. <code>planBots()</code> schedules their actions as server deadlines (<code>botPlan</code>).</td></tr>
+<tr><td>How-to-play card (v0.5)</td><td><code>engine/room.ts introDue, beginGame</code>, <code>IntroCard.tsx</code></td><td>An <code>intro</code> phase runs before the module's <code>start()</code>. It's shown once per game per room (<code>room.memory.introSeen</code>) and lasts 20 s or until every active human taps Got it.</td></tr>
+<tr><td>Pick for us (v0.5)</td><td><code>games/pick.ts</code>, <code>PickForUs.tsx</code></td><td>A random game whose <code>minPlayers</code> is met, preferring ones not queued or played tonight.</td></tr>
+<tr><td>Presets (v0.5)</td><td><code>games/presets.ts</code>, <code>QueueItem.tsx</code></td><td>Quick, Normal and Long change only rounds and timers; Normal equals the defaults. Rough per-game formulas estimate "~N min".</td></tr>
+<tr><td>Invite (v0.5)</td><td><code>Invite.tsx</code>, <code>client/name.ts</code></td><td>A <code>wa.me/?text=</code> link, a 240 px QR (<code>/api/rooms/[code]/qr</code>), and the name remembered in <code>localStorage</code>.</td></tr>
+<tr><td>PWA</td><td><code>public/sw.js</code>, <code>app/manifest.ts</code></td><td>Caches the app shell only; navigation goes network-first, falling back to <code>/offline</code>. API data is never cached.</td></tr>
+<tr><td>Theme and design</td><td><code>lib/design-tokens.ts</code>, <code>globals.css</code></td><td>Light by default, with a dark toggle. Per-game accents come from <code>[data-game]</code> CSS variables. A unit test checks contrast, and that the CSS matches the tokens.</td></tr>
+</table></div>
+
+<h3>The nine games</h3>
+<div class="tablewrap"><table>
+<tr><th>Game (min)</th><th>Module</th><th>Core rules as coded</th><th>Secret</th></tr>
+<tr><td>Quiz Clash (2)</td><td><code>games/quiz/rules.ts</code></td><td>439 questions in 7 categories. First tap is final; <code>pointsFor</code> = 500 + up to 500 for speed; team mode averages members' points; no repeats per room (<code>memory.quizUsed</code>); 3 reports exclude a question.</td><td>Correct option until the reveal</td></tr>
+<tr><td>Dumb Charades (4, teams)</td><td><code>games/charades/rules.ts</code></td><td>521 movies. Actors rotate; <code>guessedPoints</code> = 10 + floor(remaining s / 10); Pass gives a new title; optional 15 s steal for 5 points.</td><td>Title only on the actor's phone</td></tr>
+<tr><td>Draw &amp; Guess (2)</td><td><code>games/draw/rules.ts</code></td><td>592 words (91 India). The drawer picks 1 of 3 within 15 s; guesser points 50 + up to 250 for speed; drawer gets 60 per correct guesser; hint letters at 50 % and 75 %; <code>isClose</code> gives "You're close" privately.</td><td>Word and choices to the drawer; correct guessers' chat hidden from others</td></tr>
+<tr><td>Atlas (2)</td><td><code>games/atlas/rules.ts</code></td><td>9,766 places from GeoNames. <code>checkPlace</code> enforces letter, variant and not-yet-used (by place, not spelling); the last-letter fallback is <code>nextLetter</code>; unknown names go to a 10 s accept vote; lives; +10 per place, +50 to the winner.</td><td>none</td></tr>
+<tr><td>Imposter (4)</td><td><code>games/imposter/rules.ts</code></td><td>186 word pairs. Each player gets only their own word; one-word clues (<code>validClue</code>); discussion; vote with a tie revote; a caught imposter guesses the crew word (<code>guessMatches</code>, edit distance ≤ 1 for 5+ letters).</td><td>Each player's word; who is the imposter</td></tr>
+<tr><td>Most Likely To (3)</td><td><code>games/mlt/rules.ts</code></td><td>159 prompts. Anonymous vote; <code>tallyOf</code> sorts ascending for the reveal; votes are wiped after the tally; no season points.</td><td>Who voted for whom: never stored after the tally</td></tr>
+<tr><td>Name Place Animal Thing (2)</td><td><code>games/npat/rules.ts</code></td><td>Random letter (never Q, X or Z); drafts autosave via <code>fill</code>; <code>buildItems</code> groups answers (places by place id); a known place is valid without a vote; the rest stand unless most others reject them (<code>standsAfterVote</code>); unique 10, shared 5.</td><td>Answers until the writing ends</td></tr>
+<tr><td>Emoji Decode (2)</td><td><code>games/emoji/rules.ts</code></td><td>246 puzzles (71 places, no flags). <code>isCorrect</code>: case- and "The"-insensitive, alternates, small typos, and any place-database name for the same place; world cities are pinned to a country. Quiz-style speed points.</td><td>Answer until the reveal; guesses never sent</td></tr>
+<tr><td>Two Truths &amp; a Lie (3)</td><td><code>games/truths/rules.ts</code></td><td>Everyone writes three statements and marks the lie; authors go in seat order with statements shuffled (<code>perm</code> stored server-side); spotting the lie scores +100, the author gets +50 per player fooled.</td><td>Statements while writing; lie and votes until each reveal</td></tr>
+</table></div>
+
+<!-- ───────────────────────── 4 ───────────────────────── -->
+<h2 id="data">4. Data model and key algorithms</h2>
+<h3>Postgres tables (<code>db/migrations/001_core.sql</code>)</h3>
+<p><code>users</code>, <code>identities</code> (guest or user; <code>device_token_hash</code>; <code>merged_into</code>), <code>crews</code>, <code>crew_members</code>,
+<code>rooms</code> (<code>state jsonb</code>, <code>version</code>, <code>expires_at</code>, <code>ended_at</code>), <code>room_actions</code> (idempotency and audit; unique per room and action id),
+<code>presence</code> (heartbeats, kept apart so they never lock the room row), <code>strokes</code> (append-only per turn), <code>games</code>,
+<code>game_results</code>, <code>nights</code>, <code>ratings</code>, <code>question_reports</code>, <code>place_suggestions</code>.</p>
+<p><strong>The room state document</strong> (<code>RoomState</code> in <code>src/engine/types.ts</code>) is one JSON value per room, holding status, seats, teams, queue, <code>phase {id, kind, deadline,
+startedAt, durationMs, turnSeatId}</code>, <code>paused</code>, <code>game</code> (module state), <code>scoreEvents</code>, <code>botPlan</code>, <code>notices</code>, <code>memory</code> and the rate buckets.
+It is changed only inside the row-locked transaction, and its version equals <code>rooms.version</code>.</p>
+<h3>Algorithms with worked examples</h3>
+<div class="card">
+<h4>Clock offset (<code>src/client/clock.ts</code>)</h4>
+<p>offset = serverNow − (tSend + tRecv) / 2, taken from the sample with the lowest round trip among the last 5. Example: sent at 1000, received at 1200 (RTT 200), serverNow 5,000,100
+gives offset 4,999,000. The countdown shows <code>ceil((deadline − (Date.now() + offset)) / 1000)</code>. To decide that a deadline has passed it uses <code>safeNow</code>, a lower bound of
+serverNow − tRecv (here 4,998,900), so a phone never ticks early. Ticks also add 0–300 ms of random jitter.</p>
+</div>
+<div class="card">
+<h4>Placement points (<code>engine/core.ts placementPoints</code>)</h4>
+<p>pp = round(100 × (n − p) / (n − 1)); tied units get the average of the positions they cover. For 4 players with scores 900, 700, 700, 100: positions 1, (2+3)/2 = 2.5 and 4 give
+pp = 100, 50, 50, 0.</p>
+</div>
+<div class="card">
+<h4>Multiplayer Elo (<code>engine/elo.ts eloDeltas</code>)</h4>
+<p>For each pair, E = 1 / (1 + 10^((Rj − Ri)/400)) and S ∈ {1, ½, 0}; ΔRi = (32 / (n − 1)) × Σ(S − E). With two 1000-rated players, E = 0.5, so the winner gets 32 × (1 − 0.5) = +16
+and the loser −16 (AC-37).</p>
+</div>
+<div class="card">
+<h4>Team balancing (<code>engine/teams.ts balanceIndices</code>)</h4>
+<p>Sort by strength, snake-draft (1-2-2-1…), then repeatedly apply the single swap that most reduces max(mean) − min(mean). Ratings 1400, 1300, 1200, 1100, 1000, 900 into 2 teams give
+{1400, 1100, 1000} (mean 1166.7) and {1300, 1200, 900} (mean 1133.3), a 33.3-point gap. No swap does better, which matches AC-35's "within 34". Strength is this game's rating,
+else the mean of the player's other ratings, else 1000 (<code>strengthFor</code>).</p>
+</div>
+<div class="card">
+<h4>Catch-up with a virtual clock (<code>catchUp</code>)</h4>
+<p>If nobody's phone was open for three turns, the next request processes all three overdue deadlines in order, each at its own due time, so the AFK and turn logic behaves as if
+someone had ticked each one. The cap is 50 steps. Before that, <code>autoPause</code> stops a silent room (over 120 s) from fast-forwarding.</p>
+</div>
+<div class="card">
+<h4>Stroke simplification (<code>lib/strokes.ts rdp</code>)</h4>
+<p>Ramer–Douglas–Peucker keeps a point only if it is more than ε = 0.75 units from the simplified chord. The tested invariant (AC-64) is a Hausdorff distance of at most 1 unit between
+raw and simplified lines, with at least 40 % fewer points on average. Points are integers, delta-encoded <code>[x0, y0, dx1, dy1, …]</code>.</p>
+</div>
+<div class="card">
+<h4>Idempotency</h4>
+<p>Each action carries a client UUID. <code>room_actions</code> has a unique key on (room_id, action_id) and stores the result, so a retried request returns the original answer without
+applying it twice (AC-14: the same id posted twice applies once; 20 concurrent distinct actions raise the version by exactly 20).</p>
+</div>
+<div class="card">
+<h4>Text matching (<code>lib/text.ts</code>)</h4>
+<p><code>fold()</code> strips accents, case, spaces and punctuation, so "Auto-Rickshaw", "auto rickshaw" and "autorickshaw" all match. <code>isClose</code> is edit distance 1, or 2 for words of 8+
+letters (Draw's "You're close"). Atlas and NPAT look places up by folded name or alternate name.</p>
+</div>
+
+<!-- ───────────────────────── 5 ───────────────────────── -->
+<h2 id="stack">5. Tech-stack decisions</h2>
+<div class="tablewrap"><table>
+<tr><th>Choice</th><th>Alternatives</th><th>Why (as recorded)</th></tr>
+<tr><td>Next.js App Router + TypeScript (strict)</td><td>Separate SPA plus Express API</td><td>One codebase and one deploy for UI and API on Vercel. Shared types and shared pure modules (settings, presets, strokes) between client and server.</td></tr>
+<tr><td>Vercel Hobby, serverless</td><td>A VM with a long-running Node server</td><td>Free and Git-connected (deploys on push to main). The constraint is no long-running process and no background loop, which is why timers are deadlines processed on the next request.</td></tr>
+<tr><td>Ably (managed pub/sub)</td><td>Own WebSocket server, Socket.IO, Pusher, Firebase</td><td>Serverless functions can't hold sockets. Ably's token auth gives clients subscribe-only rights; there's a free tier (about 6 M messages a month in SPEC §7) and a REST publish from functions.</td></tr>
+<tr><td>Postgres on Neon</td><td>Firebase/Firestore, Redis, Supabase</td><td>Transactions and <code>SELECT … FOR UPDATE</code> give a simple serialisation point per room. It's relational for results, seasons and head-to-head, and has a free tier with dev/main branches.</td></tr>
+<tr><td><code>pg</code> + <code>attachDatabasePool</code></td><td><code>@neondatabase/serverless</code> WebSocket pool</td><td>SPEC v0.4: follows Neon and Vercel guidance (idle connections are closed before an instance is suspended). The production stalls were later traced to the network path, but the change stayed.</td></tr>
+<tr><td>Auth.js v5, optional Google</td><td>Mandatory accounts, Firebase Auth</td><td>Guests never need an account (R1). Google only gives a permanent profile across devices.</td></tr>
+<tr><td>Vitest + Playwright</td><td>Jest, Cypress</td><td>Vitest is fast and runs API code against a throwaway Postgres. Playwright drives several browser contexts at once and supports both Chromium and WebKit, needed for iPhone.</td></tr>
+<tr><td>Tailwind + CSS tokens</td><td>A component library</td><td>A bright custom style with per-game accents set through CSS variables, and contrast checked by a unit test.</td></tr>
+<tr><td>No AI at runtime</td><td>LLM-generated questions or judging</td><td>SPEC §3: content is written ahead and bundled. That keeps it deterministic and testable, free, fast, and working offline-ready.</td></tr>
+</table></div>
+
+<!-- ───────────────────────── 6 ───────────────────────── -->
+<h2 id="sdd">6. The SDD process</h2>
+<ul>
+<li><strong>SPEC.md</strong> is the contract. Requirements use EARS patterns (Ubiquitous "The system shall…", Event "When…", State "While…", Unwanted "If…, then…", Optional "Where…"),
+each tagged Must or Should. Acceptance criteria <code>AC-n</code> are pass/fail checks tagged Unit, E2E, Deploy or Manual, each mapped to requirements. Now: 103 requirements
+(95 Must, 8 Should) and 103 ACs (47 Unit, 47 E2E, 7 Deploy, 2 Manual).</li>
+<li><strong>PLAN.md</strong> turns that into phases 1–17. Each has tasks, the ACs that prove it ("Done when") and the commands to run. It also holds an AC status table with evidence, a decision log, and a Blockers section.</li>
+<li><strong>Rules</strong> written into PLAN:
+  <ul>
+  <li>one commit per phase, with the full suite (<code>npm run ci</code>) run before every commit;</li>
+  <li>never read <code>.env.local</code> or print secrets;</li>
+  <li>tests are the referee: never delete, skip, loosen or re-time a test to get green;</li>
+  <li>stop only if a requirement or AC must change.</li>
+  </ul></li>
+<li><strong>Tests carry AC IDs</strong> in their names (for example <code>AC-57 …</code>), so <code>npm test -- -t "AC-14\b"</code> proves a single AC.</li>
+<li><strong>The changelog</strong> records every spec version:
+  <ul>
+  <li><strong>v0.1</strong> (22 Oct): 90 requirements and 82 ACs from the brief.</li>
+  <li><strong>v0.2</strong>: decisions Q1–Q13 accepted as defaults, except Q12, where a bright light theme replaced dark-by-default. Added R91 (game colours and avatars), R92 (celebrations with reduced motion), R93 (privacy page) and AC-83–87.</li>
+  <li><strong>v0.3</strong>: Vercel became Git-connected and the builder never deploys. Every E2E spec also runs on WebKit iPhone (AC-88 for iOS touch drawing).</li>
+  <li><strong>v0.4</strong> (26 Oct): production DB layer moved to <code>pg</code> with <code>attachDatabasePool</code>; client request timeouts (catch-ups 10 s, actions 30 s with one retry); R94 Sign in at the top, with AC-89.</li>
+  <li><strong>v0.5</strong> (27 Oct): playtest improvements R95–R103 (How-to-play card, Pick for us, presets, WhatsApp share and QR, three new games) with AC-90–AC-103. Deploy checks of record now run from a GitHub-hosted runner, changing AC-80's method but not its measurement.</li>
+  </ul></li>
+<li><strong>Decisions get logged with a reason</strong>, including corrections. The 26 Oct entry blamed production stalls on the Neon pool; a later entry says the probes disprove that and the cause was the network path.</li>
+<li><strong>The Blockers section</strong> is where spec questions go. Example: B1 asked whether AC-80's stroke check should be accepted as intermittent, re-measured, or run elsewhere. The owner chose "run elsewhere", and B1 was resolved after 3 consecutive passing runs.</li>
+</ul>
+
+<!-- ───────────────────────── 7 ───────────────────────── -->
+<h2 id="testing">7. Testing and CI</h2>
+<div class="tablewrap"><table>
+<tr><th>Layer</th><th>What</th><th>How many</th></tr>
+<tr><td>Unit (Vitest)</td><td>Pure engine and game modules through a harness (<code>tests/helpers/engine.ts</code>), content checks, design tokens, and API/DB code against a throwaway Postgres (<code>embedded-postgres</code> locally, a service container in CI)</td><td>234 tests in 45 files</td></tr>
+<tr><td>Cross-game suites</td><td><code>tests/helpers/drive.ts</code> plays every game to the end with bots. It checks secrecy at every step (AC-38), the view stays ≤ 16 KB at 12 players (AC-15), leaving and rejoining 5 times changes nothing (AC-18), and invalid actions change nothing (AC-13).</td><td>run for all 9 games</td></tr>
+<tr><td>E2E (Playwright)</td><td>Many real browser contexts as separate phones, against a local production build in test mode (seeded RNG, short timers, local SSE realtime)</td><td>57 tests × 2 projects = 114</td></tr>
+<tr><td>Two device projects</td><td><code>android</code> (Chromium, Pixel 7) and <code>iphone</code> (WebKit, iPhone 14), because the evaluator uses an iPhone</td><td>every spec runs on both</td></tr>
+<tr><td>Deploy checks</td><td><code>tests/deploy/*</code> and <code>scripts/probe-draw.ts</code> against production: AC-77 realtime, AC-78 persistence, AC-79 Google redirect, AC-80 six browsers, AC-81 drawing throughput, AC-87 demo</td><td>7 checks + probe</td></tr>
+<tr><td>Secret scan</td><td>A build with sentinel secrets (<code>scripts/build.ts</code>), then a search of every bundle, response and realtime frame (AC-6); network sniffing for game secrets (AC-39)</td><td>-</td></tr>
+</table></div>
+<p><strong>CI</strong> (<code>.github/workflows/ci.yml</code>, ubuntu-24.04):</p>
+<ul>
+<li>A <code>checks</code> job runs lint, typecheck and unit tests against a Postgres 16 service.</li>
+<li>An <code>e2e</code> matrix runs Android on 2 workers and iPhone in 3 shards with 1 worker each, after WebKit stalled a whole runner with 2 workers.</li>
+<li>The test command is hard-killed after 20 min, logs <code>free -m</code> and <code>uptime</code> every 60 s, and always uploads reports.</li>
+<li>System packages install once with apt retries; the cached browser download is retried separately.</li>
+</ul>
+<p><strong>Production latency</strong> (budget 1 s, from <code>docs/deploy-checks.md</code>):</p>
+<div class="tablewrap"><table>
+<tr><th>From</th><th>Action → other phone p95</th><th>Stroke end → all viewers p95</th><th>Probe delivery p95</th></tr>
+<tr><td>GitHub runner (deploy-checks #1, #3, #4)</td><td>190 / 210 / 185 ms</td><td>324 / 364 / 336 ms</td><td>100 / 135 / 98 ms</td></tr>
+<tr><td>Developer machine in India (27 Oct)</td><td>828–855 ms</td><td>838–1355 ms (passed 2 of 5)</td><td>356 ms</td></tr>
+</table></div>
+<p>The India figures include the round trip to US East and a network path that drops connections for about 19 s roughly once a minute.</p>
+
+<!-- ───────────────────────── 8 ───────────────────────── -->
+<h2 id="deploy">8. Deployment, environments, secrets, security and privacy</h2>
+<ul>
+<li><strong>Deploy:</strong> Vercel is Git-connected and deploys production when <code>main</code> is pushed. <code>vercel.json</code> sets region <code>iad1</code> (next to Neon US East), build
+<code>npm run vercel-build</code> (run migrations, then <code>next build</code>), and a daily cron at 03:00 UTC (<code>/api/cron/cleanup</code>) that ends expired rooms and deletes their strokes and presence rows.</li>
+<li><strong>Environments:</strong>
+  <ul>
+  <li><strong>Production:</strong> Neon <code>main</code>.</li>
+  <li><strong>Preview, local real-services checks</strong> (<code>npm run test:real</code>): Neon <code>dev</code>.</li>
+  <li><strong>Tests:</strong> a throwaway local Postgres, with test mode on (<code>HUDDLE_TEST_MODE=1</code>). <code>isTestMode()</code> <em>throws</em> if <code>VERCEL_ENV</code> is set, so test mode can never run on Vercel.</li>
+  </ul></li>
+<li><strong>Secrets:</strong> <code>DATABASE_URL</code>, <code>ABLY_API_KEY</code>, <code>AUTH_SECRET</code> and the Google ID and secret live only in <code>.env.local</code> and Vercel env settings. <code>.env.example</code> lists names only, and
+<code>npm run env:check</code> prints names with set/MISSING, never values. The project rule was that no tool or agent reads <code>.env.local</code>.</li>
+<li><strong>Realtime auth:</strong> the Ably root key never reaches the browser. <code>/api/realtime/token</code> returns a TokenRequest with capability <code>{"huddle:room:&lt;id&gt;":["subscribe"]}</code> and a 60 min TTL, only for
+a seated identity or a registered screen (403 otherwise). Clients cannot publish.</li>
+<li><strong>Secrecy:</strong> all outgoing data goes through <code>publicView</code> / <code>privateView</code>. Realtime carries only the public view; private data is fetched over HTTPS.</li>
+<li><strong>Identity:</strong> the device token is 32 random bytes in an httpOnly cookie, stored as a SHA-256 hash. Google sign-in uses Auth.js JWT sessions. The test Credentials provider is registered only in test mode.</li>
+<li><strong>Abuse limits:</strong> 10 actions/s and 3 chats per 2 s per seat; stroke batches at most 8 KB and 8 per second per room; 12 seats, 8 spectators and 2 screens per room.</li>
+<li><strong>Privacy (R93, <code>/privacy</code>):</strong> states what is collected (display names, device token, Google name, email and picture, game results), who processes it (Vercel, Neon, Ably,
+Google), that rooms are kept 24 h after last activity and results until deletion is requested, that there are no ads or trackers, and that contact is via GitHub Issues.</li>
+<li><strong>Not done, by design</strong> (SPEC §9): no content moderation, name filter or reporting of users (admin kick is the only tool), and no anti-cheat beyond server-side validation.</li>
+</ul>
+
+<!-- ───────────────────────── 9 ───────────────────────── -->
+<h2 id="stories">9. Debugging stories (from PLAN's decision log and commits)</h2>
+<details><summary>The 11th action: the first CI failure (commit e4865c7)</summary><div class="body">
+<p><strong>Symptom:</strong> CI failed AC-84 on Android: the demo room drifted to the night summary. <strong>Evidence:</strong> the helper sent two admin actions per demo game, and on the
+CI runner the 11th action landed 918 ms after the 1st. <strong>Root cause:</strong> the server's rate limit (R46, 10 actions per seat per second) correctly rejected it, and the demo picker
+silently ignored the rejection. <strong>Fix:</strong> an <code>actionPacer</code> helper waits until the 10th most recent action is over a second old, and the picker now shows the error.
+Regression tests start and end every demo game back to back. <strong>Lesson:</strong> locally each game took about 250 ms, under the limit, which is why it never failed on the laptop.</p></div></details>
+<details><summary>WebKit can't load the 7th phone (Phase 15)</summary><div class="body">
+<p><strong>Symptom:</strong> in 8-phone tests, phones 7 and 8 never loaded on WebKit. <strong>Root cause:</strong> Playwright's WebKit shares one network process with a 6-connections-per-host limit,
+and each phone holds an open event stream in test mode. <strong>Fix:</strong> every 4 phones use a different loopback host name (<code>localhost</code>, <code>127.0.0.1</code>, <code>[::1]</code>), which
+WebKit pools separately (<code>tests/e2e/helpers.ts</code>).</p></div></details>
+<details><summary>The iPhone CI job hung for 40 minutes (37dc613, 8f28c08, 2e15f8b)</summary><div class="body">
+<p><strong>Symptom 1:</strong> the iPhone job was cancelled at the 40-minute limit with no report. <strong>Cause:</strong> test budgets of 3–4× the real duration, plus a retry, outlasted the job.
+<strong>Fix:</strong> bounded budgets, Playwright <code>globalTimeout</code> 25 min, a step timeout, traces on failure, video only on retry, and the report uploaded <code>if: always()</code>.</p>
+<p><strong>Symptom 2:</strong> later the whole runner stalled and even the timeouts didn't fire. <strong>Fix:</strong> iPhone sharded into 3 jobs with 1 worker each, the test command wrapped in
+<code>timeout --signal=KILL 20m</code>, and memory and load logged every 60 s.</p>
+<p><strong>Symptom 3:</strong> one shard's <code>playwright install --with-deps</code> took 16–23 min. My first retry loop made it worse: the 8-minute cut-off killed <code>npx</code> but not the root-owned
+<code>apt-get</code>, which kept the dpkg lock, so every retry failed with "Could not get lock". This was visible only after failure tails were added as public annotations.
+<strong>Fix:</strong> system packages install once, never cut off, with apt retries and a lock timeout; the browser download (cached) is the step that retries.</p></div></details>
+<details><summary>Production stalls: first blamed on the database, then on the network (d3b505c, c4df1a7)</summary><div class="body">
+<p><strong>Symptom:</strong> on production, some requests stalled 15–30 s. <strong>First hypothesis:</strong> the module-scope Neon WebSocket pool reused dead connections across Vercel invocations.
+Production moved to <code>pg</code> over TCP with <code>attachDatabasePool</code>, plus client request timeouts. <strong>Correction:</strong> probes showed connections from the test machine to
+Vercel's edge dying after 19.2 s (the Windows TCP retransmission limit), including a static CDN file and <code>nextjs.org</code>, but never <code>google.com</code>. So it was the network path, not the database.
+The decision log records the correction explicitly. What actually helps a phone through such a stall is the client side: timeouts with a same-actionId retry, and snapshot catch-up.</p></div></details>
+<details><summary>The reloaded phone that missed strokes (42c8598)</summary><div class="body">
+<p><strong>Symptom:</strong> in AC-80 on production, the phone that reloads mid-turn missed stroke batches. <strong>Root cause:</strong> it fetched the stroke history <em>before</em> its Ably channel attached, so
+batches published in between were never delivered, and with no later batch there was no gap to notice. <strong>Fix:</strong> SPEC §4.2 already said a snapshot taken mid-turn triggers
+<code>GET strokes?after=lastSeq</code>. The Canvas now does that after every applied snapshot (<code>onCatchUp</code>), and the client refetches a snapshot whenever Ably attaches without continuity
+(<code>attached</code> with <code>!resumed</code>). Regression test: <code>tests/e2e/draw-catchup.spec.ts</code>. The local SSE driver attached too fast to show the bug.</p></div></details>
+<details><summary>Phones queueing on the row lock (Phase 15)</summary><div class="body">
+<p><strong>Symptom:</strong> with six browsers against Neon, private views arrived 14 s late and answers missed the question timer. <strong>Cause:</strong> every snapshot, tick and heartbeat took the row lock
+(about 0.9 s each from India). <strong>Fix:</strong> <code>peekRoom()</code> runs catch-up on an unlocked read and takes the lock only if something is due. Also, phones now tick on <code>safeNow()</code>
+(a lower bound) and back off after a no-op tick, because slow responses had made the midpoint estimate run ahead and phones ticked early, which fed the queue.</p></div></details>
+<details><summary>Small but telling bugs</summary><div class="body"><ul>
+<li><strong>Postgres <code>jsonb</code> reorders object keys</strong>, so the canvas fingerprint uses a canonical field order.</li>
+<li><strong>An Atlas bot re-rolled "blank this turn" on every tick,</strong> so it never ran out of time and all-bot games never ended. The decision is now made once per turn. In v0.5, demo bots also blank more as the chain grows.</li>
+<li><strong>Windows reserved ports 54300–54399</strong> after Hyper-V/WSL started, so the test Postgres asks the OS for a free port.</li>
+<li><strong>Two Truths' lie validation:</strong> <code>Number(null)</code> is 0, so a missing lie read as "statement 1". The unit test caught it.</li>
+<li><strong>Emoji Decode "Venice":</strong> it resolved to Dayton, USA, whose alternates include Venice. The puzzle was dropped, and world cities are now pinned to their country.</li>
+<li><strong>The deploy @skeleton check counted 31 waves.</strong> It topped up to 30 while a slow wave was still in flight. It now waits until no action request is in flight and reads the server's count.</li>
+</ul></div></details>
+<details><summary>The WebKit "button never stable" investigation</summary><div class="body">
+<p><strong>Symptom:</strong> local full-suite iPhone runs intermittently fail with "element is not stable" or a stale disabled button. <strong>Checked:</strong> there are no infinite animations; the one-shot pop-ins
+never move other elements. The same failure happened on the static home page. <strong>Conclusion:</strong> under full-suite load on the laptop (3 workers, both projects), WebKit stops producing frames,
+so tests that pass alone fail together. <strong>Fixes where the app or test was at fault:</strong>
+<ul>
+<li>video recording only on retry;</li>
+<li>Draw word choice through the sync client in specs that don't test the button;</li>
+<li>the How-to-play card lost its pop-in animation and its short test-mode timer, so its button is tappable at once.</li>
+</ul>
+In CI, with sharding and one worker per iPhone shard, these tests pass.</p></div></details>
+
+<!-- ───────────────────────── 10 ───────────────────────── -->
+<h2 id="limits">10. Known limitations, trade-offs, what's next</h2>
+<div class="note warnbox"><strong>Open observation: AC-77 on deploy-checks run #4 (27 Oct).</strong> After the 41st wave, the other phone still showed 40 when the test's 15 s wait ended.
+This ran on GitHub's runner, so it isn't the India network path. The public results can't tell which of two things happened: the tap never reached the server, or that phone
+missed one realtime message. If it was a missed message, nothing newer arrived to reveal the version gap, so the phone corrects itself at its next heartbeat. That runs every
+20 s in production: the presence window of 60 s ÷ 3, sent by <code>touch.ts</code> as <code>heartbeatMs</code> (SPEC §4.2 says 25 s; the code is stricter). Focus, visibility and network changes, or any later update,
+resync it sooner. AC-77 passed on runs #1 and #3 (p95 202 and 215 ms). It has not been investigated further, at the owner's instruction.</div>
+<ul>
+<li><strong>Free-tier ceilings:</strong> Ably Free allows about 200 concurrent connections and 200 channels (SPEC §7), so roughly 20–25 full rooms at once. Vercel Hobby is non-commercial only.</li>
+<li><strong>One row per room:</strong> fine for 12 players (transactions are short and strokes stay off the row), but every action in a room is serialised. The SPEC's fallback is an append-only answers table merged at the reveal.</li>
+<li><strong>Latency from India:</strong> the servers are in US East (iad1, next to Neon), so Indian players see about 850 ms action p95 against about 200 ms from US East. It is within budget but not snappy.</li>
+<li><strong>Content written ahead by Claude may contain errors.</strong> The mitigations are a report button (auto-exclusion at 3 reports), automated content checks and a planned spot check.</li>
+<li><strong>Two manual ACs are still pending:</strong> Android install (AC-45) and the friends playtest (AC-82).</li>
+<li><strong>The local WebKit suite is load-sensitive</strong> on the development laptop; CI sharding avoids it.</li>
+<li><strong>Accepted non-goals:</strong> no moderation, no voice or video, no sounds, no offline gameplay, no native apps.</li>
+<li><strong>Next steps:</strong>
+  <ul>
+  <li>Act on the playtest findings.</li>
+  <li>Make the AC-77 path observable: log publish failures, and consider a faster version check while a game is running.</li>
+  <li>A region closer to India, if the free tiers allow.</li>
+  <li>A content review pass.</li>
+  </ul></li>
+</ul>
+
+<!-- ───────────────────────── 11 ───────────────────────── -->
+<h2 id="glossary">11. Glossary</h2>
+<div class="tablewrap"><table>
+<tr><th>Term</th><th>Meaning here</th></tr>
+<tr><td>AC (acceptance criterion)</td><td>A pass/fail check in SPEC §6, tagged Unit, E2E, Deploy or Manual, and named in its test</td></tr>
+<tr><td>Ably</td><td>Managed realtime pub/sub service; the server publishes, phones subscribe</td></tr>
+<tr><td>TokenRequest / capability</td><td>A signed request a client exchanges for a short-lived Ably token; the capability limits it to subscribing to one channel</td></tr>
+<tr><td>App Router</td><td>Next.js routing where folders under <code>src/app</code> are pages and <code>route.ts</code> files are API handlers</td></tr>
+<tr><td>attachDatabasePool</td><td>A Vercel helper that closes idle pool connections before a function instance is suspended</td></tr>
+<tr><td>Auth.js / JWT session</td><td>The sign-in library; the session lives in a signed cookie rather than a database table</td></tr>
+<tr><td>AFK</td><td>Away from keyboard: two consecutive missed turns, after which the seat's turns are skipped</td></tr>
+<tr><td>Catch-up</td><td>Processing every overdue deadline and bot action on the next request</td></tr>
+<tr><td>CIEDE2000 (ΔE)</td><td>Colour-difference formula used to keep avatar colours distinct (ΔE ≥ 15)</td></tr>
+<tr><td>Deadline / phase</td><td>Each timed step has a monotonic <code>phase.id</code> and an absolute server-time <code>deadline</code></td></tr>
+<tr><td>Deploy check</td><td>A test against the live production URL</td></tr>
+<tr><td>EARS</td><td>Easy Approach to Requirements Syntax: Ubiquitous, Event, State, Unwanted and Optional sentence patterns</td></tr>
+<tr><td>Edit distance (Levenshtein)</td><td>Number of single-letter changes between two strings; used for near misses and typos</td></tr>
+<tr><td>Effect</td><td>Something the pure engine asks the server to persist (game ended, strokes, place suggestion)</td></tr>
+<tr><td>Elo (multiplayer)</td><td>Rating update in which every pair of players is a mini-match</td></tr>
+<tr><td>embedded-postgres</td><td>A real Postgres binary started by the tests on a free port</td></tr>
+<tr><td>Hausdorff distance</td><td>The largest distance from either polyline to the other; bounds the error from simplification</td></tr>
+<tr><td>Heartbeat</td><td>A periodic POST that marks presence and returns the current version</td></tr>
+<tr><td>Idempotent</td><td>Doing it twice has the same effect as doing it once (actionId, stroke seq)</td></tr>
+<tr><td>jsonb</td><td>Postgres binary JSON column type (it doesn't preserve key order)</td></tr>
+<tr><td>Neon</td><td>Serverless Postgres host, with a pooled endpoint and branches (main, dev)</td></tr>
+<tr><td>peekRoom</td><td>Unlocked read that checks whether anything is due before taking the row lock</td></tr>
+<tr><td>Placement points</td><td>0–100 points per game, by position, used for crew seasons</td></tr>
+<tr><td>Playwright project</td><td>A named browser and device configuration (android, iphone)</td></tr>
+<tr><td>privateFor</td><td>Seats whose private view changed in this version; they refetch over HTTPS</td></tr>
+<tr><td>Public / private view</td><td>What everyone may see versus what one seat may see</td></tr>
+<tr><td>PWA / service worker</td><td>Installable web app; the worker caches the shell and serves the offline page</td></tr>
+<tr><td>RDP</td><td>Ramer–Douglas–Peucker line simplification</td></tr>
+<tr><td>Row lock (<code>SELECT … FOR UPDATE</code>)</td><td>Holds a room's row for one transaction, so actions on that room run one at a time</td></tr>
+<tr><td>RTT</td><td>Round-trip time of a request</td></tr>
+<tr><td>safeNow</td><td>A lower bound on server time, used to avoid early ticks</td></tr>
+<tr><td>SDD</td><td>Spec-driven development: spec, then plan, then tests, then code, with decisions logged</td></tr>
+<tr><td>Sentinel secret</td><td>A fake but recognisable secret used in test builds so leaks can be found</td></tr>
+<tr><td>Shard</td><td>A slice of the test suite run in its own CI job</td></tr>
+<tr><td>Snake draft</td><td>Picking order 1-2-2-1…, used to seed balanced teams</td></tr>
+<tr><td>Snapshot</td><td>Full current view for one viewer (version, public view, private view)</td></tr>
+<tr><td>SSE (local driver)</td><td>Server-sent events used instead of Ably in test mode and CI</td></tr>
+<tr><td>Test mode</td><td><code>HUDDLE_TEST_MODE=1</code>: seeded RNG, short timers, test sign-in, local realtime; refused on Vercel</td></tr>
+<tr><td>Version (v)</td><td>A counter on the room row, increased once per state change, used to detect gaps</td></tr>
+<tr><td>Virtual clock</td><td>Catch-up runs each overdue step at its own due time</td></tr>
+<tr><td>WebKit</td><td>Safari's browser engine; Playwright's iPhone project uses it</td></tr>
+<tr><td>workflow_dispatch</td><td>A GitHub Actions trigger that runs a workflow by hand (the <code>deploy-checks</code> workflow)</td></tr>
+</table></div>
+
+<!-- ═════════════════════════ PART B ═════════════════════════ -->
+<h2 id="b">Part B: question bank</h2>
+<p>Tap a question to see the model answer and a likely follow-up. <span class="star">★</span> marks the 20 most likely questions.</p>
+<div class="tools">
+  <input type="search" id="q" placeholder="Search questions…" aria-label="Search questions">
+  <label><input type="checkbox" id="starOnly"> ★ only</label>
+  <button type="button" id="openAll">Open all</button>
+  <button type="button" id="closeAll">Close all</button>
+  <span class="count" id="count"></span>
+</div>
+<div id="bank">
+
+<h3 class="qcat" id="b-product">Product and users</h3>
+<details data-star><summary><span class="star">★</span> Give me the 2-minute pitch.</summary><div class="body">
+<p>Huddle is a phone-first party-games web app for Indian friend groups. Everyone plays on their own phone with a 4-letter code, with no host device and no account. It fixes the classic failure of
+phone party games, where losing your connection costs your seat and score: here a phone that locks, refreshes or drops Wi-Fi comes back to the same seat, score and countdown. The server is the referee,
+so secrets can't leak and nobody has to host. It has nine games, crews with seasons and awards, a bots demo at <code>/demo</code>, and it's live at playhuddle.vercel.app.</p>
+<div class="follow">Follow-up: <em>Which part was hardest?</em> Reliable sync on real networks: rejoin, deadlines without a background process, and the iPhone/WebKit testing.</div></div></details>
+<details><summary>Who is the user, and what are the main scenarios?</summary><div class="body">
+<p>SPEC §2 lists guest players, signed-in players, the admin, spectators and late joiners, a big screen, crew members, and an evaluator playing alone. The scenarios are a hostless night,
+a night with a TV, an AFK player, a phone rejoining mid-game, a crew season, a late joiner, the evaluator demo, and claiming guest games later.</p>
+<div class="follow">Follow-up: <em>Which scenario drove the architecture most?</em> S4, the phone rejoining mid-game, because it forced the server-held state and the snapshot design.</div></div></details>
+<details><summary>Why "Indian friend groups"? Does it change anything technical?</summary><div class="body">
+<p>It shapes content and context: Bollywood and cricket questions, Indian cities with old names (Bombay, Calcutta) in Atlas and Emoji Decode, Hinglish prompts, WhatsApp sharing, and IST
+for seasons. Technically it means a 360 px phone and iPhone Safari are primary targets, and players are about 850 ms from the US East servers.</p>
+<div class="follow">Follow-up: <em>Why not host in India then?</em> The free tiers and the Neon region are US East; region choice is listed as future work.</div></div></details>
+<details><summary>What makes it different from skribbl.io or Jackbox?</summary><div class="body">
+<p>Against skribbl: rejoining keeps your seat and score (the SPEC calls this "the skribbl regression"). Against Jackbox: no host screen or purchase is needed, everyone plays on their own phone,
+and a TV is optional. There are also several games in one room with a queue, crews with seasons, and hostless play driven by server deadlines.</p>
+<div class="follow">Follow-up: <em>How do you prove the rejoin claim?</em> AC-18 leaves and rejoins 5 times at every phase of every game and checks that nothing changes; AC-17 does it with real browsers.</div></div></details>
+<details><summary>How does someone evaluate it alone?</summary><div class="body">
+<p><code>/demo</code> creates a room with the visitor as admin and 4 bots (R43, R44). There's a one-tap game picker with short preset rules, and the bots act through server-scheduled deadlines.
+AC-47 plays every game to its end alone; AC-87 does a Quiz on production in about 60 s.</p>
+<div class="follow">Follow-up: <em>How do bots act without a server loop?</em> Their actions are planned as due times in <code>botPlan</code> and run by catch-up, like any other deadline.</div></div></details>
+<details><summary>What did the improvement round before the playtest add, and why?</summary><div class="body">
+<p>SPEC v0.5 added:</p>
+<ul>
+<li>a How-to-play card before each game's first round in a room;</li>
+<li>"Pick for us" for the current player count;</li>
+<li>Quick, Normal and Long presets with "~N min";</li>
+<li>a WhatsApp share button, a large QR code and a remembered name;</li>
+<li>three games: Name Place Animal Thing, Emoji Decode and Two Truths &amp; a Lie.</li>
+</ul>
+<p>All of them cut friction at a real game night: explaining rules, choosing, configuring and inviting.</p>
+<div class="follow">Follow-up: <em>How did you keep the risk low with a same-day deadline?</em> One commit per item, the full suite before each, and the order chosen so the list could be cut from the bottom.</div></div></details>
+<details><summary>What would you measure at the playtest?</summary><div class="body">
+<p>AC-82: at least 4 friends on their own phones, at least 3 games, a deliberate phone lock, a refresh and a Wi-Fi-off rejoin, and one Google sign-in. Pass means no score is lost and every phone shows the
+same countdown. Findings go in <code>docs/playtest.md</code>.</p>
+<div class="follow">Follow-up: <em>Why manual?</em> Real phones, real networks and real people can't be fully emulated.</div></div></details>
+
+<h3 class="qcat" id="b-sdd">Requirements and SDD</h3>
+<details data-star><summary><span class="star">★</span> What is spec-driven development and how did you apply it?</summary><div class="body">
+<p>Write the contract first, then build against it. SPEC.md holds EARS requirements tagged Must or Should and pass/fail acceptance criteria tagged by test type. PLAN.md splits the build into phases, each
+"done when" named ACs pass, with one commit per phase. Every AC has a test with its ID in the name. Notable choices go in a decision log, spec changes get a version and a changelog row, and anything that
+would change a requirement stops the work as a Blocker.</p>
+<div class="follow">Follow-up: <em>Give an example of the spec changing.</em> v0.4 changed the production database layer and added request timeouts after production evidence; v0.5 changed only where AC-80 runs.</div></div></details>
+<details><summary>What does EARS stand for? Give one example from the spec.</summary><div class="body">
+<p>Easy Approach to Requirements Syntax. Example, unwanted behaviour: R16, "If the realtime connection has been down for more than 10 s, then the client shall poll the snapshot every 3 s and show a
+'Reconnecting…' indicator". Event: R58, "When a question ends, the system shall reveal the correct option…".</p>
+<div class="follow">Follow-up: <em>Why bother with patterns?</em> Each sentence has one trigger and one response, so it maps to one test.</div></div></details>
+<details><summary>How do requirements map to tests?</summary><div class="body">
+<p>Each AC lists the R-numbers it covers, and the SPEC's coverage line says every R1–R103 maps to at least one AC. Test names start with the AC ID, so <code>npm test -- -t "AC-57\b"</code> or
+<code>npm run test:e2e -- --grep "AC-66\b"</code> proves one criterion. PLAN's AC table records the evidence file and commit.</p>
+<div class="follow">Follow-up: <em>What about requirements that are hard to test?</em> Those are Deploy or Manual ACs; only two are Manual: the Android install and the playtest.</div></div></details>
+<details><summary>What counts as a blocker and what did you do with one?</summary><div class="body">
+<p>Anything needing a requirement or AC to change. B1: AC-80's stroke figure passed only 2 of 5 runs from the India laptop. Options were to accept it, to change the measurement (which loosens the bar), or to
+run it elsewhere. The owner chose a GitHub-hosted runner. AC-80 then passed 3 consecutive runs (stroke p95 324, 364 and 336 ms), and B1 was resolved without changing any threshold.</p>
+<div class="follow">Follow-up: <em>Why not just change the measurement?</em> That would have weakened a test to get green, which the rules forbid.</div></div></details>
+<details><summary>What were the Q1–Q13 decisions?</summary><div class="body">
+<p>Open questions settled on 22 Oct by accepting the proposed defaults: monthly IST seasons, the imposter not told by default, claiming only on the same device, guests may join crews, Atlas city thresholds,
+Most Likely To not counted for seasons, quiz answers final, 8 spectators and 2 screens, minimum players per game, the actor's tap trusted, no review UI for reports, rooms kept 24 h from last activity.
+The exception was Q12: the default theme was changed to bright and light.</p>
+<div class="follow">Follow-up: <em>Why record them in the SPEC?</em> They're binding for the build; anything not decided was logged in PLAN instead.</div></div></details>
+<details><summary>Must vs Should: what did you cut, or would you cut?</summary><div class="body">
+<p>Should items were built last and are cut first. The plan's cut order was recap card, big screen, then Most Likely To. In the end nothing was cut. In v0.5, Two Truths &amp; a Lie was the Should item, built last.</p>
+<div class="follow">Follow-up: <em>Is the steal rule a Should?</em> No: R65 is a Must (default off), so cutting it would be a SPEC change.</div></div></details>
+<details><summary>How do you know the build matches the spec, not just the tests?</summary><div class="body">
+<p>The AC table in PLAN lists each AC's status, test file and commit. Deploy ACs carry production numbers, and decisions explain any interpretation. The cross-game suites drive every phase of every game,
+so new games automatically get the secrecy, rejoin, view-size and settings checks.</p>
+<div class="follow">Follow-up: <em>Did the code ever disagree with the spec?</em> Yes: the heartbeat runs every 20 s in production while SPEC §4.2 says 25 s; the code is stricter, and it's noted in PLAN.</div></div></details>
+<details><summary>How were changes logged when you were wrong?</summary><div class="body">
+<p>As a correction. The 26 Oct decision attributed production stalls to dead pooled database connections; a later entry, marked "Correction", says probes disproved it (the network path) and explains why the
+<code>pg</code> change stayed anyway.</p>
+<div class="follow">Follow-up: <em>Why keep a change made for the wrong reason?</em> It follows Neon's and Vercel's guidance and is harmless; the real fixes were client-side timeouts and catch-up.</div></div></details>
+
+<h3 class="qcat" id="b-arch">Architecture and request routing</h3>
+<details data-star><summary><span class="star">★</span> Walk me through the architecture.</summary><div class="body">
+<p>The phones run a React UI and a sync client. Every action is an HTTPS POST to a Next.js route handler on Vercel, which calls <code>roomOp</code>: one Postgres transaction that locks the room row, replays
+idempotent actions, catches up overdue deadlines, applies the action through the pure engine and game module, and writes the state with version + 1. After the commit it publishes the public view to the
+room's Ably channel, and every phone applies it. Private data is fetched over HTTPS by the seats listed in <code>privateFor</code>.</p>
+<div class="follow">Follow-up: <em>Why publish after commit?</em> So no phone ever sees a state that could still roll back.</div></div></details>
+<details><summary>What is "pure" about the engine and why does it matter?</summary><div class="body">
+<p><code>src/engine</code> and <code>src/games</code> do no I/O: time and randomness come in through a context (<code>ctx.now</code>, <code>ctx.rng</code>, seeded per room). That makes every game testable in milliseconds with
+a fake clock, deterministic in tests, and shared by the server, the unit tests and the bot simulations.</p>
+<div class="follow">Follow-up: <em>Where do side effects go?</em> The engine pushes <code>ctx.effects</code> (game ended, strokes, place suggestion), which <code>applyEffects</code> writes in the same transaction.</div></div></details>
+<details><summary>What does a game module look like?</summary><div class="body">
+<p><code>GameModule</code> in <code>src/games/types.ts</code>: <code>start</code>, <code>act</code>, <code>onDeadline</code>, <code>publicView</code>, <code>privateView</code>, plus optional <code>bot</code>, <code>shiftTimes</code>,
+<code>seatRemoved</code>, <code>stats</code> and <code>chatActions</code>. It's registered in <code>registry.ts</code>, and its metadata (settings spec, How-to-play, intro, minimum players) lives in <code>meta.ts</code>.</p>
+<div class="follow">Follow-up: <em>How long did a new game take?</em> v0.5 added three; each reused the pattern plus wiring into the registry, meta, demo, colours and test helpers.</div></div></details>
+<details><summary>How are API routes organised?</summary><div class="body">
+<p>Under <code>src/app/api</code>: <code>rooms</code> (create), <code>rooms/[code]/{actions, join, snapshot, tick, heartbeat, strokes, qr, screen, crew}</code>, <code>realtime/token</code> (plus <code>stream</code> in test
+mode), <code>identity/{guest, me, claim}</code>, <code>crews</code>, <code>questions/[id]/report</code>, <code>recap/[roomId]/image</code>, <code>demo</code>, <code>auth/[...nextauth]</code> and <code>cron/cleanup</code>. Each wraps its
+work in <code>handle()</code>, which turns a <code>GameError</code> into <code>{ok:false, code}</code> with an HTTP status.</p>
+<div class="follow">Follow-up: <em>Why does every response include serverNow?</em> The client clock estimates its offset from it.</div></div></details>
+<details><summary>Why one JSON document per room instead of normalised tables?</summary><div class="body">
+<p>A room's live state is small (≤ 16 KB public view at 12 players, AC-15) and always read and written as a whole under one lock. A single document makes each action atomic and easy to version and diff.
+Everything that outlives the room (results, ratings, nights) goes to normal tables.</p>
+<div class="follow">Follow-up: <em>When would that stop working?</em> If many writers per room contended heavily; the SPEC's fallback is an append-only answers table.</div></div></details>
+<details><summary>What happens on the big screen?</summary><div class="body">
+<p><code>/screen</code> registers a display-only cookie <code>huddle_screen = roomId.token</code> (at most 2 per room). Requests send <code>x-huddle-screen: 1</code>, and <code>touch()</code> serves only the public view even if the
+same browser is a player. The screen reuses each game's phone component in a display layout.</p>
+<div class="follow">Follow-up: <em>How do you test it never sees secrets?</em> AC-55 checks the screen's network log never contains the Draw word.</div></div></details>
+<details><summary>Explain <code>peekRoom</code> vs <code>roomOp</code>.</summary><div class="body">
+<p><code>roomOp</code> locks the row (<code>FOR UPDATE</code>). <code>peekRoom</code> reads without locking, runs catch-up on a copy, and returns immediately if nothing changed and no effects arose; otherwise the caller falls back
+to <code>roomOp</code>. Snapshot, tick and heartbeat use peek-then-lock, so a room's phones don't queue behind each other's no-op requests.</p>
+<div class="follow">Follow-up: <em>Is there a race?</em> If something became due, the locked path re-runs catch-up on fresh state, so peek never writes anything.</div></div></details>
+<details><summary>How does the client decide what to fetch?</summary><div class="body">
+<p><code>onStateMessage</code>: if <code>v ≤ local</code>, ignore it; if <code>v = local + 1</code>, apply the public view, and fetch a snapshot if my seat is in <code>privateFor</code>; if there's a gap, fetch a snapshot. It also fetches
+on first load, Ably connected or attached without resume, visibility, focus, online and pageshow. Snapshot fetches coalesce, and a fetch requested during another runs once afterwards.</p>
+<div class="follow">Follow-up: <em>What if a response is older than a message already applied?</em> It refetches so the private view is current too.</div></div></details>
+
+<h3 class="qcat" id="b-realtime">Realtime sync and Ably token auth</h3>
+<details data-star><summary><span class="star">★</span> How does realtime work, and how are clients authenticated to Ably?</summary><div class="body">
+<p>Each room has one Ably channel, <code>huddle:room:&lt;roomId&gt;</code>; the UUID is used rather than the code so codes can be reused. Phones connect with <code>authUrl=/api/realtime/token?code=…</code>. The server
+checks the caller is seated (or a registered screen) and returns a TokenRequest signed with the server key, with capability <code>subscribe</code> on that channel only and a 60 min TTL. Clients can't publish;
+the server publishes via the Ably REST API after each commit.</p>
+<div class="follow">Follow-up: <em>What stops a kicked player listening?</em> The token route refuses kicked or unseated identities (403), and nothing secret is on the channel anyway.</div></div></details>
+<details><summary>What travels over Ably and what doesn't?</summary><div class="body">
+<p>Two message names: <code>state</code> (<code>{v, serverNow, public, privateFor}</code>) and <code>strokes</code> (<code>{turnId, seq, ops}</code>). Secrets never travel over Ably: a seat whose private view changed fetches it
+over authenticated HTTPS, and feedback meant only for the actor (like "you're close") comes back in that action's own response.</p>
+<div class="follow">Follow-up: <em>Why not encrypt private data on the channel?</em> Fetching it over HTTPS is simpler and keeps the key out of browsers.</div></div></details>
+<details><summary>What happens when Ably drops a message?</summary><div class="body">
+<p>The next message has a version gap, so the client fetches a snapshot. If no further message comes, the heartbeat catches it: it returns the current <code>v</code>, and a higher one triggers a snapshot.
+The heartbeat runs every 20 s in production. Focus, visibility and online events also resync. AC-16 drops 3 messages on purpose and expects a snapshot within 1 s.</p>
+<div class="follow">Follow-up: <em>So the worst case is about 20 s stale?</em> For a lone missed message with no later activity, yes; that may be what deploy-checks run #4 saw (see curveballs).</div></div></details>
+<details><summary>What if realtime is down altogether?</summary><div class="body">
+<p>If Ably hasn't connected for 10 s, or the browser reports offline, the client polls the snapshot every 3 s and shows "Reconnecting… (still playing)" (R16). The game stays fully playable; AC-20 plays a
+3-question quiz with realtime blocked.</p>
+<div class="follow">Follow-up: <em>Does polling hammer the database?</em> Polls go through <code>peekRoom</code>, an unlocked read, and a few phones × 1 every 3 s is small.</div></div></details>
+<details><summary>Why a local SSE driver in tests?</summary><div class="body">
+<p>CI has no Ably secrets, and tests must be deterministic and offline. <code>REALTIME_DRIVER=local</code> uses an in-process EventEmitter served as server-sent events (<code>/api/realtime/stream</code>), which returns 404
+outside test mode (checked by AC-77). Real Ably is exercised by <code>test:real</code> and the deploy checks.</p>
+<div class="follow">Follow-up: <em>Did the difference ever hide a bug?</em> Yes: the reloaded-phone stroke bug only showed on Ably, because SSE attached too fast.</div></div></details>
+<details><summary>How do clients agree on the countdown?</summary><div class="body">
+<p>Every response carries <code>serverNow</code>. <code>ServerClock</code> estimates <code>offset = serverNow − (tSend + tRecv)/2</code> from the lowest-RTT of the last 5 samples, and the countdown is computed from the server
+deadline. AC-22 holds within 500 ms with ±90 s skew and 50–400 ms RTT; AC-23 checks two phones with clocks 60 s apart.</p>
+<div class="follow">Follow-up: <em>Why the lowest RTT?</em> The midpoint assumption is most accurate when the trip is shortest and most symmetric.</div></div></details>
+<details><summary>How are Draw strokes kept in order and complete?</summary><div class="body">
+<p>The drawer assigns a monotonic <code>seq</code> per turn. The server inserts with <code>ON CONFLICT DO NOTHING</code> (idempotent) and publishes; viewers render in seq order. A gap, a reconnect or any applied
+snapshot triggers <code>GET strokes?after=lastSeq</code>. AC-17 reloads and reopens phones mid-turn and expects the full drawing within 3 s.</p>
+<div class="follow">Follow-up: <em>Why aren't strokes in the room state?</em> They're high-frequency; keeping them off the locked row keeps actions fast.</div></div></details>
+<details><summary>What's the Ably budget?</summary><div class="body">
+<p>SPEC §7 estimated about 110,000 messages per 3-hour 8-player night (×10 including deliveries), against roughly 6 M a month on the free tier. The probe measured a projected 79,680 per night, 1.33 % of 6 M
+(AC-81 requires ≤ 5 %). Strokes dominate: batching every 200 ms and RDP keep publishes around 4–5 per second while drawing.</p>
+<div class="follow">Follow-up: <em>What if you exceeded it?</em> The SPEC's fallbacks are a slower flush, a larger ε, or the drawer publishing directly on a turn-scoped token.</div></div></details>
+
+<h3 class="qcat" id="b-referee">Server as referee</h3>
+<details data-star><summary><span class="star">★</span> Why make the server the referee instead of trusting clients?</summary><div class="body">
+<p>Fairness and secrecy: the server holds answers and words, validates every action against the current phase and turn, and sends each viewer only what they may see. It also gives one source of truth for
+rejoining phones; a client can always replace its view with a snapshot. R11: every action goes through an API route that validates it, saves it with version + 1, and publishes only after the commit.</p>
+<div class="follow">Follow-up: <em>What does it cost?</em> A round trip per action (about 200 ms from US East, about 850 ms from India), which is why the UI shows taps optimistically.</div></div></details>
+<details><summary>What does "invalid action" mean and what happens?</summary><div class="body">
+<p>Wrong phase, not your turn, malformed, or paused. The module throws <code>GameError</code> (<code>WRONG_PHASE</code>, <code>NOT_YOUR_TURN</code>, <code>INVALID</code>, <code>PAUSED</code>); the transaction rolls back and the client gets
+the code. AC-13 checks, for every game through the real database pipeline, that state and version are unchanged.</p>
+<div class="follow">Follow-up: <em>Is the error shown to users?</em> Yes, where it matters, for example Atlas reasons or the demo's "Too many taps".</div></div></details>
+<details><summary>How do you avoid double-applying a retried tap?</summary><div class="body">
+<p>Every action has a client UUID. The server checks <code>room_actions</code> under the row lock: a known id returns the stored result. The client retries once on a timeout with the <em>same</em> id, so a slow tap waits rather than
+being dropped or doubled.</p>
+<div class="follow">Follow-up: <em>And concurrent taps from different phones?</em> The row lock serialises them; AC-14 sends 20 at once and expects exactly +20 versions.</div></div></details>
+<details><summary>Who decides the score?</summary><div class="body">
+<p>Only the server, in the module's <code>act</code> or <code>onDeadline</code>, via <code>award()</code>, which records an undoable <code>ScoreEvent</code>. Timing for speed points uses server time
+(<code>ctx.now − phase.startedAt</code>), not client clocks.</p>
+<div class="follow">Follow-up: <em>Except Charades?</em> Right: the actor's "Guessed" tap is trusted by design (Q10), and the admin's Undo fixes mistakes.</div></div></details>
+<details><summary>What stops a player from cheating via DevTools?</summary><div class="body">
+<p>Nothing secret reaches them before the reveal: views are built per viewer, realtime carries only the public view, and AC-38/AC-39 search every payload for secrets. They can call the API directly, but
+the same validation applies. Peeking at a friend's screen is an accepted non-goal.</p>
+<div class="follow">Follow-up: <em>Could they spam?</em> They'd hit the rate limit (R46).</div></div></details>
+
+<h3 class="qcat" id="b-lock">Room-row locking and versioned snapshots</h3>
+<details data-star><summary><span class="star">★</span> How do you handle concurrency when several phones act at once?</summary><div class="body">
+<p>Each room is one row. Every state change runs in a transaction that starts with <code>SELECT … FOR UPDATE</code>, so actions on the same room are serialised and each sees the latest state; different rooms
+never block each other. After the change, <code>version</code> increases by 1, so clients can detect missing updates.</p>
+<div class="follow">Follow-up: <em>Isn't locking slow?</em> Transactions are short and strokes stay off the row; production action p95 is about 200 ms from US East.</div></div></details>
+<details><summary>What is the version used for?</summary><div class="body">
+<p>Gap detection (a client at v5 receiving v7 fetches a snapshot), ordering (anything ≤ local is ignored), and the heartbeat (a higher <code>v</code> means "you're behind"). It equals <code>rooms.version</code>, and
+<code>state.v</code> mirrors it.</p>
+<div class="follow">Follow-up: <em>Does every request bump it?</em> Only if the state actually changed (a JSON comparison of before and after).</div></div></details>
+<details><summary>What's in a snapshot?</summary><div class="body">
+<p><code>snapshotFor()</code>: <code>{v, public: publicView(…), me: privateView(viewer)}</code>, plus the realtime driver and channel and <code>heartbeatMs</code>. The private part holds the seat, role, admin flag and the game's private
+view (for example my word, my choice, my answers). AC-15 checks a snapshot equals those functions exactly, and an unknown viewer gets the public view only.</p>
+<div class="follow">Follow-up: <em>Why does the snapshot route sometimes write?</em> It runs catch-up, so if a deadline passed it advances the game.</div></div></details>
+<details><summary>What does <code>privateChanges</code> do?</summary><div class="body">
+<p>It compares each seat's private view before and after an operation and lists the seats whose view changed. That list is <code>privateFor</code> in the realtime message: only those phones fetch a snapshot.
+It's rare in practice: a new question, a word choice, a guessed-only chat line.</p>
+<div class="follow">Follow-up: <em>Cost?</em> It builds two private views per seat per change; fine for at most 12 seats.</div></div></details>
+<details><summary>What if two phones both think they're first to end a timer?</summary><div class="body">
+<p>Both send a tick; the first takes the lock and processes the deadline, which bumps <code>phase.id</code>. The second finds nothing due and is a no-op. AC-24 sends 5 parallel ticks and expects exactly one
+transition.</p>
+<div class="follow">Follow-up: <em>Why random jitter?</em> 0–300 ms of jitter spreads phones out so they don't all hit at once.</div></div></details>
+<details><summary>How big can the state get?</summary><div class="body">
+<p>The public view is checked at ≤ 16 KB at every step of a 12-player game for every game (AC-15). Notices are capped at 10, and Atlas shows the last 30 places. Finished results move to tables;
+<code>scoreEvents</code> covers only the current game.</p>
+<div class="follow">Follow-up: <em>Why 16 KB?</em> It keeps realtime messages comfortably small (Ably allows much more).</div></div></details>
+
+<h3 class="qcat" id="b-timers">Server timers and deadline processing</h3>
+<details data-star><summary><span class="star">★</span> Vercel has no background process. How do timers work?</summary><div class="body">
+<p>Every timed phase stores an absolute server-time deadline. Nothing runs at that moment; instead any request processes overdue deadlines first (catch-up). Phones know <code>nextWakeAt</code> (the earliest of the
+deadline and the next bot action) and send a tick once it has <em>certainly</em> passed on the server (<code>safeNow</code> plus jitter). So the game advances as long as one phone is open, and catch-up chains
+overdue turns in order, up to 50 steps.</p>
+<div class="follow">Follow-up: <em>And if every phone is off?</em> Nothing advances; when someone returns after over 120 s of silence, the game auto-pauses instead of fast-forwarding (R20).</div></div></details>
+<details><summary>Why is catch-up run "at each deadline's own time"?</summary><div class="body">
+<p>So a chain of overdue turns behaves exactly as if someone had ticked each one: each step sets <code>ctx.now</code> to its own deadline (a virtual clock), so the timing and AFK accounting are right. The
+decision log records this for Phase 2.</p>
+<div class="follow">Follow-up: <em>Why cap it at 50?</em> To bound the work of one request.</div></div></details>
+<details><summary>How does pause/resume keep the exact time?</summary><div class="body">
+<p>Pausing stores <code>remainingMs</code>; resuming sets <code>deadline = now + remainingMs</code>, shifts any visible end time and bot due times, and calls the module's <code>shiftTimes</code>. AC-28: pausing with 37.4 s
+left and resuming 5 minutes later gives exactly 37.4 s.</p>
+<div class="follow">Follow-up: <em>What's shiftTimes for?</em> Draw keeps hint times inside its state; they shift too.</div></div></details>
+<details><summary>What's the difference between <code>deadline</code> and <code>endsAt</code>?</summary><div class="body">
+<p>In Draw, hints are timed events inside the drawing phase: <code>deadline</code> is the next wake-up (a hint), while <code>endsAt</code> is the visible countdown end. The countdown shows <code>endsAt ?? deadline</code>, so it never jumps.</p>
+<div class="follow">Follow-up: <em>Could you use separate phases for hints?</em> It would change the phase id and the turn semantics; the decision log explains the choice.</div></div></details>
+<details><summary>Why do phones use <code>safeNow</code> rather than the clock offset for ticks?</summary><div class="body">
+<p><code>serverNow</code> is stamped as the response leaves, so slow responses made the midpoint estimate run ahead and phones ticked early and repeatedly, which fed the row-lock queue. <code>safeNow</code> is a lower bound
+(<code>serverNow − tRecv</code>), and after a no-op tick the phone backs off 1–2 s.</p>
+<div class="follow">Follow-up: <em>Then why does the countdown still use the midpoint?</em> For display accuracy (AC-22); being early by a few ms on screen is harmless.</div></div></details>
+<details><summary>How does the How-to-play card fit the timer model?</summary><div class="body">
+<p>It's an engine phase <code>intro</code> with a 20 s deadline. The game module's <code>start()</code> runs only when the deadline passes, every active human taps Got it, or the admin skips. While it shows, the game state
+is null and game actions return <code>WRONG_PHASE</code>.</p>
+<div class="follow">Follow-up: <em>Why not a client overlay?</em> A client overlay would hide a running question timer.</div></div></details>
+<details><summary>How do bots fit in?</summary><div class="body">
+<p><code>planBots</code> asks each bot's module for its next action and a delay, and stores <code>{seatId, dueAt, phaseId, action}</code> in <code>botPlan</code>. Catch-up runs due bot actions in time order with deadlines.
+A plan for an old phase is discarded.</p>
+<div class="follow">Follow-up: <em>Bug story?</em> An Atlas bot re-rolled "blank" on every tick and never timed out; the decision is now stored per turn.</div></div></details>
+
+<h3 class="qcat" id="b-secrets">Secret filtering per viewer</h3>
+<details data-star><summary><span class="star">★</span> How do you make sure secrets don't leak?</summary><div class="body">
+<p>Every outgoing payload goes through one function pair: <code>publicView</code> (safe for anyone) and <code>privateView(seat)</code> (only what that seat may see). Realtime messages carry only the public view. SPEC §4.4 lists each
+secret and who may see it. Tests: AC-38 drives every phase of every game and searches public, screen and non-entitled views for each secret; AC-39 records every HTTP response and realtime frame on real
+browsers and searches them; AC-6 scans bundles for sentinel server secrets.</p>
+<div class="follow">Follow-up: <em>Give an example.</em> The quiz public view includes <code>reveal</code> only during the reveal phase, and the correct index never appears before then.</div></div></details>
+<details><summary>How does Draw handle the chat of players who already guessed?</summary><div class="body">
+<p>Once you've guessed correctly, your messages go to a secret chat seen only by the drawer and other correct guessers (R74). Others see "&lt;name&gt; guessed it!" without the text. Near misses get a private
+"You're close!" in the action response only.</p>
+<div class="follow">Follow-up: <em>Can the drawer chat?</em> No, drawer chat is rejected.</div></div></details>
+<details><summary>How is the imposter kept secret?</summary><div class="body">
+<p>Each player's private view contains only their own word. The imposter's identity isn't in any view until the reveal; by default even the imposter isn't told (Q2). AC-73 checks each phone shows exactly
+one word and exactly one phone's word differs.</p>
+<div class="follow">Follow-up: <em>Can the imposter be told?</em> Yes, an "Imposter knows" house rule.</div></div></details>
+<details><summary>Most Likely To says votes are anonymous. How literally?</summary><div class="body">
+<p>Literally: individual votes live in state only until the tally, then <code>s.votes = {}</code>. Views carry only totals, and a phone is told only <em>whether</em> it voted, never for whom. AC-74 checks neither
+the state, the database nor any view holds voter→votee pairs after the tally.</p>
+<div class="follow">Follow-up: <em>And during the vote?</em> They're in the server's state for that one phase only, never in a view.</div></div></details>
+<details><summary>How do the new games handle secrets?</summary><div class="body">
+<ul>
+<li><strong>NPAT:</strong> answers exist in views only after the writing ends.</li>
+<li><strong>Emoji Decode:</strong> the answer appears only at the reveal, and guesses are never broadcast.</li>
+<li><strong>Two Truths:</strong> drafts are private, statements appear shuffled on the author's turn, and the lie's position and the votes appear only at that turn's reveal; only the author's view marks the lie.</li>
+</ul>
+<p>All three are in AC-38's per-phase secret checks.</p>
+<div class="follow">Follow-up: <em>Where is the shuffle stored?</em> In server state (<code>perm</code>), so a reload shows the same order.</div></div></details>
+
+<h3 class="qcat" id="b-rejoin">Rejoin, AFK, admin and spectators</h3>
+<details data-star><summary><span class="star">★</span> How does a phone come back to the same seat and score?</summary><div class="body">
+<p>Seats belong to identities, not connections. A guest has a device cookie (<code>huddle_dt</code>, 1 year, httpOnly); a signed-in user has a profile, plus aliases for merged guests. <code>joinRoom</code> finds an existing
+seat for any alias and returns it unchanged. The phone then fetches a snapshot with the same seat, score, timer and full drawing, because the state lives on the server. AC-18 checks no code path changes scores
+on rejoin, 5 times at every phase of every game.</p>
+<div class="follow">Follow-up: <em>What if they open it in a different browser?</em> "That's me" on the disconnected seat, approved by the admin (R17).</div></div></details>
+<details><summary>How does AFK work?</summary><div class="body">
+<p>A turn or answer phase that expires without the seat acting counts a miss. Two consecutive misses set <code>afk</code>; AFK seats' turns are skipped immediately, they're excluded from "everyone has answered", and
+they keep their seat and score. Any action or "I'm back" clears it. Admin skips don't count as misses.</p>
+<div class="follow">Follow-up: <em>Exception?</em> In Atlas, AFK players keep their turns and lose lives normally (AC-27).</div></div></details>
+<details><summary>How does admin hand-off work?</summary><div class="body">
+<p>During catch-up, if the admin hasn't been seen for 60 s (presence) or is AFK, admin passes to the connected, non-AFK human seated player with the earliest <code>joinedAt</code>, with a notice. AC-31 closes the admin's
+page and checks the next player gets the controls.</p>
+<div class="follow">Follow-up: <em>Can bots become admin?</em> No, candidates exclude bots.</div></div></details>
+<details><summary>What happens to someone who joins mid-game?</summary><div class="body">
+<p>They become a spectator with <code>seatAtNextRound</code> and see the live public view. <code>seatWaiting()</code> seats them at the next round boundary of that game (Quiz: next question; Atlas: next game), joining the
+smallest team in team games. AC-11 checks a 5th player gets 0 points at question 3.</p>
+<div class="follow">Follow-up: <em>Room full?</em> Above 12 seated, newcomers can only watch (up to 8 spectators).</div></div></details>
+<details><summary>What can the admin do?</summary><div class="body">
+<p>Skip a turn, kick, pause and resume, end the game, transfer admin, undo the last score (repeatable back to the start of the game), set the queue, teams and rules, rematch, and end the night. Every admin action
+shows a notice; non-admins get <code>NOT_ADMIN</code> (AC-29).</p>
+<div class="follow">Follow-up: <em>Is the admin required?</em> No: R28 says the whole queue runs from deadlines alone (AC-33 closes the admin's tab right after starting).</div></div></details>
+<details><summary>Kicking: what if the kicked player was mid-turn?</summary><div class="body">
+<p><code>kick</code> marks the seat kicked, removes them from teams, claims and bot plans, and calls the module's <code>seatRemoved</code> to repair turn order (Atlas moves on; Two Truths skips their turn). They see "Removed by
+the admin", and a rejoin returns <code>KICKED</code> (AC-12).</p>
+<div class="follow">Follow-up: <em>Can they still listen to realtime?</em> No new token is issued to a kicked seat.</div></div></details>
+<details><summary>What if a signed-in user opens the room on a second device?</summary><div class="body">
+<p>Opening the room makes that device active (<code>deviceId</code> on the seat). The other device shows "Your seat is now active on another device" with a "Use here" button. AC-3 checks the score carries over.</p>
+<div class="follow">Follow-up: <em>Why track device?</em> To avoid two phones acting as one seat by accident.</div></div></details>
+
+<h3 class="qcat" id="b-rate">Rate limiting</h3>
+<details><summary>What are the limits and where are they enforced?</summary><div class="body">
+<p><code>rateLimit()</code> in <code>engine/room.ts</code>, inside the locked transaction: at most 10 actions per second per seat, and 3 chat-type actions per 2 s (each module declares its <code>chatActions</code>, like Draw
+guesses or Emoji guesses). Stroke batches are limited separately to 8 per second per room. Excess returns <code>RATE_LIMITED</code> (HTTP 429).</p>
+<div class="follow">Follow-up: <em>Where are the timestamps kept?</em> In the room state (<code>rate</code>, <code>chatRate</code>), pruned to the window.</div></div></details>
+<details><summary>Did the rate limit ever cause a bug?</summary><div class="body">
+<p>Yes, in a test: the first CI run sent 11 admin actions within a second, and the 11th was correctly rejected while the demo picker hid the error. The fix paced the test and made the UI show the rejection.</p>
+<div class="follow">Follow-up: <em>Why not raise the limit?</em> The limit is correct product behaviour; the test was outrunning it.</div></div></details>
+<details><summary>Is rate limiting per IP?</summary><div class="body">
+<p>No, per seat inside a room (and per room for strokes). Players are identified by seat, and serverless instances don't share memory, so the state row is the natural place for it.</p>
+<div class="follow">Follow-up: <em>Room creation spam?</em> Not limited per IP in this build; it's a known gap. Rooms expire after 24 h.</div></div></details>
+
+<h3 class="qcat" id="b-elo">Team balancing (Elo and snake draft)</h3>
+<details><summary>How are teams balanced?</summary><div class="body">
+<p>Each player's strength is their Elo for this game, else the mean of their other game ratings, else 1000. Sort by strength, snake-draft into k teams (1-2-2-1…), then repeatedly apply the single cross-team
+swap that most reduces the gap between the highest and lowest team mean, until no swap helps. It's deterministic for a given input order. Example: 1400–900 in steps of 100 into 2 teams gives means
+1166.7 vs 1133.3.</p>
+<div class="follow">Follow-up: <em>Why not try all splits?</em> Snake plus swaps is near-optimal for ≤ 12 players and trivially fast; AC-35 requires means within 34 points.</div></div></details>
+<details><summary>Explain multiplayer Elo.</summary><div class="body">
+<p>Treat every pair as a match: the expected score is E = 1/(1+10^((Rj−Ri)/400)), the actual S is 1, ½ or 0 by rank. Then ΔR = (K/(n−1)) × Σ(S−E) with K = 32. Beating stronger players earns more;
+with two players it's classic Elo (+16/−16 for equals). Deltas sum to about zero (AC-37).</p>
+<div class="follow">Follow-up: <em>Team games?</em> Every member carries the team's rank.</div></div></details>
+<details><summary>How are teams assigned to late joiners?</summary><div class="body">
+<p>To the smallest team (<code>seatWaiting</code> / <code>joinRoom</code>), so sizes stay within one.</p>
+<div class="follow">Follow-up: <em>Can the admin override?</em> Yes: move, shuffle or rebalance in the lobby (AC-36).</div></div></details>
+<details><summary>Where do ratings come from at runtime?</summary><div class="body">
+<p><code>prepare()</code> in <code>rooms.ts</code> loads <code>ratings</code> rows for the room's identities when no game is running; balancing never trusts client-supplied ratings. After each game, <code>recordRatings</code>
+updates them once (the game insert is unique per room and game number).</p>
+<div class="follow">Follow-up: <em>Bots?</em> They have no identity rows, so they're skipped.</div></div></details>
+<details><summary>What are placement points versus ratings?</summary><div class="body">
+<p>Placement points (0–100 by finishing position, ties averaged) rank crew seasons. Ratings (Elo) only balance teams. Most Likely To gives no placement points (Q6).</p>
+<div class="follow">Follow-up: <em>Why two systems?</em> Seasons should be easy to read; balancing needs skill estimates.</div></div></details>
+
+<h3 class="qcat" id="b-games">Each game's rules module</h3>
+<details><summary>Quiz Clash: scoring and fairness?</summary><div class="body">
+<p>The first tap is final (Q7). Correct scores <code>500 + round(500 × remaining/total)</code>, timed by the server from the phase start; wrong or none scores 0; team mode averages members. Questions don't repeat in a room until the
+pool is exhausted, and 3 reports exclude a question (R60). A question ends early when all active players have answered.</p>
+<div class="follow">Follow-up: <em>Correct at the start?</em> 1000; at the deadline 500 (AC-57).</div></div></details>
+<details><summary>Draw &amp; Guess: what's special technically?</summary><div class="body">
+<p>Strokes bypass the room lock (append-only table, no versions); the canvas uses pointer events and <code>touch-action: none</code>, so iOS doesn't scroll or zoom (AC-88). Hints are timed inside the phase, the mask shows
+<code>_ _ _</code>, and at most half the letters are revealed. The drawer chooses within 15 s or the turn is skipped as a miss.</p>
+<div class="follow">Follow-up: <em>Bot drawings?</em> 24 parametric drawings generated by <code>scripts/make-bot-drawings.ts</code>.</div></div></details>
+<details><summary>Atlas: how is a place validated?</summary><div class="body">
+<p><code>checkPlace</code> looks up the folded text in an index of names and alternates from <code>data/places.json</code> (9,766 GeoNames places plus a curated list of Indian states and old names). It checks the start letter, the variant
+(any, India only, countries only), and that the place (by id, so Bombay = Mumbai) is unused. Unknown names pause the timer for a 10 s accept vote: a majority of votes cast accepts.</p>
+<div class="follow">Follow-up: <em>The letter fallback?</em> If no unused place starts with the last letter, it uses the one before it, and so on (<code>nextLetter</code>).</div></div></details>
+<details><summary>Imposter: walk through a round.</summary><div class="body">
+<p>Secret words go out (1 imposter, or 2 at 8+ players if enabled). Clue rounds take one word each, no own word and no spaces. Then discussion (ends early when all are Ready), a vote excluding self, and a 20 s
+revote on a tie (a second tie means the imposter survives). A caught imposter gets 30 s to guess the crew word and steal. Scores: crew win +100 each, +50 per correct voter, imposter survives +300,
+steal +200.</p>
+<div class="follow">Follow-up: <em>Multiple rounds?</em> 1–5 rounds (default 3), with new words and a new imposter each time (decision log).</div></div></details>
+<details><summary>Dumb Charades: how does the steal rule work?</summary><div class="body">
+<p>If the steal rule is on and a turn times out, the actor gets 15 s to mark which other team guessed; that team gets 5 points, then the title is revealed (R65). The actor's taps are trusted (Q10).</p>
+<div class="follow">Follow-up: <em>What else does the actor see?</em> Year, industry, era and word count (decision log).</div></div></details>
+<details><summary>Most Likely To: why no points?</summary><div class="body">
+<p>It's a social game: results are recorded with <code>excludeFromSeason</code> and zero placement points (Q6). Night stats still show who collected the most votes.</p>
+<div class="follow">Follow-up: <em>Reveal animation and reduced motion?</em> Totals appear one by one over about 5 s; with reduced motion, all at once.</div></div></details>
+<details><summary>Name Place Animal Thing: how is it judged?</summary><div class="body">
+<p><code>buildItems</code> groups equal answers per category, folding text and grouping places by database id. A wrong first letter scores 0 with no vote; a known place is valid at once; everything else stands unless
+more than half of the other active players reject it (<code>standsAfterVote</code>: rejects × 2 ≤ voters). Unique valid answers score 10, shared ones 5 each.</p>
+<div class="follow">Follow-up: <em>Why "reject" rather than "accept" votes?</em> With 4–5 categories × several players, per-answer accept taps would take minutes.</div></div></details>
+<details><summary>Emoji Decode: how does matching work?</summary><div class="body">
+<p><code>isCorrect</code> folds the guess and drops a leading "the". It accepts the answer or any alternate within a typo allowance (1 edit from 5 letters, 2 from 10), and for places any name the Atlas database maps to the
+same place id. World cities carry a country code so a same-named city elsewhere doesn't count. The bank has 246 puzzles; a content test forbids flag emoji and letters in clues.</p>
+<div class="follow">Follow-up: <em>Short answers?</em> They must be exact: "Up" won't accept "Upp".</div></div></details>
+<details><summary>Two Truths &amp; a Lie: flow and scoring?</summary><div class="body">
+<p>Everyone writes three different statements (≤ 80 characters) and marks the lie (autosaved drafts). Then each author in seat order: statements are shuffled (<code>perm</code>) and the others vote once. At the reveal,
+spotting the lie scores +100 and the author +50 per player fooled. Non-submitters are skipped, and non-voters count a missed turn.</p>
+<div class="follow">Follow-up: <em>Bug found?</em> <code>Number(null)</code> = 0 made a missing lie read as statement 1; the validation now requires a number.</div></div></details>
+<details><summary>How does a new game automatically get tested for the hard properties?</summary><div class="body">
+<p>Adding its id to <code>GAMES</code> in <code>tests/helpers/drive.ts</code> enrols it in the cross-game suites: AC-38 secrets (with a per-game case), AC-15 view size at 12 players, AC-18 rejoin, AC-32 settings, AC-46 How-to-play and
+AC-13 invalid actions. E2E adds it to the demo (AC-47), accent (AC-84), layout (AC-40), contrast (AC-41) and leaderboard (AC-42) loops.</p>
+<div class="follow">Follow-up: <em>Did that catch anything?</em> Yes: an NPAT colour at 4.49:1 contrast failed AC-83 before it shipped.</div></div></details>
+
+<h3 class="qcat" id="b-frontend">Frontend, design and accessibility</h3>
+<details><summary>What does the frontend look like structurally?</summary><div class="body">
+<p>Next.js pages: <code>/</code> (home), <code>/r/[code]</code> (room), <code>/demo</code>, <code>/screen</code>, <code>/c/[invite]</code>, <code>/crews/[id]</code>, <code>/about</code>, <code>/privacy</code>, <code>/signin</code> and <code>/offline</code>. The room page uses
+<code>RoomClient</code> (join, then live), then <code>RoomView</code> (lobby, playing, break or summary), then a per-game component from <code>src/client/games</code>. State comes from <code>RoomSync</code> via the <code>useRoom</code> hook.</p>
+<div class="follow">Follow-up: <em>State library?</em> None: a small subscribe/notify class; the server is the store.</div></div></details>
+<details><summary>How did you design for accessibility?</summary><div class="body">
+<p>WCAG 2.2 AA contrast in both themes, checked two ways: a unit test over design tokens (AC-83) and axe-core in E2E on the home page, lobby, each game's main phase and the scoreboard (AC-41). Primary
+buttons are at least 48 × 48 px at 360 px width with no horizontal scrolling (AC-40). Reduced motion removes confetti and limits animations to 150 ms (AC-85). Statuses use <code>role="status"</code> and timers
+<code>role="timer"</code>.</p>
+<div class="follow">Follow-up: <em>Colour-blind players?</em> Correctness is shown with ✓ and text, not colour alone; avatars also differ by emoji.</div></div></details>
+<details><summary>Why light by default?</summary><div class="body">
+<p>Decision Q12, recorded in SPEC v0.2: a bright party theme fits the product, whatever the OS setting. Dark is a toggle remembered per device. AC-41 checks the first visit is light even when the OS prefers dark.</p>
+<div class="follow">Follow-up: <em>How do game colours work?</em> <code>[data-game=…]</code> sets <code>--accent</code>, <code>--on-accent</code>, <code>--accent-soft</code> and <code>--accent-ink</code>; nine distinct hues.</div></div></details>
+<details><summary>What iPhone-specific work was needed?</summary><div class="body">
+<p>Using <code>dvh</code>/<code>svh</code> instead of <code>100vh</code>, safe-area insets with <code>viewport-fit=cover</code>, Apple touch icon and meta tags, and no page scroll or zoom while drawing. Vibration is
+feature-detected, so iOS degrades silently (R40). Every E2E spec also runs on WebKit.</p>
+<div class="follow">Follow-up: <em>Biggest WebKit surprise?</em> The 6-connections-per-host limit in Playwright's WebKit, and frame stalls under load.</div></div></details>
+<details><summary>How do you avoid inputs losing typed text during updates?</summary><div class="body">
+<p>Typed text is local React state; server updates don't overwrite it. NPAT and Two Truths seed the form once per round from the server draft (keyed by round) and autosave a second after typing stops. The
+leaderboard overlay is non-modal and keeps the game mounted, so typed guesses survive (AC-42).</p>
+<div class="follow">Follow-up: <em>Why autosave?</em> So a timer ending mid-word still counts what was written.</div></div></details>
+<details><summary>Why no layout shift on interactive elements?</summary><div class="body">
+<p>Playwright and real fingers tap where the button is. One-shot pop-ins don't move other elements, and the How-to-play card has no entrance animation so its button is tappable immediately. That was a fix after a
+WebKit "not stable" failure.</p>
+<div class="follow">Follow-up: <em>Any infinite animations?</em> No, checked explicitly (decision log, POLISH task).</div></div></details>
+<details><summary>How did you review the visual design?</summary><div class="body">
+<p><code>scripts/ui-audit.ts</code> takes full-page screenshots of every screen and game phase at 360 px and 1440 px in light and dark. The polish pass (commit 7399458) came from critiquing those: notices moved
+off the inputs, the correct answer shown at full strength, empty states added.</p>
+<div class="follow">Follow-up: <em>Automated?</em> The audit is a script; the critique was a human-style review of the shots.</div></div></details>
+
+<h3 class="qcat" id="b-db">Database</h3>
+<details><summary>Which tables matter most and why?</summary><div class="body">
+<p><code>rooms</code> (live state and version), <code>room_actions</code> (idempotency and audit), <code>presence</code> (kept apart so heartbeats never lock the room), <code>strokes</code> (append-only), and <code>games</code> /
+<code>game_results</code> / <code>nights</code> / <code>ratings</code> (kept forever, independent of room expiry, R45).</p>
+<div class="follow">Follow-up: <em>Why a separate presence table?</em> Heartbeats every 20 s from every phone would otherwise version and lock the state row.</div></div></details>
+<details><summary>How are migrations run?</summary><div class="body">
+<p><code>scripts/migrate.ts</code> applies <code>db/migrations/*.sql</code> under a transaction lock; Vercel runs it in <code>vercel-build</code> before <code>next build</code>. Locally, <code>npm run db:migrate</code> uses
+<code>node --env-file</code>, so no tool reads the env file directly.</p>
+<div class="follow">Follow-up: <em>How many migrations?</em> One, <code>001_core.sql</code>; all tables were created up front.</div></div></details>
+<details><summary>How do codes stay unique yet reusable?</summary><div class="body">
+<p>A partial unique index on <code>rooms(code) WHERE ended_at IS NULL</code>. On create, an expired room holding the code is retired first, and a collision retries. After 24 h of inactivity a room expires, and the daily cron ends it.</p>
+<div class="follow">Follow-up: <em>What survives expiry?</em> Games, results and nights (AC-10).</div></div></details>
+<details><summary>How is "exactly once" guaranteed for results?</summary><div class="body">
+<p><code>games</code> has a unique (room_id, game_no); <code>recordGame</code> inserts with <code>ON CONFLICT DO NOTHING</code> and only then writes results and ratings. Processing the same end twice writes nothing new (AC-48).</p>
+<div class="follow">Follow-up: <em>Inside the same transaction?</em> Yes, effects are applied before the commit.</div></div></details>
+<details><summary>What's the connection setup on Vercel?</summary><div class="body">
+<p><code>pg.Pool</code> with max 10 connections, a 30 s connection timeout and keepAlive. On Vercel it adds a 5 s idle timeout and <code>attachDatabasePool</code>, so idle connections close before an instance is suspended. It
+connects to Neon's pooled endpoint.</p>
+<div class="follow">Follow-up: <em>Why 30 s?</em> It matches the client's 30 s action timeout, so a burst queued on one room's lock waits instead of failing.</div></div></details>
+
+<h3 class="qcat" id="b-security">Security and privacy</h3>
+<details><summary>How do you handle secrets and keys?</summary><div class="body">
+<p>Server keys (<code>DATABASE_URL</code>, <code>ABLY_API_KEY</code>, <code>AUTH_SECRET</code>, the Google secret) exist only in <code>.env.local</code> and Vercel env settings, and are read only in server modules marked
+<code>server-only</code>. The browser gets short-lived, subscribe-only Ably tokens. CI builds with sentinel secrets, and AC-6 scans every bundle, response and realtime frame for them. The working rule was
+that no tool or agent ever reads <code>.env.local</code>; <code>env:check</code> prints names only.</p>
+<div class="follow">Follow-up: <em>Can test mode be enabled in production?</em> No: <code>isTestMode()</code> throws if <code>VERCEL_ENV</code> is set.</div></div></details>
+<details><summary>How are guest identities secured?</summary><div class="body">
+<p>A random 32-byte token in an httpOnly, SameSite=Lax cookie (Secure over HTTPS), valid for a year. The database stores only its SHA-256 hash, so a database leak doesn't give working tokens.</p>
+<div class="follow">Follow-up: <em>If someone copies the cookie?</em> They'd be that guest; it's a party game, and a signed-in Google profile is the stronger option.</div></div></details>
+<details><summary>What personal data do you hold?</summary><div class="body">
+<p>Display names, the device token (hashed), and Google name, email and picture if you sign in, plus game results. It's processed by Vercel, Neon, Ably and Google. Rooms are kept 24 h after last activity;
+results until deletion is requested via GitHub Issues. There are no ads or trackers (R93, AC-86).</p>
+<div class="follow">Follow-up: <em>Why a privacy page at all?</em> Google's OAuth consent screen requires a public privacy policy.</div></div></details>
+<details><summary>Why no word filter on names?</summary><div class="body">
+<p>A deliberate non-goal: names are any 1–24 characters in any script, including emoji (R1, AC-1 even tests that a rude word is accepted). Moderation is out of scope for private rooms of friends; admin kick is the tool.</p>
+<div class="follow">Follow-up: <em>Risk?</em> Acceptable for private rooms by code; it would need revisiting for public matchmaking (also a non-goal).</div></div></details>
+<details><summary>How do you protect against XSS from player text?</summary><div class="body">
+<p>All text is rendered through React, which escapes it; no player input is inserted as HTML. Inputs are length-capped on the server (for example Atlas 60 characters, NPAT answers 30, statements 80).</p>
+<div class="follow">Follow-up: <em>Security headers?</em> <code>poweredByHeader</code> is off. No custom CSP was configured in this build; it's a possible improvement.</div></div></details>
+<details><summary>Who can call the cron endpoint?</summary><div class="body">
+<p>If <code>CRON_SECRET</code> is set, it requires <code>Authorization: Bearer &lt;secret&gt;</code>, as Vercel Cron sends. The job only ends expired rooms and deletes transient rows.</p>
+<div class="follow">Follow-up: <em>Is it idempotent?</em> Yes, running it twice is harmless.</div></div></details>
+
+<h3 class="qcat" id="b-testing">Testing and CI (including the WebKit stall investigation)</h3>
+<details data-star><summary><span class="star">★</span> How do you test a multiplayer game?</summary><div class="body">
+<p>Two levels. Unit: the pure engine through a harness with a fake clock and seeded RNG, and bots driving every game to the end while checking secrecy, view size and rejoin at every step. E2E: Playwright
+opens up to 8 browser contexts as separate phones against a production build in test mode, and checks every phone shows the same thing (for example AC-58: 4 phones, identical scoreboards within ±1 point).
+Every E2E spec runs on Android Chromium and iPhone WebKit. Then deploy checks run against production.</p>
+<div class="follow">Follow-up: <em>How do you avoid flaky timing?</em> Seeded RNG, short test-mode timers, waiting for state (versions, test ids) instead of sleeping, and pacing actions under the rate limit.</div></div></details>
+<details data-star><summary><span class="star">★</span> Tell me about the WebKit stalls.</summary><div class="body">
+<p>Four separate issues:</p>
+<ol>
+<li><strong>A WebKit connection limit.</strong> Phones 7 and 8 never loaded, because Playwright's WebKit shares a 6-connections-per-host limit and each phone holds an event stream. Fix: a different loopback host name per 4 phones.</li>
+<li><strong>A CI job hanging to its 40-minute limit with no report.</strong> Fix: bounded budgets, a global timeout, a step timeout and always-uploaded reports.</li>
+<li><strong>A whole runner stalling with 2 WebKit workers.</strong> Fix: 3 shards with 1 worker, a hard kill at 20 min, and memory and load logging.</li>
+<li><strong>"Button never stable" locally under load.</strong> No infinite animations; it even happened on the static home page, so it's WebKit not producing frames. The app and test fixes: video only on retry, Draw choices via the sync client, no entrance animation on the How-to-play card.</li>
+</ol>
+<div class="follow">Follow-up: <em>How do you know it's environmental?</em> The same specs pass alone and in CI's sharded jobs, and fail only in the full local run with both projects.</div></div></details>
+<details><summary>What's the difference between Unit, E2E and Deploy ACs?</summary><div class="body">
+<p>Unit: Vitest, including API handlers against a local Postgres. E2E: Playwright with several contexts against a local production build in test mode, on both device projects. Deploy: checks against the
+production URL after a push. Manual: a human check (only two).</p>
+<div class="follow">Follow-up: <em>Why a production build for E2E?</em> To test the real bundle, including the secret scan.</div></div></details>
+<details><summary>How did CI evolve?</summary><div class="body">
+<ul>
+<li>It started as one job running everything (about 20 minutes).</li>
+<li>Then it was split into <code>checks</code> and an <code>e2e</code> matrix per device.</li>
+<li>Then it got budgets, timeouts and always-uploaded reports.</li>
+<li>Then iPhone was sharded 3 ways with a hard kill and resource logs.</li>
+<li>Finally the browser installs were made robust: packages installed once with apt retries, and a cached, retried browser download.</li>
+</ul>
+<p>Recent green runs take about 0.9 min for checks and 6–14 min per E2E job.</p>
+<div class="follow">Follow-up: <em>Retries?</em> Only Playwright <code>retries: 1</code> in CI; never a loosened assertion.</div></div></details>
+<details><summary>What are the deploy checks and where do they run?</summary><div class="body">
+<p>AC-77 (Ably token and update latency), AC-78 (state survives a redeploy), AC-79 (Google redirect), AC-80 (six real browsers: 2 Chromium, 2 Firefox, 2 WebKit; 3 quiz questions and a Draw turn with a reload), AC-87
+(demo under 2 minutes), plus the probe (AC-81). Since v0.5 the evidence of record comes from the manual <code>deploy-checks</code> GitHub workflow; laptop runs from India are extra real-world evidence.</p>
+<div class="follow">Follow-up: <em>Why a manual trigger?</em> Production checks create real rooms and Ably traffic, and they're meaningful after a deploy, not on every push.</div></div></details>
+<details><summary>How do you prove no secret leaks in the real bundle?</summary><div class="body">
+<p><code>scripts/build.ts</code> builds with sentinel values like <code>sentinel-ably-secret-d0-not-ship</code>. AC-6 searches <code>.next/static</code>, every HTTP response and every realtime frame from a full E2E session for them and for
+the database URL and password.</p>
+<div class="follow">Follow-up: <em>And game secrets?</em> AC-39 sniffs the network per phone during real games.</div></div></details>
+<details><summary>How did tests catch real bugs during the v0.5 round?</summary><div class="body">
+<ul>
+<li>A missing lie accepted as statement 1.</li>
+<li>A Quick preset estimating the same minutes as Normal.</li>
+<li>An NPAT colour at 4.49:1 contrast.</li>
+<li>A 31-character place name truncated by the 30-character input.</li>
+<li>"Venice" mapping to Dayton, USA.</li>
+<li>The How-to-play card unstable on a loaded iPhone.</li>
+</ul>
+<div class="follow">Follow-up: <em>Any you fixed by changing a test?</em> Only where the test itself was wrong, like a race in the deploy wave count, and that's logged.</div></div></details>
+<details><summary>What's the slowest test and why?</summary><div class="body">
+<p>The solo-demo test (AC-47) plays all nine games alone with bots: about 6 minutes locally, with a 600 s budget. The full-night regression plays 8 phones through six games with reloads, a Wi-Fi drop, an AFK
+player and the admin leaving (about 4–5 minutes).</p>
+<div class="follow">Follow-up: <em>Why keep them?</em> They're the closest thing to a real night, and they caught real issues.</div></div></details>
+<details><summary>How do you run one AC?</summary><div class="body">
+<p><code>npm test -- -t "AC-57\b"</code> for Unit, <code>npm run test:e2e -- --grep "AC-66\b"</code> for E2E, both projects. The full suite is <code>npm run ci</code>: lint, typecheck, unit, build, E2E.</p>
+<div class="follow">Follow-up: <em>How long?</em> About 15–19 minutes locally.</div></div></details>
+
+<h3 class="qcat" id="b-perf">Performance, latency and scalability</h3>
+<details data-star><summary><span class="star">★</span> What are your production latency numbers?</summary><div class="body">
+<p>The budget is 1 s at p95. From the GitHub-hosted runner: action to other phone p95 190–215 ms, stroke end to all viewers p95 324–364 ms, probe delivery p95 98–135 ms. From my laptop in India: actions
+about 830–860 ms; strokes 838–1355 ms, passing 2 of 5 runs, which is why AC-80's evidence now comes from the runner.</p>
+<div class="follow">Follow-up: <em>Why is India 4× slower?</em> Round trips to US East plus a network path that drops connections for about 19 s roughly once a minute.</div></div></details>
+<details data-star><summary><span class="star">★</span> What if 1,000 rooms play at once?</summary><div class="body">
+<p>The design scales horizontally: each room is its own row and channel, so rooms never contend; serverless functions scale out; Postgres handles many independent row locks. The real limits are the free
+tiers: Ably Free caps concurrent connections at about 200 (SPEC §7), so roughly 20–25 full rooms, and Vercel Hobby is non-commercial. For 1,000 rooms (around 8,000 phones) you'd need a paid Ably plan,
+a bigger Neon compute and pool, and Vercel Pro. You'd also watch the per-instance pool (max 10) and lock hold times.</p>
+<div class="follow">Follow-up: <em>What breaks first technically?</em> Ably connections, then database connections; the per-room design itself doesn't change.</div></div></details>
+<details><summary>Why does a room's state live in one row, and what about lock contention?</summary><div class="body">
+<p>With at most 12 players, a few actions per second per room are fine: transactions are short and strokes, presence and polling avoid the lock (append-only table, separate table, unlocked peek). SPEC §10's
+fallback is an append-only answers table merged at the reveal if contention ever showed.</p>
+<div class="follow">Follow-up: <em>Did it ever show?</em> Yes, early on, from no-op requests; that's why <code>peekRoom</code> exists.</div></div></details>
+<details><summary>How did you keep drawing cheap?</summary><div class="body">
+<p>Batching every 200 ms or 64 points, RDP simplification (at least 40 % fewer points), integer delta encoding, batches at most 8 KB, no state lock or version per batch, and at most 8 batches per second per room.
+The probe measured 4.15 publishes per second on average and 120-byte batches.</p>
+<div class="follow">Follow-up: <em>Quality loss?</em> Bounded at 1 unit of Hausdorff distance (0.1 % of the width).</div></div></details>
+<details><summary>What's the bundle-size budget?</summary><div class="body">
+<p>SPEC §3: each route's first-load JS at most 250 KB gzipped. Ably is imported dynamically only when realtime connects (<code>await import('ably')</code>), and server-only modules never ship to the browser.</p>
+<div class="follow">Follow-up: <em>Do the game banks ship to clients?</em> No: rules modules with answers are server-only; clients get views.</div></div></details>
+<details><summary>Where's the server, and why?</summary><div class="body">
+<p>Vercel region <code>iad1</code> (US East), next to the Neon database in AWS US East 1, so every database round trip inside a request is short. Players' distance shows up only once per request.</p>
+<div class="follow">Follow-up: <em>Move it to Mumbai?</em> It would need the database there too; it's future work, constrained by free tiers.</div></div></details>
+
+<h3 class="qcat" id="b-failure">Failure scenarios</h3>
+<details data-star><summary><span class="star">★</span> What happens if Ably goes down?</summary><div class="body">
+<p>Publishing fails silently on the server (logged, not fatal), and phones notice realtime isn't connected. After 10 s they poll the snapshot every 3 s and show "Reconnecting… (still playing)". The game stays
+playable, just with up to about 3 s of lag (R16, AC-20). When Ably reconnects, the client fetches a snapshot and switches back.</p>
+<div class="follow">Follow-up: <em>Drawing during an outage?</em> Strokes are stored; viewers catch up with <code>GET strokes</code> after each snapshot.</div></div></details>
+<details><summary>What if Neon is down or slow?</summary><div class="body">
+<p>Requests fail or wait (up to a 30 s connection timeout). No committed state is lost because each action is one transaction. The client times out catch-ups at 10 s and actions at 30 s, retrying an action
+once with the same id, so a slow tap waits rather than double-applying. When the database is back, the next request catches up the deadlines.</p>
+<div class="follow">Follow-up: <em>Cold start?</em> AC-78: the first request after idling succeeds; first loads measured 0.5–2 s.</div></div></details>
+<details><summary>What if a phone's network stalls for 20 seconds?</summary><div class="body">
+<p>This was seen in production from the test laptop. Catch-up requests time out at 10 s and retry (snapshot fetches coalesce, so a stalled one can't block later ones). Actions wait up to 30 s with one
+same-id retry. Realtime-down detection switches to polling, and the browser's offline event shows "Reconnecting…" immediately.</p>
+<div class="follow">Follow-up: <em>Was that the server's fault?</em> No: the probes showed it hit a static file and another Vercel site too, but never google.com.</div></div></details>
+<details><summary>What if everyone's phone locks mid-game?</summary><div class="body">
+<p>Nothing advances while no requests arrive. When someone returns, if more than 120 s passed since the last human contact, the game auto-pauses with the remaining time as of that contact (minimum 10 s) rather
+than skipping through turns (R20, AC-25).</p>
+<div class="follow">Follow-up: <em>And the 60 s admin grace?</em> If the admin is the one missing, admin passes to someone connected.</div></div></details>
+<details><summary>What if the server crashes mid-action?</summary><div class="body">
+<p>The transaction rolls back, and nothing was published, since publishing happens after commit. The client times out and retries with the same action id; if the first attempt actually committed, the stored
+result is returned.</p>
+<div class="follow">Follow-up: <em>And if the publish after commit fails?</em> Clients detect the version gap on the next message or heartbeat and fetch a snapshot.</div></div></details>
+
+<h3 class="qcat" id="b-deploy">Deployment, cost and free-tier limits</h3>
+<details><summary>How is it deployed?</summary><div class="body">
+<p>Vercel is connected to the public GitHub repo and deploys production when <code>main</code> is pushed. The build runs migrations, then <code>next build</code>, in region iad1, with a daily cleanup cron. The builder (Claude Code) never
+deployed; production was verified after each push with the deploy checks.</p>
+<div class="follow">Follow-up: <em>Previews?</em> Vercel previews use the Neon dev branch; Google sign-in isn't configured for preview URLs.</div></div></details>
+<details><summary>What does it cost to run?</summary><div class="body">
+<p>Nothing at this scale: Vercel Hobby, Neon Free, Ably Free and GitHub Actions free for a public repo. The SPEC budgets a class demo plus about 10 game nights a month: about 1.1 M Ably messages against roughly
+6 M.</p>
+<div class="follow">Follow-up: <em>Hidden cost?</em> Hobby is non-commercial, so a real launch needs Pro.</div></div></details>
+<details><summary>How do environment variables differ between environments?</summary><div class="body">
+<p>Production uses Neon main, the <code>huddle-server</code> Ably key, its own <code>AUTH_SECRET</code>, and the Google ID and secret. Preview uses Neon dev and another secret, with no Google. Local uses <code>.env.local</code> (Neon dev). CI uses sentinels and no
+real keys. Test-only variables (<code>HUDDLE_TEST_MODE</code>, <code>REALTIME_DRIVER</code>) are never set in Vercel.</p>
+<div class="follow">Follow-up: <em>How do you check config without reading it?</em> <code>npm run env:check</code> prints names with set or MISSING.</div></div></details>
+<details><summary>How do you know a push actually went live?</summary><div class="body">
+<p>Poll production until its JS bundles contain something only the new build has (for example a new game's name), then run the deploy checks. CI status is read from the public GitHub API by full commit SHA.</p>
+<div class="follow">Follow-up: <em>Why the full SHA?</em> The API's <code>head_sha</code> filter didn't match a short SHA; that cost an hour once.</div></div></details>
+<details><summary>What if production breaks after a push?</summary><div class="body">
+<p>The agreed procedure was to investigate and fix; if it couldn't be fixed within 30 minutes, <code>git revert</code> the change, push, and confirm production is healthy, never force-pushing or rewriting history.</p>
+<div class="follow">Follow-up: <em>Did you ever revert?</em> No; production stayed healthy, and the failures found were in test code or CI.</div></div></details>
+
+<h3 class="qcat" id="b-ai">AI-assisted development</h3>
+<details data-star><summary><span class="star">★</span> How did you use Claude Code?</summary><div class="body">
+<p>SPEC §3 records that it was built mostly autonomously by Claude Code over about three days (the commits run 22–27 Oct 2026). I wrote the brief and the working rules: never push without permission, never
+read secrets, run the full suite before each commit, never weaken tests, stop on spec changes. Claude Code drafted the SPEC and PLAN from that brief, I accepted the decisions, and it then built phase by
+phase, logging decisions and evidence. I directed the follow-up rounds: CI failures, production checks, UI polish, the v0.5 features, and the AC-80 decision.</p>
+<div class="follow">Follow-up: <em>Then what's your contribution?</em> Problem framing, requirements and decisions, review of evidence, the playtest, and holding it to the spec. Say exactly what you did.</div></div></details>
+<details data-star><summary><span class="star">★</span> How did you verify the AI's work?</summary><div class="body">
+<ul>
+<li><strong>Tests as referee:</strong> 103 ACs, each with a named test, and the full suite before every commit.</li>
+<li><strong>Two device engines</strong> for every E2E test.</li>
+<li><strong>Production deploy checks</strong> with measured numbers.</li>
+<li><strong>Screenshot audits.</strong></li>
+<li><strong>A decision log I could audit,</strong> which includes the AI's own corrections, like the database-stall misdiagnosis.</li>
+<li><strong>Rules that make shortcuts visible:</strong> a test may not be loosened, and anything needing a spec change stops as a Blocker.</li>
+</ul>
+<div class="follow">Follow-up: <em>An example where verification caught the AI?</em> Its first CI retry loop made installs worse; public annotations proved it, and the fix changed approach.</div></div></details>
+<details><summary>Which decisions did you make yourself?</summary><div class="body">
+<p>The ones recorded as owner decisions: accepting the Q1–Q13 defaults and replacing Q12 with a bright theme; the v0.5 feature list and its order; when to push (the builder never pushed without permission);
+the CI split request; B1 option (c), running deploy checks on a GitHub-hosted runner; and stopping CI and test work before the playtest. Adapt this to your actual involvement.</p>
+<div class="follow">Follow-up: <em>Did you ever overrule it?</em> Answer from your own experience; for example, the B1 choice was between options it laid out.</div></div></details>
+<details><summary>What did the AI get wrong?</summary><div class="body">
+<p>Recorded examples:</p>
+<ul>
+<li>It first attributed the production stalls to the database pool; probes later disproved this, and it's corrected in the log.</li>
+<li>A CI install retry loop made apt lock failures worse.</li>
+<li>A watcher script searched CI runs by short SHA and found nothing for an hour.</li>
+<li>A wiring script corrupted a TypeScript type, caught by typecheck.</li>
+<li>It ran unit tests beside the E2E run, overloading WebKit, and stopped doing that.</li>
+<li>It quoted a 25 s heartbeat where the code uses 20 s, later corrected in PLAN.</li>
+</ul>
+<div class="follow">Follow-up: <em>How did you catch those?</em> Tests, typecheck, public CI annotations, and checking claims against the code.</div></div></details>
+<details><summary>How did you keep secrets safe with an AI agent?</summary><div class="body">
+<p>A standing rule: never read, print or grep <code>.env.local</code> or any environment value, and never ask for keys in chat. Env is loaded only by <code>node --env-file</code>, Next.js, Vitest or Vercel, and configuration
+is checked with <code>env:check</code> (names only).</p>
+<div class="follow">Follow-up: <em>Did it hold?</em> Yes; the AC-6 sentinel scan also guards against leaking through code.</div></div></details>
+<details><summary>Would you build it this way again?</summary><div class="body">
+<p>Yes for spec-first with AC-named tests: they turned "it works on my phone" into evidence. I'd move real-device and real-network checks earlier (the network-path issue appeared late), and run deploy checks
+from a cloud runner from the start.</p>
+<div class="follow">Follow-up: <em>Biggest risk with an AI builder?</em> Plausible but wrong explanations; the log's corrections show why evidence matters.</div></div></details>
+
+<h3 class="qcat" id="b-noai">Why there's no AI in an AI course</h3>
+<details data-star><summary><span class="star">★</span> This is an AI course. Why does the app contain no AI?</summary><div class="body">
+<p>The AI is in how it was built, not in the runtime. SPEC §3 says "No AI APIs at runtime. All content is written ahead of time and bundled." A party game needs instant, deterministic, free and testable responses:
+an LLM call per question or judgment would add latency and cost on free tiers, break deterministic tests, and risk leaking or inventing answers. The AI work is the process: spec-driven development with
+an autonomous coding agent, verified by tests and production evidence, plus AI-written content checked by automated content tests and a report button.</p>
+<div class="follow">Follow-up: <em>Where would AI fit later?</em> Optionally generating new question packs offline, reviewed and run through the same content checks; still not at runtime.</div></div></details>
+<details><summary>Was the content AI-generated? How do you trust it?</summary><div class="body">
+<p>Yes, the banks were written ahead, and SPEC §10 lists "Claude-written facts are wrong or dated" as a risk. Mitigations: automated content checks (unique ids, valid options, no time-relative words, place
+answers resolving in the database, no flag emoji), the in-app report button (3 reports exclude a question), and a spot check during the playtest.</p>
+<div class="follow">Follow-up: <em>An example a check caught?</em> "Venice" resolving to Dayton, USA in Emoji Decode.</div></div></details>
+
+<h3 class="qcat" id="b-tradeoffs">Trade-offs</h3>
+<details data-star><summary><span class="star">★</span> Why not run your own WebSocket server?</summary><div class="body">
+<p>Hosting is serverless: Vercel functions are short-lived and can't hold sockets, and the free hosting rules out a long-running process. A managed pub/sub (Ably) keeps fan-out off the functions, gives
+subscribe-only tokens for security, and survives function cold starts. The trade-off is a third-party dependency and quota, mitigated by the polling fallback.</p>
+<div class="follow">Follow-up: <em>Would a VM be simpler?</em> For sockets, yes; but then you also run the process, scaling and TLS, and pay for it.</div></div></details>
+<details><summary>Why not Firebase?</summary><div class="body">
+<p>Firebase would give realtime and storage together, but the referee logic (validation, secrets per viewer, deadlines) would need Cloud Functions plus security rules. Ad-hoc queries for seasons and
+head-to-head records are awkward in Firestore. Postgres transactions with a row lock give a simple, testable serialisation point, and the pure engine runs unchanged in unit tests.</p>
+<div class="follow">Follow-up: <em>Supabase then?</em> Similar trade-off; the chosen split (Neon plus Ably) is explicit, with each on a free tier.</div></div></details>
+<details><summary>Why polling plus realtime instead of realtime only?</summary><div class="body">
+<p>Realtime is the fast path; snapshots are the truth. Phones on real networks lose messages and connections, so every gap, reconnect, focus or heartbeat leads to a snapshot, and polling keeps the game playable
+without realtime (R16).</p>
+<div class="follow">Follow-up: <em>Cost?</em> Polls hit the unlocked <code>peekRoom</code> path.</div></div></details>
+<details><summary>Why accept the latency of server validation for every tap?</summary><div class="body">
+<p>Fairness and secrecy outweigh it. The UI marks taps optimistically (for example the quiz shows your choice as pending), and speed points use server time, so latency doesn't make the scoring unfair.</p>
+<div class="follow">Follow-up: <em>Cheating by delaying?</em> The timer is server-side; late taps are just late.</div></div></details>
+<details><summary>Why trust the Charades actor's tap?</summary><div class="body">
+<p>Decision Q10: the game is played in person, the actor sees the guess happen, and the admin's Undo fixes mistakes. A voting or confirmation flow would slow every turn.</p>
+<div class="follow">Follow-up: <em>Abuse?</em> Friends can see it; Undo exists.</div></div></details>
+<details><summary>Why one big E2E suite on both engines when it's slow and sometimes flaky locally?</summary><div class="body">
+<p>The evaluator uses an iPhone, and WebKit behaves differently (connection limits, touch, frame scheduling). Running everything on both found real issues. The flakiness is local-load related; CI sharding keeps it
+green.</p>
+<div class="follow">Follow-up: <em>Why not real devices?</em> Emulation covers engine differences cheaply; real devices are the playtest.</div></div></details>
+
+<h3 class="qcat" id="b-code">"Walk me through this code"</h3>
+<details><summary>Walk me through <code>roomOp</code>.</summary><div class="body">
+<ol>
+<li>Begin a transaction.</li>
+<li><code>SELECT id, state, version … FOR UPDATE</code> on a live room, or <code>ROOM_NOT_FOUND</code>.</li>
+<li>If an actionId was given and <code>room_actions</code> has it, return the stored result (replay).</li>
+<li><code>prepare()</code>: load presence, clone the state and build the context, adding ratings and reported questions when no game is running.</li>
+<li><code>catchUp()</code>, then the op itself, then <code>planBots()</code>.</li>
+<li>If the JSON changed: set version + 1, update the state and expiry, and <code>applyEffects()</code>; otherwise just refresh the activity time at most once a minute.</li>
+<li>Insert into <code>room_actions</code>, upsert presence, commit.</li>
+<li>After the commit, publish <code>state</code> with the public view and <code>privateFor</code>, then any stroke effects.</li>
+</ol>
+<div class="follow">Follow-up: <em>Why compare JSON rather than track changes?</em> It's simple and exact for one document per room.</div></div></details>
+<details><summary>Walk me through <code>applyAction</code>.</summary><div class="body">
+<p>If the seat is kicked, throw. Rate-limit (chat actions per module). Clear AFK and the missed-turn streak, since any action proves presence. Then a switch on room-level actions (wave, imBack, introReady,
+setIntros, setAvatar, setQueue, setTeams, start, demoStart, continue, rematch, newQueue, endNight, pause, resume, skip, endGame, undo, kick, transferAdmin, approveClaim/denyClaim); the default goes to
+<code>dispatchGame</code>, which checks playing, not paused and seated, then calls the module's <code>act</code>.</p>
+<div class="follow">Follow-up: <em>Where are settings validated?</em> <code>validateQueue</code> calls <code>validateSettings</code> per game spec; test mode allows shorter timers.</div></div></details>
+<details><summary>Walk me through <code>RoomSync.act</code>.</summary><div class="body">
+<p>Generate a UUID, POST <code>{actionId, type, payload}</code> with a 30 s timeout. On a network error or timeout, send again once with the same id; if that fails, return <code>NETWORK</code>. If the response version jumped by more than 1,
+fetch a snapshot; on any server error, fetch a snapshot too. Return the body, including any private feedback.</p>
+<div class="follow">Follow-up: <em>Why fetch on error?</em> An error usually means the phone's view was stale (wrong phase).</div></div></details>
+<details><summary>Walk me through a game module, for example Emoji Decode's <code>act</code>.</summary><div class="body">
+<p>Accept only <code>guess</code> in the <code>puzzle</code> phase, with non-empty trimmed text of at most 60 characters, and only if the seat hasn't solved it already. Record that the seat tried. If <code>isCorrect</code> is false, set
+<code>ctx.private = {correct: false}</code> and return. Otherwise store the solve time, <code>award()</code> 500 + speed bonus, update stats, return private <code>{correct: true, points}</code>, and reveal early if every active player
+has solved it.</p>
+<div class="follow">Follow-up: <em>Why <code>ctx.private</code>?</em> Feedback only the actor should see goes back in that action's response, never on the channel.</div></div></details>
+<details><summary>Walk me through <code>catchUp</code>.</summary><div class="body">
+<p>Auto-pause if the room has been silent too long, and hand off admin if needed. Then loop up to 50 times while not paused: find the earliest due bot action and whether the phase deadline is due. Run whichever
+is earlier at its own time (<code>ctx.now</code> set to its due time): bot actions via <code>dispatchGame</code>, deadlines via <code>processDeadline</code>, which goes to the module's <code>onDeadline</code> (or the break, or the intro). Replan bots
+after each deadline, restore the real time, and plan bots again.</p>
+<div class="follow">Follow-up: <em>Bot action error?</em> A <code>GameError</code> from a bot is swallowed; the bot just misses.</div></div></details>
+
+<h3 class="qcat" id="b-future">Future work</h3>
+<details data-star><summary><span class="star">★</span> What would you build next?</summary><div class="body">
+<ul>
+<li>Whatever the playtest finds first.</li>
+<li>Make the AC-77 path observable (log publish failures, perhaps a faster version check during play).</li>
+<li>Investigate a region closer to India for latency.</li>
+<li>Review content quality from reports.</li>
+<li>Add security headers such as a CSP.</li>
+<li>Consider an append-only answers table if lock contention ever shows.</li>
+</ul>
+<p>New features would go through the same SPEC → AC → PLAN loop.</p>
+<div class="follow">Follow-up: <em>What would you not build?</em> Public matchmaking, voice or video, runtime AI (the non-goals), until the core is proven at playtests.</div></div></details>
+<details><summary>How would you add a tenth game?</summary><div class="body">
+<p>Write the requirements and ACs first. Implement a <code>GameModule</code> plus meta (settings, How-to-play, intro, minimum players) and a bot. Wire it into the registry, meta, demo, presets, colours and the client component. Add it to
+<code>GAMES</code> so the cross-game suites cover it, write the unit and E2E ACs on both projects, and pick a distinct colour that passes the contrast test.</p>
+<div class="follow">Follow-up: <em>How long?</em> v0.5 shipped three in a day, each with full tests.</div></div></details>
+<details><summary>How would you scale it into a real product?</summary><div class="body">
+<p>Paid tiers (Ably connections, Vercel Pro, a bigger Neon), regional hosting, observability (publish failures, lock times, client resync counts), abuse limits per IP for room creation, and moderation if rooms ever
+became public.</p>
+<div class="follow">Follow-up: <em>Monetisation?</em> A non-goal for this project.</div></div></details>
+
+<h3 class="qcat" id="b-curve">Curveballs</h3>
+<details data-star><summary><span class="star">★</span> Is anything known to be broken or uncertain right now?</summary><div class="body">
+<p>One open observation. On deploy-checks run #4, AC-77 saw the other phone still showing 40 waves after the 41st for the full 15 s wait, from GitHub's runner, so not my network. Either the tap never reached the
+server, or that phone missed one realtime message; the public results can't tell which. If it was a missed message, nothing newer revealed the gap, so the phone corrects itself at its next heartbeat. That
+runs every 20 s in production (the 60 s presence window ÷ 3; the SPEC says 25 s, the code is stricter), and focus, visibility or any later update resyncs it sooner. AC-77 passed on runs #1 and #3 at p95
+202 and 215 ms. It's logged in PLAN, not yet investigated, at the owner's instruction before the playtest.</p>
+<div class="follow">Follow-up: <em>How would you find out which?</em> Log server publish results and the client's version on each heartbeat during the deploy check; if the action was stored but the message missing, it's
+delivery, and a shorter version check during play would bound the staleness.</div></div></details>
+<details><summary>Your test passed only after rerunning. Isn't that cherry-picking?</summary><div class="body">
+<p>The rule is never to loosen, skip or re-time a test to get green, and to fix flaky tests. Reruns were used only where the failure was shown to be environmental: the same spec passing alone and in CI, with the
+evidence logged. Where a test was actually wrong (the wave-count race), it was fixed and logged, without lowering any threshold. B1 needed three <em>consecutive</em> passes, not one lucky run.</p>
+<div class="follow">Follow-up: <em>And the India AC-80 failures?</em> Kept in PLAN as real-world evidence, not hidden.</div></div></details>
+<details><summary>If the spec says 25 s heartbeat and the code does 20 s, which is right?</summary><div class="body">
+<p>The code is stricter (more frequent), so it satisfies the intent of a heartbeat at most 25 s apart; it's derived from the presence window (60 s ÷ 3) so a phone is never marked disconnected between heartbeats.
+It's an honest discrepancy, noted in PLAN; the clean fix is to update SPEC §4.2's wording.</p>
+<div class="follow">Follow-up: <em>Why didn't a test catch it?</em> No AC asserts the interval; AC-77 asserts update latency, not heartbeat cadence.</div></div></details>
+<details><summary>Could two players get the same seat?</summary><div class="body">
+<p>No: a seat belongs to one identity, and joins run under the row lock. A device can't take another's seat without the "That's me" claim, which needs approval; after approval the old token stops working
+for that seat.</p>
+<div class="follow">Follow-up: <em>Two tabs on one phone?</em> Same identity, same seat; whichever opened last is the active device.</div></div></details>
+<details><summary>What's the single riskiest part of the system?</summary><div class="body">
+<p>Realtime delivery on real networks: it's where the production bugs were (the reloaded viewer missing strokes) and the open AC-77 observation. That's why the design treats realtime as an optimisation over
+snapshots and versions.</p>
+<div class="follow">Follow-up: <em>And the second?</em> Free-tier limits if usage grew.</div></div></details>
+<details><summary>Explain this project to a non-technical person in one sentence.</summary><div class="body">
+<p>It's like having a referee in the cloud for party games on everyone's phones: it keeps score, keeps secrets, keeps time, and remembers you if your phone drops out.</p>
+<div class="follow">Follow-up: <em>And to an engineer?</em> A serverless, server-authoritative state machine per room with versioned snapshots and pub/sub fan-out.</div></div></details>
+<details><summary>How many commits, and what's the history's shape?</summary><div class="body">
+<p>40 commits between 22 and 27 Oct 2026: spec and plan first, then one commit per phase 1–15, then fixes from CI and production, the UI polish, the v0.5 items (one commit each, 17.1–17.7), CI robustness, and the
+deploy-checks workflow.</p>
+<div class="follow">Follow-up: <em>Why one commit per phase?</em> Each commit is a working, tested increment tied to its ACs.</div></div></details>
+
+</div><!-- /bank -->
+
+<footer>Built from SPEC.md v0.5, PLAN.md and git history at 269d2cb. Self-contained: no external requests, no secrets.</footer>
+</main>
+<script>
+(function () {
+  var q = document.getElementById('q'), starOnly = document.getElementById('starOnly'), count = document.getElementById('count');
+  var items = Array.prototype.slice.call(document.querySelectorAll('#bank details'));
+  var cats = Array.prototype.slice.call(document.querySelectorAll('#bank h3'));
+  function apply() {
+    var term = q.value.trim().toLowerCase(), shown = 0;
+    items.forEach(function (d) {
+      var ok = (!starOnly.checked || d.hasAttribute('data-star')) && (!term || d.textContent.toLowerCase().indexOf(term) !== -1);
+      d.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+      if (term && ok) d.open = true;
+    });
+    cats.forEach(function (h) {
+      var el = h.nextElementSibling, any = false;
+      while (el && el.tagName !== 'H3') { if (el.tagName === 'DETAILS' && el.style.display !== 'none') any = true; el = el.nextElementSibling; }
+      h.style.display = any ? '' : 'none';
+    });
+    count.textContent = shown + ' of ' + items.length + ' questions';
+  }
+  q.addEventListener('input', apply);
+  starOnly.addEventListener('change', apply);
+  document.getElementById('openAll').addEventListener('click', function () { items.forEach(function (d) { if (d.style.display !== 'none') d.open = true; }); });
+  document.getElementById('closeAll').addEventListener('click', function () { items.forEach(function (d) { d.open = false; }); });
+  apply();
+})();
+</script>
+</body>
+</html>
